@@ -1,22 +1,53 @@
 ---
-title: "Project proposal"
-author: "Team name"
+title: "Project proposal: Site Fidelity and Inter-pool Movement of Spotted Salamanders by the Sea"
+author: "Georgia Lattig"
+date: "02/14/24"
 output: github_document
 ---
 
-```{r load-packages, message = FALSE}
+```{r load-packages, include = FALSE}
 library(tidyverse)
 library(broom)
+library(readr)
 ```
 
 ## 1. Introduction
 
+The aim of this project is to organize, synthesize and begin to analyze data from the past nine seasons of data collection for the Otter Point Salamander project. The Otter Point Salamander project is a long-term monitoring project focused on a population of Spotted Salamanders (Ambystoma maculatum) that breed on a rocky headland by the Atlantic Ocean. This population is unique because they breed in a series of freshwater pools in the granite, so close to the ocean that the pools are occasionally flushed with full-strength seawater. The project was initiated by Dr. Stephen Ressel in 2015 and annual monitoring efforts have continued since then, relying on the interest and efforts of many COA students, resulting in 9 years of data. 
+
+
+
+I will work with one dataset that contains 9 years of data. The variables are as follows:
+
+"sheet" - `variable`, `variable` etc.
 
 
 ## 2. Data
 
+There is a lot of data cleaning that still needs to be done.
+
+```{r load-data, message = FALSE}
+op15 <- read_csv("/cloud/project/data/otter point - 2015.csv")
+op16 <- read_csv("/cloud/project/data/otter point - 2016.csv")
+op17 <- read_csv("/cloud/project/data/otter point - 2017.csv")
+op18 <- read_csv("/cloud/project/data/otter point - 2018.csv")
+op19 <- read_csv("/cloud/project/data/otter point - 2019.csv")
+op20 <- read_csv("/cloud/project/data/otter point - 2020.csv")
+op21 <- read_csv("/cloud/project/data/otter point - 2021.csv")
+op22 <- read_csv("/cloud/project/data/otter point - 2022.csv")
+sals22 <- read_csv("/cloud/project/data/otter point - 2022_sals.csv")
+op23 <- read_csv("/cloud/project/data/otter point - 2023.csv")
+```
+
+#### Data Skim
+
+```{r skim-data}
+
+```
+
 
 ## 3. Ethics review
+
 
 ## 4. Data analysis plan
 

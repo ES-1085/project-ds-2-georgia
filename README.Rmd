@@ -1,6 +1,6 @@
 ---
-title: Project title
-author: by Team name
+title: Site Fidelity and Interpool Movement of Spotted Salamanders by the Sea
+author: by Georgia
 output: github_document
 ---
 
