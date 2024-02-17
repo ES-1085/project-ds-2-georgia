@@ -48,14 +48,82 @@ and tidying that this project will require, I will come up with a
 standardized method of data collection and ideally design a data sheet
 for use in the field for future seasons.
 
-I will work with one dataset that contains 9 years of data. The
-variables are as follows:
+I will work with one dataset that contains 9 years (currently separate
+data sheets) of data. There is a lot of data cleaning that still needs
+to be done because there are 10 different sheets, one sheet for each
+season, except for the 2022 season which for some reason has two. Each
+sheet has a slightly different number and configuration of variables.
+The variables are as follows:
 
-“sheet” - `variable`, `variable` etc.
+#### op15
+
+`Date`, `Pool Number`, `Salinity(ppt)`, `Second Salinity Noted (lower)`,
+`Temperature (C)`, `Total`, `Unmarked`, `Red (2021/2020)`,
+`Orange (2019)`, `Pink (2018)`, `Yellow (2017)`, `Dead Individuals`,
+`Eggmasses Present`, `Notes`
+
+#### op16
+
+`Date`, `Pool Number`, `Salinity(ppt)`, `Second Salinity Noted (lower)`,
+`Temperature (C)`, `Total`, `Unmarked`, `Red (2021/2020)`,
+`Orange (2019)`, `Pink (2018)`, `Yellow (2017)`, `Dead Individuals`,
+`Eggmasses Present`
+
+#### op17
+
+`Date`, `Pool Number`, `Salinity(ppt)`, `Second Salinity Noted (lower)`,
+`Temperature (C)`, `Total`, `Unmarked`, `Red (2021/2020)`,
+`Orange (2019)`, `Pink (2018)`, `Yellow (2017)`, `Dead Individuals`,
+`Eggmasses Present`
+
+#### op18
+
+`Date`, `Pool Number`, `Salinity(ppt)`, `Second Salinity Noted (lower)`,
+`Temperature (C)`, `Total`, `Unmarked`, `Red (2021/2020)`,
+`Orange (2019)`, `Pink (2018)`, `Yellow (2017)`, `Dead Individuals`,
+`Eggmasses Present`, `Returns Per Night`, `Color`, `Top # of Returns`
+
+#### op19
+
+`Date`, `Pool Number`, `Salinity(ppt)`, `Second Salinity Noted (lower)`,
+`Temperature (C)`, `Total`, `Unmarked`, `Red (2021/2020)`,
+`Orange (2019)`, `Pink (2018)`, `Yellow (2017)`, `Dead Individuals`,
+`Eggmasses Present`, `Returns Per Night`, `Color`
+
+#### op20
+
+`Date`, `Pool Number`, `Salinity(ppt)`, `Second Salinity Noted (lower)`,
+`Temperature (C)`, `Total`, `Unmarked`, `Red (2021/2020)`,
+`Orange (2019)`, `Pink (2018)`, `Yellow (2017)`, `Dead Individuals`,
+`Eggmasses Present`, `extra..14`, `Returns Per Night`, `Color`
+
+#### op21
+
+`Date`, `Pool Number`, `Salinity(ppt)`, `Second Salinity Noted (lower)`,
+`Temperature (C)`, `Total`, `Unmarked`, `Red (2021/2020)`,
+`Orange (2019)`, `Pink (2018)`, `Yellow (2017)`, `Dead Individuals`,
+`Eggmasses Present`, `Returns Per Night`, `Color/Year`,
+`Top # of Returns`
+
+#### op22
+
+`date`, `recapture`, `pool_num`, `pit_num`, `image`, `color`, `sex`,
+`year`, `air_temp_c`, `salinity_ppt`, `pool_temp_c`, `notes`,
+`extra..13`, `extra..14`
+
+#### sals22
+
+`date`, `svl`, `pool_num`, `pit_num`, `image`, `sex`, `color`, `year`,
+`air_temp_c`, `salinity_ppt`, `pool_temp_c`, `spermatophores`, `eggs`,
+`notes`
+
+#### op23
+
+`date`, `recapture`, `pool_num`, `new_pit`, `pit_num`, `color`, `sex`,
+`year`, `air_temp_c`, `salinity_ppt`, `pool_temp_c`, `2nd_pool_temp_c`,
+`notes`
 
 ## 2. Data
-
-There is a lot of data cleaning that still needs to be done.
 
 ``` r
 op15 <- read_csv("/cloud/project/data/otter point - 2015.csv")

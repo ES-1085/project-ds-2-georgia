@@ -20,15 +20,40 @@ In 2022, a new and exciting aspect was added to the study by COA alum Jasper Whi
 Both the quantity and type of data that has been collected on the Otter Point population for the past nine years opens many possible questions. With my final project, I am specifically interested in beginning to look at the site fidelity of individuals across seasons and the movement of individuals between breeding pools within each season. For both of these questions, I will be working with data from more recent years (2022-2023) and will hopefully set up the code so that this coming spring's data can easily be incorporated. Another major goal of mine in working with these data is that, in the lengthy process of data-cleaning and tidying that this project will require, I will come up with a standardized method of data collection and ideally design a data sheet for use in the field for future seasons.
 
 
+I will work with one dataset that contains 9 years (currently separate data sheets) of data. There is a lot of data cleaning that still needs to be done because there are 10 different sheets, one sheet for each season, except for the 2022 season which for some reason has two. Each sheet has a slightly different number and configuration of variables. The variables are as follows:
 
-I will work with one dataset that contains 9 years of data. The variables are as follows:
+#### op15
+`Date`, `Pool Number`, `Salinity(ppt)`, `Second Salinity Noted (lower)`, `Temperature (C)`, `Total`, `Unmarked`, `Red (2021/2020)`, `Orange (2019)`, `Pink (2018)`, `Yellow (2017)`, `Dead Individuals`, `Eggmasses Present`, `Notes`
 
-"sheet" - `variable`, `variable` etc.
+#### op16
+`Date`, `Pool Number`, `Salinity(ppt)`, `Second Salinity Noted (lower)`, `Temperature (C)`, `Total`, `Unmarked`, `Red (2021/2020)`, `Orange (2019)`, `Pink (2018)`, `Yellow (2017)`, `Dead Individuals`, `Eggmasses Present`
+
+#### op17
+`Date`, `Pool Number`, `Salinity(ppt)`, `Second Salinity Noted (lower)`, `Temperature (C)`, `Total`, `Unmarked`, `Red (2021/2020)`, `Orange (2019)`, `Pink (2018)`, `Yellow (2017)`, `Dead Individuals`, `Eggmasses Present`
+
+#### op18
+`Date`, `Pool Number`, `Salinity(ppt)`, `Second Salinity Noted (lower)`, `Temperature (C)`, `Total`, `Unmarked`, `Red (2021/2020)`, `Orange (2019)`, `Pink (2018)`, `Yellow (2017)`, `Dead Individuals`, `Eggmasses Present`, `Returns Per Night`, `Color`, `Top # of Returns`
+
+#### op19
+`Date`, `Pool Number`, `Salinity(ppt)`, `Second Salinity Noted (lower)`, `Temperature (C)`, `Total`, `Unmarked`, `Red (2021/2020)`, `Orange (2019)`, `Pink (2018)`, `Yellow (2017)`, `Dead Individuals`, `Eggmasses Present`, `Returns Per Night`, `Color`
+
+#### op20
+`Date`, `Pool Number`, `Salinity(ppt)`, `Second Salinity Noted (lower)`, `Temperature (C)`, `Total`, `Unmarked`, `Red (2021/2020)`, `Orange (2019)`, `Pink (2018)`, `Yellow (2017)`, `Dead Individuals`, `Eggmasses Present`, `extra..14`, `Returns Per Night`, `Color`
+
+#### op21
+`Date`, `Pool Number`, `Salinity(ppt)`, `Second Salinity Noted (lower)`, `Temperature (C)`, `Total`, `Unmarked`, `Red (2021/2020)`, `Orange (2019)`, `Pink (2018)`, `Yellow (2017)`, `Dead Individuals`, `Eggmasses Present`, `Returns Per Night`, `Color/Year`, `Top # of Returns`
+
+#### op22
+`date`, `recapture`, `pool_num`, `pit_num`, `image`, `color`, `sex`, `year`, `air_temp_c`, `salinity_ppt`, `pool_temp_c`, `notes`, `extra..13`, `extra..14`
+
+#### sals22
+`date`, `svl`, `pool_num`, `pit_num`, `image`, `sex`, `color`, `year`, `air_temp_c`, `salinity_ppt`, `pool_temp_c`, `spermatophores`, `eggs`, `notes`
+
+#### op23 
+`date`, `recapture`, `pool_num`, `new_pit`, `pit_num`, `color`, `sex`, `year`, `air_temp_c`, `salinity_ppt`, `pool_temp_c`, `2nd_pool_temp_c`, `notes`
 
 
 ## 2. Data
-
-There is a lot of data cleaning that still needs to be done.
 
 ```{r load-data, message = FALSE}
 op15 <- read_csv("/cloud/project/data/otter point - 2015.csv")
