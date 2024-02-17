@@ -6,10 +6,47 @@ Georgia Lattig
 
 ## 1. Introduction
 
-Title: Site Fidelity and Inter-pool Movement of Spotted Salamanders by
-the Sea
+The aim of this project is to organize, synthesize and begin to analyze
+data from the past nine seasons of data collection for the Otter Point
+Salamander project. The Otter Point Salamander project (unofficial
+title) is a long-term monitoring project that is focused on a population
+of Spotted Salamanders (Ambystoma maculatum) that breeds on a rocky
+headland by the Atlantic Ocean. This population is unique because they
+breed in a series of freshwater pools in the granite headland, so close
+to the ocean that the pools are occasionally flushed with full-strength
+seawater during stochastic storm events. The project was initiated by
+Dr. Stephen Ressel in 2015 with efforts to quantify the environmental
+salinities that these salamanders were experiencing during the breeding
+season. In 2017, Dr. Ressel implemented a mark-recapture study to gauge
+the rate of salamander returns to this unusual breeding site.
 
-The aim of this project is to
+In 2022, a new and exciting aspect was added to the study by COA alum
+Jasper White. The original methods for mark-recapture were through the
+use of Visible Implant Elastomer (VIE) tags. To tag salamanders with VIE
+tags, we would inject a small amount of colorful, fluorescing polymer
+under the salamander’s skin at the base of their tail. Unique colors
+were used for each unique year so, for example, if a salamander had a
+yellow tag that means it was initially marked in 2017. There are limits
+to this type of tagging, however, because we were only able to mark
+cohorts from a given year rather than uniquely identify individual
+salamanders. In 2022, Jasper implemented PIT-tagging as a method of
+marking individual salamanders. PIT tags are small microchip tags that
+are inserted into the body cavity of the salamanders, assigning each
+individual a unique barcode of numbers. PIT-tagging continued last
+spring (2023) and will continue this coming spring (2024).
+
+Both the quantity and type of data that has been collected on the Otter
+Point population for the past nine years opens many possible questions.
+With my final project, I am specifically interested in beginning to look
+at the site fidelity of individuals across seasons and the movement of
+individuals between breeding pools within each season. For both of these
+questions, I will be working with data from more recent years
+(2022-2023) and will hopefully set up the code so that this coming
+spring’s data can easily be incorporated. Another major goal of mine in
+working with these data is that, in the lengthy process of data-cleaning
+and tidying that this project will require, I will come up with a
+standardized method of data collection and ideally design a data sheet
+for use in the field for future seasons.
 
 I will work with one dataset that contains 9 years of data. The
 variables are as follows:
@@ -17,6 +54,8 @@ variables are as follows:
 “sheet” - `variable`, `variable` etc.
 
 ## 2. Data
+
+There is a lot of data cleaning that still needs to be done.
 
 ``` r
 op15 <- read_csv("/cloud/project/data/otter point - 2015.csv")
