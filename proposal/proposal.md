@@ -187,4 +187,27 @@ glimpse(op23)
 
 ## 3. Ethics review
 
+Data collection for this project is done in partnership with Acadia
+National Park and has gone through the necessary review and appeals
+(IACUC). The permit number is \_\_\_\_\_\_\_\_\_. Brief statement about
+data collection methods, how it affects the salamanders, and the
+implications of the research : WHY it is being done if it is stressful
+to the wildlife.
+
 ## 4. Data analysis plan
+
+Below are a few of the questions I am most interested in answering
+through this project:
+
+- Which pools are the most frequently visited across all seasons?
+  (confirm Steve’s assumption)
+- Rate of salamander returns using VIE color tags for year cohorts (n =
+  9 seasons): What is the proportion of returns to new recruits each
+  season?
+- Site/Pool Fidelity of individual salamanders across 2 seasons (2022,
+  2023): are individual salamanders returning to the same pools each
+  season?
+- Inter-pool movement of individual salamanders across 2 seasons (2022,
+  2023): how much are individual salamanders moving between pools within
+  a given season?
+- What is the most efficient way to collect these data in the field?
