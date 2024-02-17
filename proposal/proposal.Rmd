@@ -70,8 +70,11 @@ op23 <- read_csv("/cloud/project/data/otter point - 2023.csv")
 
 #### Data Skim
 
-```{r skim-data}
+To give you an idea of the data in its current form, I glimpsed the first data sheet from 2015 and the most recent data sheet from last season (2023).
 
+```{r skim-data}
+glimpse(op15)
+glimpse(op23)
 ```
 
 
@@ -79,6 +82,5 @@ op23 <- read_csv("/cloud/project/data/otter point - 2023.csv")
 
 
 ## 4. Data analysis plan
-
 
 
