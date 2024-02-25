@@ -29,16 +29,16 @@ sals22 <- read_csv("/cloud/project/data/otter point - 2022_sals.csv")
 op23 <- read_csv("/cloud/project/data/otter point - 2023.csv")
 ```
 
-## Data Cleaning
+## Data Tidying
 
-```{r clean-op15}
+```{r tidy-op15}
 op15 <- op15 %>% 
   rename(
     date = `Date`,
     pool = `Pool Number`,
     salinity = `Salinity (ppt)`,
     salinity2 = `Second Salinity Noted (lower)`,
-    temp = `Temperature (C)`,
+    pool_temp = `Temperature (C)`,
     total = Total,
     unmarked = Unmarked,
     yellow = `Yellow (2017)`,
@@ -58,7 +58,7 @@ op15 <- op15 %>%
     .default = salinity)) %>%  ## One observation was recorded as a range 0.1-0.2 so I changed it to 0.1
   mutate(salinity = as.numeric(salinity)) %>% 
   mutate(salinity2 = as.numeric(salinity2)) %>% 
-  mutate(temp = as.numeric(temp)) %>% 
+  mutate(pool_temp = as.numeric(pool_temp)) %>% 
   mutate(total = as.numeric(total)) %>% 
   mutate(unmarked = as.numeric(unmarked)) %>% 
   mutate(yellow = as.numeric(yellow)) %>% 
@@ -70,17 +70,17 @@ op15 <- op15 %>%
   mutate(notes = as.character(notes))
 
 op15 <- op15 %>% 
-  subset(select = -eggs) # I am dropping the eggs variable because the data were recorded in different ways across seasons and because I do not need it for the questions I am interested in asking 
+  subset(select = -c(eggs, notes)) # I am dropping the eggs variable because the data were recorded in different ways across seasons and because I do not need it for the questions I am interested in asking 
 ```
 
-```{r clean-op16}
+```{r tidy-op16}
 op16 <- op16 %>% 
   rename(
     date = `Date`,
     pool = `Pool Number`,
     salinity = `Salinity (ppt)`,
     salinity2 = `Second Salinity Noted (lower)`,
-    temp = `Temperature (C)`,
+    pool_temp = `Temperature (C)`,
     total = Total,
     unmarked = Unmarked,
     yellow = `Yellow (2017)`,
@@ -96,7 +96,7 @@ op16 <- op16 %>%
   mutate(pool = as.character(pool)) %>% 
   mutate(salinity = as.numeric(salinity)) %>% 
   mutate(salinity2 = as.numeric(salinity2)) %>% 
-  mutate(temp = as.numeric(temp)) %>% 
+  mutate(pool_temp = as.numeric(pool_temp)) %>% 
   mutate(total = as.numeric(total)) %>% 
   mutate(unmarked = as.numeric(unmarked)) %>% 
   mutate(yellow = as.numeric(yellow)) %>% 
@@ -110,14 +110,14 @@ op16 <- op16 %>%
   subset(select = -eggs)
 ```
 
-```{r clean-op17}
+```{r tidy-op17}
 op17 <- op17 %>% 
   rename(
     date = `Date`,
     pool = `Pool Number`,
     salinity = `Salinity (ppt)`,
     salinity2 = `Second Salinity Noted (lower)`,
-    temp = `Temperature (C)`,
+    pool_temp = `Temperature (C)`,
     total = Total,
     unmarked = Unmarked,
     yellow = `Yellow (2017)`,
@@ -133,7 +133,7 @@ op17 <- op17 %>%
   mutate(pool = as.character(pool)) %>% 
   mutate(salinity = as.numeric(salinity)) %>% 
   mutate(salinity2 = as.numeric(salinity2)) %>% 
-  mutate(temp = as.numeric(temp)) %>% 
+  mutate(pool_temp = as.numeric(pool_temp)) %>% 
   mutate(total = as.numeric(total)) %>% 
   mutate(unmarked = as.numeric(unmarked)) %>% 
   mutate(yellow = as.numeric(yellow)) %>% 
@@ -147,14 +147,14 @@ op17 <- op17 %>%
   subset(select = -eggs)
 ```
 
-```{r clean-op18}
+```{r tidy-op18}
 op18 <- op18 %>% 
   rename(
     date = `Date`,
     pool = `Pool Number`,
     salinity = `Salinity (ppt)`,
     salinity2 = `Second Salinity Noted (lower)`,
-    temp = `Temperature (C)`,
+    pool_temp = `Temperature (C)`,
     total = Total,
     unmarked = Unmarked,
     yellow = `Yellow (2017)`,
@@ -176,7 +176,7 @@ op18 <- op18 %>%
   mutate(pool = as.character(pool)) %>% 
   mutate(salinity = as.numeric(salinity)) %>% 
   mutate(salinity2 = as.numeric(salinity2)) %>% 
-  mutate(temp = as.numeric(temp)) %>% 
+  mutate(pool_temp = as.numeric(pool_temp)) %>% 
   mutate(total = as.numeric(total)) %>% 
   mutate(unmarked = as.numeric(unmarked)) %>% 
   mutate(yellow = as.numeric(yellow)) %>% 
@@ -186,14 +186,14 @@ op18 <- op18 %>%
   mutate(dead = as.numeric(dead))
 ```
 
-```{r clean-op19}
+```{r tidy-op19}
 op19 <- op19 %>% 
   rename(
     date = `Date`,
     pool = `Pool Number`,
     salinity = `Salinity (ppt)`,
     salinity2 = `Second Salinity Noted (lower)`,
-    temp = `Temperature (C)`,
+    pool_temp = `Temperature (C)`,
     total = Total,
     unmarked = Unmarked,
     yellow = `Yellow (2017)`,
@@ -218,7 +218,7 @@ op19 <- op19 %>%
   )) %>% 
   mutate(salinity = as.numeric(salinity)) %>% 
   mutate(salinity2 = as.numeric(salinity2)) %>% 
-  mutate(temp = as.numeric(temp)) %>% 
+  mutate(pool_temp = as.numeric(pool_temp)) %>% 
   mutate(total = as.numeric(total)) %>% 
   mutate(unmarked = as.numeric(unmarked)) %>% 
   mutate(yellow = as.numeric(yellow)) %>% 
@@ -228,14 +228,14 @@ op19 <- op19 %>%
   mutate(dead = as.numeric(dead))
 ```
 
-```{r clean-op20}
+```{r tidy-op20}
 op20 <- op20 %>% 
   rename(
     date = `Date`,
     pool = `Pool Number`,
     salinity = `Salinity (ppt)`,
     salinity2 = `Second Salinity Noted (lower)`,
-    temp = `Temperature (C)`,
+    pool_temp = `Temperature (C)`,
     total = Total,
     unmarked = Unmarked,
     yellow = `Yellow (2017)`,
@@ -258,7 +258,7 @@ op20 <- op20 %>%
   mutate(salinity = as.numeric(salinity)) %>% 
   mutate(salinity2 = str_remove(salinity2, "\\(deep\\)")) %>% 
   mutate(salinity2 = as.numeric(salinity2)) %>% 
-  mutate(temp = as.numeric(temp)) %>% 
+  mutate(pool_temp = as.numeric(pool_temp)) %>% 
   mutate(total = as.numeric(total)) %>% 
   mutate(unmarked = as.numeric(unmarked)) %>% 
   mutate(yellow = str_remove(yellow, "\\(.*\\d\\)")) %>% 
@@ -273,5 +273,60 @@ op20 <- op20 %>%
   mutate(dead = as.numeric(dead))
 
 ## The coerced NAs in `salinity` and `temp` are okay because they were "N/A" text
+```
+```{r tidy-op21}
+op21 <- op21 %>% 
+  rename(
+    date = `Date`,
+    pool = `Pool Number`,
+    salinity = `Salinity (ppt)`,
+    salinity2 = `Second Salinity Noted (lower)`,
+    pool_temp = `Temperature (C)`,
+    total = Total,
+    unmarked = Unmarked,
+    yellow = `Yellow (2017)`,
+    pink = `Pink (2018)`,
+    orange = `Orange (2019)`,
+    red = `Red (2021/2020)`,
+    dead = `Dead Individuals`,
+    eggs = `Eggmasses present`,
+    returns = `Returns Per Night`,
+    color = `Color/Year`,
+    top_returns = `Top # of Returns`
+  )
+
+op21 <- op21 %>% 
+  subset(select = -c(eggs, returns, color, top_returns))
+
+op21 <- op21 %>% 
+  mutate(date = case_when(
+    date == "4/1" ~ "4/1/21",
+    .default = date
+  ))
+
+op21 <- op21 %>% 
+  mutate(date = as.Date(date, "%m/%d/%Y")) %>% 
+  mutate(pool = as.character(pool)) %>% 
+  mutate(salinity = as.numeric(salinity)) %>% 
+  mutate(salinity2 = as.numeric(salinity2)) %>% 
+  mutate(pool_temp = as.numeric(pool_temp)) %>% 
+  mutate(total = as.numeric(total)) %>% 
+  mutate(unmarked = as.numeric(unmarked)) %>% 
+  mutate(yellow = str_remove(yellow, "\\?"))
+
+op21 <- op21 %>% 
+  mutate(yellow = as.numeric(yellow)) %>% 
+  mutate(pink = as.numeric(pink)) %>% 
+  mutate(orange = as.numeric(orange)) %>% 
+  mutate(red = as.numeric(red)) %>% 
+  mutate(dead = as.numeric(dead))
+
+##I am okay with the coerced NAs in `unmarked` as they were "X"s and the data is captured in other columns
+```
+
+I am running into a slight issue in that the data for 2022-2023 is in a very different format, with each observation being an individual salamander after PIT-tagging was implemented. I'm going to merge the datasets I just cleaned (op15-op21) which could be used to look at return rates. I could select out only the same data/variables as the past years in order to do this kind of analysis but more tidying will have to be done. For now I will merge the tidied datasets op15-op21 and do a similar tidying/merge of datasets op22, sals 22 and op23.
+
+```{r bind op-sets-15-21}
+rbind(op15, op16, op17, op18, op19, op20, op21)
 ```
 
