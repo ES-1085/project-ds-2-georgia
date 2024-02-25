@@ -1,22 +1,11 @@
----
-title: "Site Fidelity and Inter-pool Movement of Spotted Salamanders by the Sea"
-author: "Georgia Lattig"
-date: "02/25/24"
-output: github_document
----
+Site Fidelity and Inter-pool Movement of Spotted Salamanders by the Sea
+================
+Georgia Lattig
+02/25/24
 
 ## Packages and Data
 
-```{r load-packages, include = FALSE}
-library(tidyverse)
-library(broom)
-library(readr)
-library(ggplot2)
-library(dplyr)
-library(lubridate)
-```
-
-```{r load-data, message = FALSE}
+``` r
 op15 <- read_csv("/cloud/project/data/otter point - 2015.csv")
 op16 <- read_csv("/cloud/project/data/otter point - 2016.csv")
 op17 <- read_csv("/cloud/project/data/otter point - 2017.csv")
@@ -31,7 +20,7 @@ op23 <- read_csv("/cloud/project/data/otter point - 2023.csv")
 
 ## Data Cleaning
 
-```{r op15}
+``` r
 op15 <- op15 %>% 
   rename(
     date = `Date`,
@@ -69,4 +58,3 @@ op15 <- op15 %>%
   mutate(eggs = as.numeric(eggs)) %>% 
   mutate(notes = as.character(notes))
 ```
-
