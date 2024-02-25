@@ -31,7 +31,7 @@ op23 <- read_csv("/cloud/project/data/otter point - 2023.csv")
 
 ## Data Cleaning
 
-```{r op15}
+```{r clean-op15}
 op15 <- op15 %>% 
   rename(
     date = `Date`,
@@ -55,7 +55,7 @@ op15 <- op15 %>%
   mutate(pool = as.character(pool)) %>% 
   mutate(salinity = case_when(
     salinity == "0.1 - 0.2" ~ "0.1",
-    .default = salinity)) %>% 
+    .default = salinity)) %>%  ## One observation was recorded as a range 0.1-0.2 so I changed it to 0.1
   mutate(salinity = as.numeric(salinity)) %>% 
   mutate(salinity2 = as.numeric(salinity2)) %>% 
   mutate(temp = as.numeric(temp)) %>% 
@@ -68,5 +68,49 @@ op15 <- op15 %>%
   mutate(dead = as.numeric(dead)) %>% 
   mutate(eggs = as.numeric(eggs)) %>% 
   mutate(notes = as.character(notes))
+
+op15 <- op15 %>% 
+  subset(select = -eggs) # I am dropping the eggs variable because the data were recorded in different ways across seasons and because I do not need it for the questions I am interested in asking 
+```
+
+```{r clean-op16}
+op16 <- op16 %>% 
+  rename(
+    date = `Date`,
+    pool = `Pool Number`,
+    salinity = `Salinity (ppt)`,
+    salinity2 = `Second Salinity Noted (lower)`,
+    temp = `Temperature (C)`,
+    total = Total,
+    new = Unmarked,
+    yellow = `Yellow (2017)`,
+    pink = `Pink (2018)`,
+    orange = `Orange (2019)`,
+    red = `Red (2021/2020)`,
+    dead = `Dead Individuals`,
+    eggs = `Eggmasses present`
+  )
+
+op16 <- op16 %>% 
+  mutate(date = as.Date(date, "%m/%d/%Y")) %>% 
+  mutate(pool = as.character(pool)) %>% 
+  mutate(salinity = as.numeric(salinity)) %>% 
+  mutate(salinity2 = as.numeric(salinity2)) %>% 
+  mutate(temp = as.numeric(temp)) %>% 
+  mutate(total = as.numeric(total)) %>% 
+  mutate(new = as.numeric(new)) %>% 
+  mutate(yellow = as.numeric(yellow)) %>% 
+  mutate(pink = as.numeric(yellow)) %>% 
+  mutate(orange = as.numeric(yellow)) %>% 
+  mutate(red = as.numeric(yellow)) %>% 
+  mutate(dead = as.numeric(dead)) %>% 
+  mutate(eggs = as.numeric(eggs))
+
+op16 <- op16 %>% 
+  subset(select = -eggs)
+```
+
+```{r clean-op17}
+
 ```
 
