@@ -1,5 +1,5 @@
 ---
-title: "Site Fidelity and Inter-pool Movement of Spotted Salamanders by the Sea"
+title: "Data Tidying: Site Fidelity and Inter-pool Movement of Spotted Salamanders by the Sea"
 author: "Georgia Lattig"
 date: "02/25/24"
 output: github_document
@@ -70,7 +70,7 @@ op15 <- op15 %>%
   mutate(notes = as.character(notes))
 
 op15 <- op15 %>% 
-  subset(select = -c(eggs, notes)) # I am dropping the eggs variable because the data were recorded in different ways across seasons and because I do not need it for the questions I am interested in asking 
+  subset(select = -c(eggs, notes)) # I am dropping the eggs variable because the data were recorded in different ways across seasons and because I do not need it for the questions I am interested in asking. I am also dropping the notes column because there is minimal information there which I do not need for my analysis 
 ```
 
 ```{r tidy-op16}
