@@ -1,0 +1,12 @@
+---
+title: "Site Fidelity and Inter-pool Movement of Spotted Salamanders by the Sea"
+author: "Georgia Lattig"
+date: "02/25/24"
+output: github_document
+---
+
+```{r load-packages, include = FALSE}
+library(tidyverse)
+library(broom)
+library(readr)
+```
