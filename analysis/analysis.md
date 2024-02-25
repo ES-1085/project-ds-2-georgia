@@ -29,7 +29,7 @@ op15 <- op15 %>%
     salinity2 = `Second Salinity Noted (lower)`,
     temp = `Temperature (C)`,
     total = Total,
-    new = Unmarked,
+    unmarked = Unmarked,
     yellow = `Yellow (2017)`,
     pink = `Pink (2018)`,
     orange = `Orange (2019)`,
@@ -49,11 +49,11 @@ op15 <- op15 %>%
   mutate(salinity2 = as.numeric(salinity2)) %>% 
   mutate(temp = as.numeric(temp)) %>% 
   mutate(total = as.numeric(total)) %>% 
-  mutate(new = as.numeric(new)) %>% 
+  mutate(unmarked = as.numeric(unmarked)) %>% 
   mutate(yellow = as.numeric(yellow)) %>% 
-  mutate(pink = as.numeric(yellow)) %>% 
-  mutate(orange = as.numeric(yellow)) %>% 
-  mutate(red = as.numeric(yellow)) %>% 
+  mutate(pink = as.numeric(pink)) %>% 
+  mutate(orange = as.numeric(orange)) %>% 
+  mutate(red = as.numeric(red)) %>% 
   mutate(dead = as.numeric(dead)) %>% 
   mutate(eggs = as.numeric(eggs)) %>% 
   mutate(notes = as.character(notes))
@@ -71,7 +71,7 @@ op16 <- op16 %>%
     salinity2 = `Second Salinity Noted (lower)`,
     temp = `Temperature (C)`,
     total = Total,
-    new = Unmarked,
+    unmarked = Unmarked,
     yellow = `Yellow (2017)`,
     pink = `Pink (2018)`,
     orange = `Orange (2019)`,
@@ -87,11 +87,11 @@ op16 <- op16 %>%
   mutate(salinity2 = as.numeric(salinity2)) %>% 
   mutate(temp = as.numeric(temp)) %>% 
   mutate(total = as.numeric(total)) %>% 
-  mutate(new = as.numeric(new)) %>% 
+  mutate(unmarked = as.numeric(unmarked)) %>% 
   mutate(yellow = as.numeric(yellow)) %>% 
-  mutate(pink = as.numeric(yellow)) %>% 
-  mutate(orange = as.numeric(yellow)) %>% 
-  mutate(red = as.numeric(yellow)) %>% 
+  mutate(pink = as.numeric(pink)) %>% 
+  mutate(orange = as.numeric(orange)) %>% 
+  mutate(red = as.numeric(red)) %>% 
   mutate(dead = as.numeric(dead)) %>% 
   mutate(eggs = as.numeric(eggs))
 ```
@@ -104,4 +104,182 @@ op16 <- op16 %>%
 ``` r
 op16 <- op16 %>% 
   subset(select = -eggs)
+```
+
+``` r
+op17 <- op17 %>% 
+  rename(
+    date = `Date`,
+    pool = `Pool Number`,
+    salinity = `Salinity (ppt)`,
+    salinity2 = `Second Salinity Noted (lower)`,
+    temp = `Temperature (C)`,
+    total = Total,
+    unmarked = Unmarked,
+    yellow = `Yellow (2017)`,
+    pink = `Pink (2018)`,
+    orange = `Orange (2019)`,
+    red = `Red (2021/2020)`,
+    dead = `Dead Individuals`,
+    eggs = `Eggmasses present`
+  )
+
+op17 <- op17 %>% 
+  mutate(date = as.Date(date, "%m/%d/%Y")) %>% 
+  mutate(pool = as.character(pool)) %>% 
+  mutate(salinity = as.numeric(salinity)) %>% 
+  mutate(salinity2 = as.numeric(salinity2)) %>% 
+  mutate(temp = as.numeric(temp)) %>% 
+  mutate(total = as.numeric(total)) %>% 
+  mutate(unmarked = as.numeric(unmarked)) %>% 
+  mutate(yellow = as.numeric(yellow)) %>% 
+  mutate(pink = as.numeric(pink)) %>% 
+  mutate(orange = as.numeric(orange)) %>% 
+  mutate(red = as.numeric(red)) %>% 
+  mutate(dead = as.numeric(dead)) %>% 
+  mutate(eggs = as.numeric(eggs))
+
+op17 <- op17 %>% 
+  subset(select = -eggs)
+```
+
+``` r
+op18 <- op18 %>% 
+  rename(
+    date = `Date`,
+    pool = `Pool Number`,
+    salinity = `Salinity (ppt)`,
+    salinity2 = `Second Salinity Noted (lower)`,
+    temp = `Temperature (C)`,
+    total = Total,
+    unmarked = Unmarked,
+    yellow = `Yellow (2017)`,
+    pink = `Pink (2018)`,
+    orange = `Orange (2019)`,
+    red = `Red (2021/2020)`,
+    dead = `Dead Individuals`,
+    eggs = `Eggmasses present`,
+    returns = `Returns Per Night`,
+    color = Color,
+    top_returns = `Top # of Returns`
+  )
+
+op18 <- op18 %>% 
+  subset(select = -c(eggs, returns, color, top_returns))
+
+op18 <- op18 %>% 
+  mutate(date = as.Date(date, "%m/%d/%Y")) %>% 
+  mutate(pool = as.character(pool)) %>% 
+  mutate(salinity = as.numeric(salinity)) %>% 
+  mutate(salinity2 = as.numeric(salinity2)) %>% 
+  mutate(temp = as.numeric(temp)) %>% 
+  mutate(total = as.numeric(total)) %>% 
+  mutate(unmarked = as.numeric(unmarked)) %>% 
+  mutate(yellow = as.numeric(yellow)) %>% 
+  mutate(pink = as.numeric(pink)) %>% 
+  mutate(orange = as.numeric(orange)) %>% 
+  mutate(red = as.numeric(red)) %>% 
+  mutate(dead = as.numeric(dead))
+```
+
+``` r
+op19 <- op19 %>% 
+  rename(
+    date = `Date`,
+    pool = `Pool Number`,
+    salinity = `Salinity (ppt)`,
+    salinity2 = `Second Salinity Noted (lower)`,
+    temp = `Temperature (C)`,
+    total = Total,
+    unmarked = Unmarked,
+    yellow = `Yellow (2017)`,
+    pink = `Pink (2018)`,
+    orange = `Orange (2019)`,
+    red = `Red (2021/2020)`,
+    dead = `Dead Individuals`,
+    eggs = `Eggmasses present`,
+    returns = `Returns Per Night`,
+    color = Color
+  )
+
+op19 <- op19 %>% 
+  subset(select = -c(eggs, returns, color))
+
+op19 <- op19 %>% 
+  mutate(date = as.Date(date, "%m/%d/%Y")) %>% 
+  mutate(pool = as.character(pool)) %>% 
+  mutate(salinity = case_when(
+    salinity == "N/A" ~ NA,
+    .default = salinity
+  )) %>% 
+  mutate(salinity = as.numeric(salinity)) %>% 
+  mutate(salinity2 = as.numeric(salinity2)) %>% 
+  mutate(temp = as.numeric(temp)) %>% 
+  mutate(total = as.numeric(total)) %>% 
+  mutate(unmarked = as.numeric(unmarked)) %>% 
+  mutate(yellow = as.numeric(yellow)) %>% 
+  mutate(pink = as.numeric(pink)) %>% 
+  mutate(orange = as.numeric(orange)) %>% 
+  mutate(red = as.numeric(red)) %>% 
+  mutate(dead = as.numeric(dead))
+```
+
+``` r
+op20 <- op20 %>% 
+  rename(
+    date = `Date`,
+    pool = `Pool Number`,
+    salinity = `Salinity (ppt)`,
+    salinity2 = `Second Salinity Noted (lower)`,
+    temp = `Temperature (C)`,
+    total = Total,
+    unmarked = Unmarked,
+    yellow = `Yellow (2017)`,
+    pink = `Pink (2018)`,
+    orange = `Orange (2019)`,
+    red = `Red (2021/2020)`,
+    dead = `Dead Individuals`,
+    notes = ...14,
+    eggs = `Eggmasses present`,
+    returns = `Returns per night`,
+    color = Color
+  )
+
+op20 <- op20 %>% 
+  subset(select = -c(eggs, notes, returns, color))
+
+op20 <- op20 %>% 
+  mutate(date = as.Date(date, "%m/%d/%Y")) %>% 
+  mutate(pool = as.character(pool)) %>% 
+  mutate(salinity = as.numeric(salinity)) %>% 
+  mutate(salinity2 = str_remove(salinity2, "\\(deep\\)")) %>% 
+  mutate(salinity2 = as.numeric(salinity2)) %>% 
+  mutate(temp = as.numeric(temp)) %>% 
+  mutate(total = as.numeric(total)) %>% 
+  mutate(unmarked = as.numeric(unmarked)) %>% 
+  mutate(yellow = str_remove(yellow, "\\(.*\\d\\)")) %>% 
+  mutate(orange = str_remove(orange, "\\(.*\\d\\)")) 
+```
+
+    ## Warning: There was 1 warning in `mutate()`.
+    ## ℹ In argument: `salinity = as.numeric(salinity)`.
+    ## Caused by warning:
+    ## ! NAs introduced by coercion
+
+    ## Warning: There was 1 warning in `mutate()`.
+    ## ℹ In argument: `temp = as.numeric(temp)`.
+    ## Caused by warning:
+    ## ! NAs introduced by coercion
+
+``` r
+## Something tricky with the data here in that there was only 1 returning salamander but it was unclear whether that salamander was tagged in 2017 (yellow) or 2019 (orange) so it was marked as both. I will be making a "marked" column to account for the difference in total - unmarked.
+
+op20 <- op20 %>% 
+  mutate(yellow = as.numeric(yellow)) %>% 
+  mutate(pink = as.numeric(pink)) %>% 
+  mutate(orange = as.numeric(orange)) %>% 
+  mutate(red = as.numeric(red)) %>% 
+  mutate(dead = as.numeric(dead))
+
+## The coerced NAs in `salinity` and `temp` are okay because they were "N/A" text
 ```
