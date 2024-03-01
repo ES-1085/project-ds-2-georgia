@@ -368,9 +368,9 @@ nights23 <- op23 %>%
 ```
 
 ``` r
-nights <- rbind(op15, op16, op17, op18, op19, op20, op21)
+pools <- rbind(op15, op16, op17, op18, op19, op20, op21)
 
-write_csv(nights, "/cloud/project/data/tidy_data/nights.csv")
+write_csv(pools, "/cloud/project/data/tidy_data/pools.csv")
 ```
 
 ### 2022-2023 Tracking Individual Salamanders (PIT CMR)
