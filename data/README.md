@@ -11,6 +11,7 @@ The second dataset is called `sals` and was tidied and merged from datasets op22
 `sals` contains information about individually-tagged salamanders on each survey night, including the environmental conditions of the breeding pool they were found in and information about the individual salamanders. 
 
 ## pools
+This dataset has 12 variables and 355 observations. Each observation represents a breeding pool on a given night. 
 - `date`: date of the observation
 - `pool`: number of the breeding pool (0-15)
 - `salinity`: salinity measurement of the breeding pool
@@ -25,6 +26,7 @@ The second dataset is called `sals` and was tidied and merged from datasets op22
 - `dead`: how many dead individuals were observed in the breeding pool
 
 ## sals
+This dataset has 10 variables and 1006 observations. Each observation represents a salamander on a given night.
 - `date`: date of the observation
 - `pool`: number of the breeding pool (0-15) that the salamander was found in
 - `pit`: the unique numeric PIT tag implanted in the salamander
