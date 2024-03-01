@@ -1,5 +1,4 @@
-Data Tidying: Site Fidelity and Inter-pool Movement of Spotted
-Salamanders by the Sea
+Data Tidying: Salamanders by the Sea
 ================
 Georgia Lattig
 02/25/24
@@ -7,21 +6,26 @@ Georgia Lattig
 ## Packages and Data
 
 ``` r
-op15 <- read_csv("/cloud/project/data/otter point - 2015.csv")
-op16 <- read_csv("/cloud/project/data/otter point - 2016.csv")
-op17 <- read_csv("/cloud/project/data/otter point - 2017.csv")
-op18 <- read_csv("/cloud/project/data/otter point - 2018.csv")
-op19 <- read_csv("/cloud/project/data/otter point - 2019.csv")
-op20 <- read_csv("/cloud/project/data/otter point - 2020.csv")
-op21 <- read_csv("/cloud/project/data/otter point - 2021.csv")
-op22 <- read_csv("/cloud/project/data/otter point - 2022.csv")
-sals22 <- read_csv("/cloud/project/data/otter point - 2022_sals.csv")
-op23 <- read_csv("/cloud/project/data/otter point - 2023.csv")
+op15 <- read_csv("/cloud/project/data/raw_data/otter point - 2015.csv")
+op16 <- read_csv("/cloud/project/data/raw_data/otter point - 2016.csv")
+op17 <- read_csv("/cloud/project/data/raw_data/otter point - 2017.csv")
+op18 <- read_csv("/cloud/project/data/raw_data/otter point - 2018.csv")
+op19 <- read_csv("/cloud/project/data/raw_data/otter point - 2019.csv")
+op20 <- read_csv("/cloud/project/data/raw_data/otter point - 2020.csv")
+op21 <- read_csv("/cloud/project/data/raw_data/otter point - 2021.csv")
+op22 <- read_csv("/cloud/project/data/raw_data/otter point - 2022.csv")
+sals22 <- read_csv("/cloud/project/data/raw_data/otter point - 2022_sals.csv")
+op23 <- read_csv("/cloud/project/data/raw_data/otter point - 2023.csv")
 ```
 
 ## Data Tidying
 
-### op15-23 Environmental Salinity and Coarse CMR
+### op15-21: Environmental Salinities and Coarse CMR
+
+In these datasets (op15-op21), each observation is a unique pool on a
+given night. For each pool, salinity and temperature were recorded and
+the salamanders within were counted and, beginning in 2017, tagged with
+visible implant elastomer (VIE) tags.
 
 ``` r
 op15 <- op15 %>% 
@@ -354,17 +358,19 @@ have to be done. For now I will merge the tidied datasets op15-op21 and
 do a similar tidying/merge of datasets op22, sals 22 and op23.
 
 ``` r
-nightly22 <- op22 %>% 
+nights22 <- op22 %>% 
   select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes)
 ```
 
 ``` r
-nightly23 <- op23 %>% 
+nights23 <- op23 %>% 
   select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes)
 ```
 
 ``` r
 nights <- rbind(op15, op16, op17, op18, op19, op20, op21)
+
+write_csv(nights, "/cloud/project/data/tidy_data/nights.csv")
 ```
 
 ### 2022-2023 Tracking Individual Salamanders (PIT CMR)
@@ -442,4 +448,10 @@ individuals23 <- op23 %>%
   mutate(salinity = as.numeric(salinity)) %>% 
   mutate(pool_temp = as.numeric(pool_temp)) %>% 
   mutate(recap = as.factor(recap))
+```
+
+``` r
+sals <- rbind(individuals22, individuals23)
+
+write_csv(sals, "/cloud/project/data/tidy_data/sals.csv")
 ```
