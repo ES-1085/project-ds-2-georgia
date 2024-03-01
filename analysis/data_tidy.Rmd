@@ -31,6 +31,8 @@ op23 <- read_csv("/cloud/project/data/otter point - 2023.csv")
 
 ## Data Tidying
 
+### op15-23 Environmental Salinity and Coarse CMR
+
 ```{r tidy-op15}
 op15 <- op15 %>% 
   rename(
@@ -326,7 +328,94 @@ op21 <- op21 %>%
 
 I am running into a slight issue in that the data for 2022-2023 is in a very different format, with each observation being an individual salamander after PIT-tagging was implemented. I'm going to merge the datasets I just cleaned (op15-op21) which could be used to look at return rates. I could select out only the same data/variables as the past years in order to do this kind of analysis but more tidying will have to be done. For now I will merge the tidied datasets op15-op21 and do a similar tidying/merge of datasets op22, sals 22 and op23.
 
-```{r bind op-sets-15-21}
-rbind(op15, op16, op17, op18, op19, op20, op21)
+```{r tidy-22}
+nightly22 <- op22 %>% 
+  select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes)
+```
+
+```{r tidy-23}
+nightly23 <- op23 %>% 
+  select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes)
+
+```
+
+```{r bind nightly-op-sets-15-23}
+nights <- rbind(op15, op16, op17, op18, op19, op20, op21)
+```
+### 2022-2023 Tracking Individual Salamanders (PIT CMR)
+
+Tidy and merge 2022 and 2023 data about uniquely PIT-tagged salamanders.
+
+```{r tidy-inidividuals-sets}
+individuals22 <- op22 %>% 
+  mutate(pit_num = str_remove_all(pit_num, "90004300024")) %>% 
+  select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes) %>% 
+  rename(
+    pool = `pool_num`,
+    salinity = `salinity_ppt`,
+    pit = `pit_num`,
+    pool_temp = `pool_temp_c`) %>% 
+  mutate(year = case_when(
+    color == "yellow" ~ "2017",
+    color == "pink" ~ "2018",
+    color == "orange" ~ "2019",
+    color == "red" ~ "2020_2021",
+    .default = year
+  )) %>% 
+  mutate(recap = case_when(
+    year == "2017" ~ "yes",
+    year == "2018" ~ "yes",
+    year == "2019" ~ "yes",
+    year == "2020_2021" ~ "yes",
+    year == "2022" ~ "no"
+  )) %>% 
+  mutate(date = as.Date(date, "%m/%d/%Y")) %>% 
+  mutate(pool = as.character(pool)) %>% 
+  mutate(pit = as.character(pit)) %>% 
+  mutate(color = as.character(color)) %>% 
+  mutate(sex = as.factor(sex)) %>% 
+  mutate(year = as.character(year)) %>% 
+  mutate(salinity = as.numeric(salinity)) %>% 
+  mutate(pool_temp = as.numeric(pool_temp)) %>% 
+  mutate(recap = as.factor(recap))
+
+individuals23 <- op23 %>% 
+  mutate(pit_num = str_remove_all(pit_num, "90004300024")) %>% 
+  #Remove 11-digit repeating number sequence before the unique 4-digit combination at the end of PIT IDs
+  select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes) %>% 
+  rename(
+    pool = `pool_num`,
+    salinity = `salinity_ppt`,
+    pit = `pit_num`,
+    pool_temp = `pool_temp_c`) %>% 
+  mutate(year = as.character(year)) %>%
+  mutate(year = case_when(
+    color == "yellow" ~ "2017",
+    color == "pink" ~ "2018",
+    color == "orange" ~ "2019",
+    color == "red" ~ "2020_2021",
+    .default = year
+  )) %>% 
+  mutate(year = case_when(
+    year == "2021" ~ "2020_2021", #Red VIE tags were used both in 2020 and 2021
+    .default = year
+  )) %>% 
+  mutate(recap = case_when(
+    year == "2017" ~ "yes",
+    year == "2018" ~ "yes",
+    year == "2019" ~ "yes",
+    year == "2020_2021" ~ "yes",
+    year == "2022" ~ "yes",
+    year == "2023" ~ "no"
+  )) %>% 
+  mutate(date = as.Date(date, "%m/%d/%Y")) %>% 
+  mutate(pool = as.character(pool)) %>% 
+  mutate(pit = as.character(pit)) %>% 
+  mutate(color = as.character(color)) %>% 
+  mutate(sex = as.factor(sex)) %>% 
+  mutate(year = as.character(year)) %>% 
+  mutate(salinity = as.numeric(salinity)) %>% 
+  mutate(pool_temp = as.numeric(pool_temp)) %>% 
+  mutate(recap = as.factor(recap))
 ```
 

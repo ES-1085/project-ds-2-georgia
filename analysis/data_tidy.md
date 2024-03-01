@@ -1,4 +1,5 @@
-Site Fidelity and Inter-pool Movement of Spotted Salamanders by the Sea
+Data Tidying: Site Fidelity and Inter-pool Movement of Spotted
+Salamanders by the Sea
 ================
 Georgia Lattig
 02/25/24
@@ -19,6 +20,8 @@ op23 <- read_csv("/cloud/project/data/otter point - 2023.csv")
 ```
 
 ## Data Tidying
+
+### op15-23 Environmental Salinity and Coarse CMR
 
 ``` r
 op15 <- op15 %>% 
@@ -59,7 +62,7 @@ op15 <- op15 %>%
   mutate(notes = as.character(notes))
 
 op15 <- op15 %>% 
-  subset(select = -c(eggs, notes)) # I am dropping the eggs variable because the data were recorded in different ways across seasons and because I do not need it for the questions I am interested in asking 
+  subset(select = -c(eggs, notes)) # I am dropping the eggs variable because the data were recorded in different ways across seasons and because I do not need it for the questions I am interested in asking. I am also dropping the notes column because there is minimal information there which I do not need for my analysis 
 ```
 
 ``` r
@@ -351,21 +354,92 @@ have to be done. For now I will merge the tidied datasets op15-op21 and
 do a similar tidying/merge of datasets op22, sals 22 and op23.
 
 ``` r
-rbind(op15, op16, op17, op18, op19, op20, op21)
+nightly22 <- op22 %>% 
+  select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes)
 ```
 
-    ## # A tibble: 355 × 12
-    ##    date       pool  salinity salinity2 pool_temp total unmarked   red orange
-    ##    <date>     <chr>    <dbl>     <dbl>     <dbl> <dbl>    <dbl> <dbl>  <dbl>
-    ##  1 2015-04-14 <NA>      NA        NA        NA      43       NA    NA     NA
-    ##  2 2015-04-16 <NA>       0.1      NA        10.4    NA       NA    NA     NA
-    ##  3 2015-04-16 <NA>       0.2      NA         8.8    NA       NA    NA     NA
-    ##  4 2015-04-18 <NA>      NA        NA        NA      63       NA    NA     NA
-    ##  5 2015-04-19 <NA>       0.1      NA        NA     129       NA    NA     NA
-    ##  6 2015-04-20 <NA>      NA        NA        NA      87       NA    NA     NA
-    ##  7 2015-04-21 <NA>      NA        NA        NA      69       NA    NA     NA
-    ##  8 2015-04-21 <NA>      10        NA        NA      NA       NA    NA     NA
-    ##  9 2015-04-21 <NA>      24         0.1      NA      NA        1    NA     NA
-    ## 10 2015-04-21 <NA>       8        NA        NA      NA        3    NA     NA
-    ## # ℹ 345 more rows
-    ## # ℹ 3 more variables: pink <dbl>, yellow <dbl>, dead <dbl>
+``` r
+nightly23 <- op23 %>% 
+  select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes)
+```
+
+``` r
+nights <- rbind(op15, op16, op17, op18, op19, op20, op21)
+```
+
+### 2022-2023 Tracking Individual Salamanders (PIT CMR)
+
+Tidy and merge 2022 and 2023 data about uniquely PIT-tagged salamanders.
+
+``` r
+individuals22 <- op22 %>% 
+  mutate(pit_num = str_remove_all(pit_num, "90004300024")) %>% 
+  select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes) %>% 
+  rename(
+    pool = `pool_num`,
+    salinity = `salinity_ppt`,
+    pit = `pit_num`,
+    pool_temp = `pool_temp_c`) %>% 
+  mutate(year = case_when(
+    color == "yellow" ~ "2017",
+    color == "pink" ~ "2018",
+    color == "orange" ~ "2019",
+    color == "red" ~ "2020_2021",
+    .default = year
+  )) %>% 
+  mutate(recap = case_when(
+    year == "2017" ~ "yes",
+    year == "2018" ~ "yes",
+    year == "2019" ~ "yes",
+    year == "2020_2021" ~ "yes",
+    year == "2022" ~ "no"
+  )) %>% 
+  mutate(date = as.Date(date, "%m/%d/%Y")) %>% 
+  mutate(pool = as.character(pool)) %>% 
+  mutate(pit = as.character(pit)) %>% 
+  mutate(color = as.character(color)) %>% 
+  mutate(sex = as.factor(sex)) %>% 
+  mutate(year = as.character(year)) %>% 
+  mutate(salinity = as.numeric(salinity)) %>% 
+  mutate(pool_temp = as.numeric(pool_temp)) %>% 
+  mutate(recap = as.factor(recap))
+
+individuals23 <- op23 %>% 
+  mutate(pit_num = str_remove_all(pit_num, "90004300024")) %>% 
+  #Remove 11-digit repeating number sequence before the unique 4-digit combination at the end of PIT IDs
+  select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes) %>% 
+  rename(
+    pool = `pool_num`,
+    salinity = `salinity_ppt`,
+    pit = `pit_num`,
+    pool_temp = `pool_temp_c`) %>% 
+  mutate(year = as.character(year)) %>%
+  mutate(year = case_when(
+    color == "yellow" ~ "2017",
+    color == "pink" ~ "2018",
+    color == "orange" ~ "2019",
+    color == "red" ~ "2020_2021",
+    .default = year
+  )) %>% 
+  mutate(year = case_when(
+    year == "2021" ~ "2020_2021", #Red VIE tags were used both in 2020 and 2021
+    .default = year
+  )) %>% 
+  mutate(recap = case_when(
+    year == "2017" ~ "yes",
+    year == "2018" ~ "yes",
+    year == "2019" ~ "yes",
+    year == "2020_2021" ~ "yes",
+    year == "2022" ~ "yes",
+    year == "2023" ~ "no"
+  )) %>% 
+  mutate(date = as.Date(date, "%m/%d/%Y")) %>% 
+  mutate(pool = as.character(pool)) %>% 
+  mutate(pit = as.character(pit)) %>% 
+  mutate(color = as.character(color)) %>% 
+  mutate(sex = as.factor(sex)) %>% 
+  mutate(year = as.character(year)) %>% 
+  mutate(salinity = as.numeric(salinity)) %>% 
+  mutate(pool_temp = as.numeric(pool_temp)) %>% 
+  mutate(recap = as.factor(recap))
+```
