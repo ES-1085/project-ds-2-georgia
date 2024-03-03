@@ -50,10 +50,9 @@ sals <- sals %>%
   ))
 ```
 
-To date, 249 unique PIT tags have been deployed within the Otter Point population of salamanders. Below I ran some code to see which PIT tags, if any, had multiple years/colors associated with them. Out of 250 PIT tags, 46 are associated with more than one year (first year observed/marked)/color. 
+To date there have been 249 unique PIT tags deployed within the Otter Point population of salamanders. Below I ran some code to see which PIT tags, if any, had multiple years/colors associated with them. Out of 249 PIT tags, 46 are associated with more than one year (first year observed/marked)/color. 
 
 ```{r check-pits}
-
 sals %>% 
   group_by(year) %>% 
   count()
@@ -62,6 +61,8 @@ sals %>%
   group_by(pit) %>% 
   count(year)
 
+#This code revealed that there is an erroneous pit tag 1299 (I think this is actually the IMG file number). Keep this in mind as I'll have to omit the observation? from my visualizations/analysis.
+
 sals %>% 
   count(pit)
 ```
@@ -69,7 +70,7 @@ sals %>%
 Though this is a major pain, I am going to look through the data for each of these 46 PIT tags to determine which color/year should be associated with them. Then I will create a massive case_when function to recode the PIT tags as necessary. I will recode based on information about year of first PIT tag (these are concrete data) or based on the most frequent color tag recorded across seasons. In cases with equal numbers of observations of different color tags, I looked for additional information in the notes column or else trusted the first observation because of increased sampling effort in 2022.
 
 ```{r recode-pit-year}
-sals %>% 
+sals <- sals %>% 
   mutate(year = case_when(
     pit == "3216" ~ "2020_2021", #once recorded as pink in 2023 but all other times, across 2 seasons, red
     pit == "3218" ~ "2022", #recorded as new in 2023 but was first tagged with PIT in 2022; was NOT double-tagged
@@ -93,20 +94,56 @@ sals %>%
     pit == "3345" ~ "2022", #first tagged with PIT in 2022, all observations no color except one orange record in 2023
     pit == "3358" ~ "2022", #first tagged with PIT in 2022
     pit == "3359" ~ "2020_2021", #once recorded orange in 2023 but all other times, across nights, red
+    pit == "3360" ~ "2018", #no color recorded but notes say pink
     pit == "3361" ~ "2022", #no color recorded when first PIT tagged in 2022 nor other 2022 observations but twice recorded as orange in 2023 ***
     pit == "3363" ~ "2020_2021", #once no color recorded in 2023 but all other times, across seasons, red
     pit == "3370" ~ "2019", #recorded orange 4x in 2022, once pink and twice red in 2023
     pit == "3374" ~ "2017", #yellow tag likely missed in first/only encounter in 2022, all other observations are yellow
     pit == "3375" ~ "2017", #recorded yellow across 3 nights in 2023, no colors recorded in all prior observations ***
+    pit == "3377" ~ "2022", #UV light forgotten so no color tag but first tagged with PIT 2022
+    pit == "3380" ~ "2022", #first tagged with PIT in 2022
     pit == "3382" ~ "2022", #first tagged with PIT in 2022
     pit == "3383" ~ "2022", #first tagged with PIT in 2022
+    pit == "3393" ~ "2022", #first tagged with PIT in 2022
     pit == "3396" ~ "2020_2021", #once recorded pink in 2023 but all other times, across seasons, red
     pit == "3399" ~ "2022", #no color recorded when first PIT tagged in 2022 nor all other 2022 observations except 2x recorded as red in 2023 with accompanying notes "may not be red"
     pit == "3401" ~ "2020_2021", #no color recorded when first PIT tagged in 2022 and only once recorded "red" but additional notes from another night say "has color tag but couldn't read it" ***
-    pit == "3402" ~ "2019", #once recorded pink in 2023 but all other times, across seasons, orange
-    
+    pit == "3402" ~ "2019", #once recorded pink in 2023 but all other times, across nights, orange
+    pit == "3403" ~ "2020_2021", #once recorded pink in 2023 but all other times, across seasons, red
+    pit == "4741" ~ "2018", #always recorded pink
+    pit == "4752" ~ "2019", #most often recorded orange
+    pit == "4766" ~ "2023", #first tagged with PIT in 2023
+    pit == "4797" ~ "2020_2021", #possible that the red color tag was missed when first PIT tagged 2023
+    pit == "4832" ~ "2020_2021", #possible that the red color tag was missed when first PIT tagged 2023, all other times red
+    pit == "4838" ~ "2023", #first tagged with PIT in 2023
+    pit == "4842" ~ "2023", #first tagged with PIT in 2023
+    pit == "4854" ~ "2023", #first tagged with PIT in 2023
+    pit == "4880" ~ "2023", #first tagged with PIT in 2023
+    pit == "4883" ~ "2023", #first tagged with PIT in 2023
+    pit == "4888" ~ "2023", #first tagged with PIT in 2023
+    pit == "4898" ~ "2020_2021", #possible that the red color tag was missed when first PIT tagged 2023, all other times red
     .default = year
   ))
 
+sals <- sals %>% 
+  mutate(color = case_when(
+    year == "2017" ~ "yellow",
+    year == "2018" ~ "pink",
+    year == "2019" ~ "orange",
+    year == "2020_2021" ~ "red",
+    year == "2022" ~ "blue",
+    year == "2023" ~ "green"
+  ))
+```
+
+```{r check-pit-year-again}
+sals %>% 
+  group_by(pit) %>% 
+  count(year)
+
+#Below I removed the erroneous observation of PIT #1299 from the dataset (a single observation on 03/31/22)
+sals <- sals %>% 
+  filter(pit != "1299" |
+        is.na(pit))
 ```
 
