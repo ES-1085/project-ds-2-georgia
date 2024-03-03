@@ -144,6 +144,24 @@ sals %>%
 #Below I removed the erroneous observation of PIT #1299 from the dataset (a single observation on 03/31/22)
 sals <- sals %>% 
   filter(pit != "1299" |
-        is.na(pit))
+        is.na(pit)) %>% 
+  mutate(pit = as.character(pit)) %>% 
+  mutate(pool = as.character(pool))
+```
+
+```{r pit-counts-by-year}
+sals %>% 
+  group_by(year) %>% 
+  count()
+
+sals %>% 
+  group_by(pit) %>% 
+  count()
+```
+```{r visualize}
+sals %>% 
+  group_by(pit) %>% 
+  ggplot(aes(pool, pit), fill = year) +
+  geom_col()
 ```
 

@@ -385,7 +385,8 @@ individuals22 <- op22 %>%
   mutate(year = as.character(year)) %>% 
   mutate(salinity = as.numeric(salinity)) %>% 
   mutate(pool_temp = as.numeric(pool_temp)) %>% 
-  mutate(recap = as.factor(recap))
+  mutate(recap = as.factor(recap)) %>% 
+  mutate(pit_year = "2022")
 
 individuals23 <- op23 %>% 
   mutate(pit_num = str_remove_all(pit_num, "90004300024")) %>% 
@@ -393,8 +394,10 @@ individuals23 <- op23 %>%
      new_pit == "y" ~ "green", #assign 2023-marked salamanders a color (even though they don't have VIE tags, this will help with the code and data QAQC)
      .default = color
    )) %>% 
+  mutate(pit_year = case_when(
+    new_pit == "y" ~ "2023")) %>% 
   #Remove 11-digit repeating number sequence before the unique 4-digit combination at the end of PIT IDs
-  select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes) %>% 
+  select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes, pit_year) %>% 
   rename(
     pool = `pool_num`,
     salinity = `salinity_ppt`,
