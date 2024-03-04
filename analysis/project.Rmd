@@ -165,3 +165,9 @@ sals %>%
   geom_col()
 ```
 
+```{r load-CMR-pckg}
+# install CMRnet
+remotes::install_github("matthewsilk/CMRnet", build_vignettes = FALSE)
+library(CMRnet)
+```
+
