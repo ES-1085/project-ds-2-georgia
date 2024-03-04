@@ -171,3 +171,52 @@ remotes::install_github("matthewsilk/CMRnet", build_vignettes = FALSE)
 library(CMRnet)
 ```
 
+```{r format-CMR-data}
+cmr <- sals %>% 
+  select(pit, pool, date) %>% 
+  mutate(date = as.Date(date))
+```
+
+```{r try-CMR-movenet-analysis}
+#single-layer movement network
+library(CMRnet)
+mindate <- "2022-03-18"
+maxdate <- "2022-04-16"
+intwindow <- 1
+netwindow <- 6
+overlap <- 0
+spacewindow <- 0
+
+movenetdat <- MoveNetCreate(
+  data = cmr,
+  intwindow = intwindow,
+  mindate = mindate,
+  maxdate = maxdate,
+  netwindow = netwindow,
+  overlap = overlap,
+  nextonly = TRUE,
+  index = FALSE
+)
+```
+
+```{r try-CMR-movenethi-analysis}
+library(CMRnet)
+mindate <- "2022-03-18 00:00:00"
+maxdate <- "2022-04-16 00:00:00"
+intwindow <- 24*60
+netwindow <- 352
+overlap <- 0
+spacewindow <- 0
+
+movenetdat <- MoveNetCreate(
+  data = cmr,
+  intwindow = intwindow,
+  mindate = mindate,
+  maxdate = maxdate,
+  netwindow = netwindow,
+  overlap = overlap,
+  nextonly = TRUE,
+  index = FALSE
+)
+```
+
