@@ -274,29 +274,58 @@ movenetdat <- MoveNetCreate(
   index = FALSE
 )
 ```
+
 ## Network Analysis Karate Club Example
 
 ```{r network-analysis-karate-example}
 #create a table that extracts the information needed from the dataset."Turn your data into a list of connections: for each individual within each time window, find all sites where it was recorded; find all unique combinations of sites (if undirected, AB = BA); make a table so that each pair of sites is weighted based on how many times that combination was recorded"
 
+library(zoo)
+zoo::rollapply
+#https://stackoverflow.com/questions/72779067/r-mutate-new-column-that-tells-me-if-any-row-in-the-next-x-number-of-row-is-be
+
 sals %>% 
   group_by(pit) %>% 
   group_by(year) %>% 
-  group_by(pool)
+  group_by(pool) %>%
+  arrange(date) %>% 
+  arrange(pit) %>% 
+  mutate(pool_from = first(pool)) %>% 
+  mutate(pool_to = rollapply( #How do I extract the next pool in chronological sequence where the individual was encountered within that season?
+    pool,
+    width = 1,
+    FUN = function
+  ))
+
+# Code below from: https://bookdown.org/jdholster1/idsr/network-analysis.html#
 
 members <- sals$pool
 edges <- 
 
 nodes <- 
-edges <-
+edges <- as.vector(rbind(edges$from, edges$to))
+  
+pool_net <- make_empty_graph(n = length(nodes), directed = F) %>%
+  add_edges(edges) 
+
+pool_net <- pool_net %>%
+  igraph::set.vertex.attribute('group', index = V(G), value = groups)
+
+plot(pool_net, vertex.color="green",  # Changes node color
+     edge.color = 'black',     # Changes edge color
+     vertex.size = 10,         # Changes vertex size
+     vertex.shape = 'circle',  # Changes vertex shape
+     asp = 0,                  # Spread out nodes
+     layout = layout_in_circle)# Format nodes in a circle
 ```
 
-```{r}
+```{r observations-per-year}
 sals %>% 
   group_by(year) %>% 
   count()
+#There were more salamander observations than just 291 but the data in 2023 did not record untagged/uncaptured salamanders as their own rows
 ```
-##Modeling
+## Modeling
 
 ```{r}
 
