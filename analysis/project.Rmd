@@ -217,6 +217,17 @@ sals %>%
   group_by(year) %>% 
   group_by(pit) %>% 
   count(pool)
+
+pools %>% 
+  mutate(year = )
+  mutate(pool = factor(pool, levels = c("0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"))) %>%
+  ggplot(aes(pool, total), fill = first_year) + #Okay what am I actually plotting here?
+  geom_col() + 
+  facet_wrap(~ year) +
+  labs(title = "Breeding Pools Used by Salamanders",
+       subtitle = "Across Seven Seasons",
+       x = "Pool",
+       y = "Individual Salamanders Observed")
 ```
 ## CMRnet Package
 
@@ -279,6 +290,8 @@ movenetdat <- MoveNetCreate(
 
 ```{r network-analysis-karate-example}
 #create a table that extracts the information needed from the dataset."Turn your data into a list of connections: for each individual within each time window, find all sites where it was recorded; find all unique combinations of sites (if undirected, AB = BA); make a table so that each pair of sites is weighted based on how many times that combination was recorded"
+library(igraphdata)
+data(karate)
 
 library(zoo)
 zoo::rollapply
@@ -327,22 +340,91 @@ sals %>%
 ```
 ## Modeling
 
-How can I make a model that looks at site fidelity? First I would need to modify the data some more, creating a categorical variable for individuals that have returned to the same pool across years "return" or have not returned to the same pool across years "not return". Then I could try to predict the response of the return categorical variable based on predictors of salinity? (high/low category or just numerical)...
+### Site Fidelity
 
-```{r model-fidelity}
-sals %>% 
-  group_by(pit) %>% 
-  group_by(year) %>% 
-  mutate(fidelity =  case_when(
-                       ~ "yes",
-                       ~ "no"
-  )   #How do I create this variable? If a pool shows up more than once within a pit across seasons ~ yes, if a pool shows up once within a pit across seasons ~ no
+How can I make a model that looks at site fidelity? First I would need to modify the data some more, creating a categorical variable `fidelity` for individuals that have returned to the same pool across years "yes" or have not returned to the same pool across years "no". Then I could try to predict the response of the return categorical variable based on salinity? (high/low category or just numerical)...
+
+```{r set-up-data-for-model-fidelity}
+sals_sight_twice <- sals %>% 
+  group_by(pit, year) %>% 
+  arrange(date) %>% 
+  slice(1) %>% #Get the first row (pool) for each year that the salamander was observed
+  ungroup() %>%
+  group_by(pit) %>%
+  summarise(sightings = n()) %>%
+  filter(sightings > 1) %>% #Filter for salamanders observed across two years
+  pull(pit) 
+
+sals_fidelity <- sals %>% 
+  filter(pit %in% sals_sight_twice) %>%
+  group_by(pit, year) %>% 
+  slice(1) %>%
+  ungroup() %>%
+  group_by(pit) %>%
+  summarise(pools = toString(pool)) %>%
+  separate_wider_delim(cols = pools, delim = ", ", names = c("pool1", "pool2")) %>%
+  mutate(fidelity = case_when(pool1 == pool2 ~ "yes",
+                               TRUE ~ "no"))
+
+environ22 <- sals %>% 
+  filter(pit %in% sals_sight_twice) %>%
+  group_by(pit, year) %>% 
+  slice(1) %>% 
+  filter(year == "2022") %>% 
+  rename(pool1_salinity = salinity,
+         pool1_temp = pool_temp,
+         pool1 = pool,
+         year1 = year,
+         date1 = date) %>% 
+  select(date1, year1, pool1, pit, pool1_salinity, pool1_temp)
+
+environ23 <- sals %>% 
+  filter(pit %in% sals_sight_twice) %>%
+  group_by(pit, year) %>% 
+  slice(1) %>% 
+  filter(year == "2023") %>% 
+  rename(pool2_salinity = salinity,
+         pool2_temp = pool_temp,
+         pool2 = pool,
+         year2 = year,
+         date2 = date) %>% 
+  select(date2, year2, pool2, pit, pool2_salinity, pool2_temp)
+
+fidelity <- left_join(sals_fidelity, environ22, by = c("pool1", "pit"))
+fidelity <- left_join(fidelity, environ23, by = c("pool2", "pit"))
+
+
+# %>% 
+#   summarise(sitings = n(),
+#             pools = unique(pool))
   
+# sals %>% 
+#   filter(pit %in% sals_fidel) %>%
+#   group_by(pit, year) %>% 
+#   slice(1) %>%
+#   ungroup() %>%
+#   # group_by(pit, pool) %>%
+#   # summarise(sitings = n()) %>%
+#   # mutate(fidelity = case_when(sitings == 2 ~ "yes",
+#   #                             TRUE ~ "no")) %>%
+#   # ungroup() %>%
+#   group_by(pit) %>%
+#   summarise(pools = toString(pool)) %>%
+#   separate_wider_delim(cols = pools, delim = ", ", names = c("pool1", "pool2")) %>%
+#   mutate(fidelity = case_when(pool1 == pool2 ~ "yes",
+#                                TRUE ~ "no"))
+
+  # mutate(fidelity = case_when
+  #           length(unique(pool)) == 1 ~ "yes",
+  #           TRUE ~ "no"))
+
 ```
+Then with the model, walk through all the necessary steps of data splitting into training/testing...
+
 ```{r lm-returns-by-salinity}
 fidelity_main_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(fidelity ~ salinity, data = sals)
+  fit(fidelity ~ salinity + pool_temp + pool, data = sals)
 tidy(fidelity_main_fit)
 ```
 
