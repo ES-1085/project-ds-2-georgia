@@ -314,7 +314,7 @@ fidelity <- fidelity %>%
 
 My data consist of 96 individual salamanders that were observed across two years. "Site fidelity" for the sake of this analysis is determined by whether the individual was observed within the same pool on the first night it was observed across 2 seasons. With these data I will model fidelity in response to predictors of change in salinity and change in temperature. 
 
-```{r lm-returns-by-salinity}
+```{r lm-returns-by-salinity-and-temp}
 set.seed(21)
 fidel_split <- initial_split(fidelity)
 
@@ -327,19 +327,15 @@ dim(fidel_test)
 fidelity_mod <- logistic_reg() %>%
   set_engine("glm") 
 
-fidel_rec <- recipe(fidelity ~ salinity_change + temp_change, data = fidelity) %>%
-  # title isn't a predictor, but keep around to ID
-  update_role(title, new_role = "ID") %>%
-  # extract month of air_date
-  step_date(air_date, features = "month") %>%
-  step_rm(air_date) %>%
-  # make dummy variables of month 
-  step_dummy(contains("month")) %>%
-  # remove zero variance predictors
-  step_zv(all_predictors())
+fidel_rec <- recipe(fidelity ~ salinity_change + temp_change, data = fidel_train, family = "binomial")
 
-%>%
-  fit(spam ~ num_char, data = email, family = "binomial")
+fidel_wflow <- workflow() %>%
+  add_model(fidelity_mod) %>%
+  add_recipe(fidel_rec)
+
+fidel_fit <- fidel_wflow %>%
+  fit(data = fidel_train)
+tidy(fidel_fit)
 
 # fidelity_main_fit <- linear_reg() %>%
 #   set_engine("lm") %>%
