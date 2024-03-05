@@ -327,7 +327,22 @@ sals %>%
 ```
 ## Modeling
 
-```{r}
+How can I make a model that looks at site fidelity? First I would need to modify the data some more, creating a categorical variable for individuals that have returned to the same pool across years "return" or have not returned to the same pool across years "not return". Then I could try to predict the response of the return categorical variable based on predictors of salinity? (high/low category or just numerical)...
 
+```{r model-fidelity}
+sals %>% 
+  group_by(pit) %>% 
+  group_by(year) %>% 
+  mutate(fidelity =  case_when(
+                       ~ "yes",
+                       ~ "no"
+  )   #How do I create this variable? If a pool shows up more than once within a pit across seasons ~ yes, if a pool shows up once within a pit across seasons ~ no
+  
+```
+```{r lm-returns-by-salinity}
+fidelity_main_fit <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(fidelity ~ salinity, data = sals)
+tidy(fidelity_main_fit)
 ```
 
