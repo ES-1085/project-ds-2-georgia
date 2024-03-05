@@ -172,6 +172,7 @@ sals <- sals %>%
   mutate(pit = as.character(pit)) %>% 
   mutate(pool = as.character(pool))
 ```
+
 ```{r create-observation-year-variable}
 sals <- sals %>% 
   mutate(date = as.Date(date)) %>% 
@@ -197,16 +198,31 @@ sals %>%
   count(pool) %>% 
   mutate(pool_prop = n/sum(n))
 ```
-```{r visualize}
+```{r visualize-most-popular-breeding-pools}
 sals %>% 
+  drop_na(pit) %>% #Only look at tagged individuals
+  group_by(pit) %>% #Will grouping by PIT remove duplicate observations?
+  group_by(year) %>% 
+  count(pool) %>% 
+  mutate(pool = factor(pool, levels = c("0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"))) %>%
+  ggplot(aes(pool, n), fill = first_year) + #Okay what am I actually plotting here?
+  geom_col() + 
+  facet_wrap(~ year) +
+  labs(title = "Breeding Pools Used by PIT Tagged Salamanders",
+       subtitle = "Across Two Seasons",
+       x = "Pool",
+       y = "PIT Tagged Individuals Observed")
+
+sals %>% 
+  group_by(year) %>% 
   group_by(pit) %>% 
-  ggplot(aes(pool, pit), fill = first_year) +
-  geom_col()
+  count(pool)
 ```
+## CMRnet Package
 
 ```{r load-CMR-pckg}
 # install CMRnet
-remotes::install_github("matthewsilk/CMRnet", build_vignettes = FALSE)
+remotes::install_github("matthewsilk/CMRnet", build_vignettes = TRUE)
 library(CMRnet)
 ```
 
@@ -258,17 +274,31 @@ movenetdat <- MoveNetCreate(
   index = FALSE
 )
 ```
+## Network Analysis Karate Club Example
+
 ```{r network-analysis-karate-example}
-#create a table that extracts the information needed from the dataset.
+#create a table that extracts the information needed from the dataset."Turn your data into a list of connections: for each individual within each time window, find all sites where it was recorded; find all unique combinations of sites (if undirected, AB = BA); make a table so that each pair of sites is weighted based on how many times that combination was recorded"
+
+sals %>% 
+  group_by(pit) %>% 
+  group_by(year) %>% 
+  group_by(pool)
+
+members <- sals$pool
+edges <- 
 
 nodes <- 
 edges <-
 ```
 
 ```{r}
-op23 %>%
-  filter(new_pit = yes) %>%
-  
+sals %>% 
+  group_by(year) %>% 
+  count()
 ```
+##Modeling
 
+```{r}
+
+```
 
