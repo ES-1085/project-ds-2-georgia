@@ -358,35 +358,47 @@ individuals22 <- op22 %>%
     pool = `pool_num`,
     salinity = `salinity_ppt`,
     pit = `pit_num`,
-    pool_temp = `pool_temp_c`) %>% 
-  mutate(year = case_when(
+    first_year = year,
+    pool_temp = `pool_temp_c`)
+
+individuals22 <- individuals22 %>% 
+  mutate(first_year = case_when(
     color == "yellow" ~ "2017",
     color == "pink" ~ "2018",
     color == "orange" ~ "2019",
     color == "red" ~ "2020_2021",
-    .default = year
+    .default = first_year
   )) %>% 
   mutate(color = case_when(
-    year == "2022" ~ "blue", #assign 2022-marked salamanders a color (even though they don't have VIE tags, this will help with the code and data QAQC)
+    first_year == "2022" ~ "blue", #assign 2022-marked salamanders a color (even though they don't have VIE tags, this will help with the code and data QAQC)
     .default = color
   )) %>% 
   mutate(recap = case_when(
-    year == "2017" ~ "yes",
-    year == "2018" ~ "yes",
-    year == "2019" ~ "yes",
-    year == "2020_2021" ~ "yes",
-    year == "2022" ~ "no"
+    first_year == "2017" ~ "yes",
+    first_year == "2018" ~ "yes",
+    first_year == "2019" ~ "yes",
+    first_year == "2020_2021" ~ "yes",
+    first_year == "2022" ~ "no"
   )) %>% 
   mutate(date = as.Date(date, "%m/%d/%Y")) %>% 
   mutate(pool = as.character(pool)) %>% 
   mutate(pit = as.character(pit)) %>% 
   mutate(color = as.character(color)) %>% 
   mutate(sex = as.factor(sex)) %>% 
-  mutate(year = as.character(year)) %>% 
+  mutate(first_year = as.character(first_year)) %>% 
   mutate(salinity = as.numeric(salinity)) %>% 
   mutate(pool_temp = as.numeric(pool_temp)) %>% 
-  mutate(recap = as.factor(recap)) %>% 
-  mutate(pit_year = "2022")
+  mutate(recap = as.factor(recap))
+
+# Create pit_year variable for the year that PIT tag was given
+
+pits22 <- individuals22 %>% 
+  filter(str_detect(pit,"\\d"))
+
+individuals22 <- individuals22 %>% 
+  mutate(pit_year = case_when(
+    pit %in% pits22$pit ~ "2022"
+  ))
 
 individuals23 <- op23 %>% 
   mutate(pit_num = str_remove_all(pit_num, "90004300024")) %>% 
@@ -394,47 +406,53 @@ individuals23 <- op23 %>%
      new_pit == "y" ~ "green", #assign 2023-marked salamanders a color (even though they don't have VIE tags, this will help with the code and data QAQC)
      .default = color
    )) %>% 
-  mutate(pit_year = case_when(
-    new_pit == "y" ~ "2023")) %>% 
+  mutate(pit_year = case_when( # Create pit_year variable for the year that PIT tag was given
+    new_pit == "y" ~ "2023" # Later will need to recode as there are a few errors in new_pit variable
+  )) %>% 
   #Remove 11-digit repeating number sequence before the unique 4-digit combination at the end of PIT IDs
   select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes, pit_year) %>% 
   rename(
     pool = `pool_num`,
     salinity = `salinity_ppt`,
     pit = `pit_num`,
-    pool_temp = `pool_temp_c`) %>% 
-  mutate(year = as.character(year)) %>%
-  mutate(year = case_when(
+    first_year = year,
+    pool_temp = `pool_temp_c`)
+
+individuals23 <- individuals23 %>% 
+  mutate(first_year = as.character(first_year)) %>%
+  mutate(first_year = case_when(
     color == "yellow" ~ "2017",
     color == "pink" ~ "2018",
     color == "orange" ~ "2019",
     color == "red" ~ "2020_2021",
     color == "blue" ~ "2022",
     color == "green" ~ "2023",
-    .default = year
+    .default = first_year
   )) %>% 
-  mutate(year = case_when(
-    year == "2021" ~ "2020_2021", #Red VIE tags were used both in 2020 and 2021
-    .default = year
+  mutate(first_year = case_when(
+    first_year == "2021" ~ "2020_2021", #Red VIE tags were used both in 2020 and 2021
+    .default = first_year
   )) %>% 
   mutate(recap = case_when(
-    year == "2017" ~ "yes",
-    year == "2018" ~ "yes",
-    year == "2019" ~ "yes",
-    year == "2020_2021" ~ "yes",
-    year == "2022" ~ "yes",
-    year == "2023" ~ "no"
+    first_year == "2017" ~ "yes",
+    first_year == "2018" ~ "yes",
+    first_year == "2019" ~ "yes",
+    first_year == "2020_2021" ~ "yes",
+    first_year == "2022" ~ "yes",
+    first_year == "2023" ~ "no"
   )) %>% 
   mutate(date = as.Date(date, "%m/%d/%Y")) %>% 
   mutate(pool = as.character(pool)) %>% 
   mutate(pit = as.character(pit)) %>% 
   mutate(color = as.character(color)) %>% 
   mutate(sex = as.factor(sex)) %>% 
-  mutate(year = as.character(year)) %>% 
+  mutate(first_year = as.character(first_year)) %>% 
   mutate(salinity = as.numeric(salinity)) %>% 
   mutate(pool_temp = as.numeric(pool_temp)) %>% 
   mutate(recap = as.factor(recap))
 ```
+
+ˆ
 
 ```{r merge_&_write_individuals-sets}
 sals <- rbind(individuals22, individuals23)

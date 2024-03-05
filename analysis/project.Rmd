@@ -12,6 +12,11 @@ library(readr)
 library(ggplot2)
 library(dplyr)
 library(lubridate)
+library(igraph)
+install.packages("ggnetwork")
+library(ggnetwork)
+install.packages("intergraph")
+library(intergraph)
 ```
 
 ```{r load-data, include = TRUE}
@@ -20,33 +25,39 @@ sals <- read_csv("/cloud/project/data/tidy_data/sals.csv")
 ```
 ## Data Processing
 
-```{r assigning-years-22-23}
-(`2023pits` <- sals %>% 
-  filter(year == 2023))
+```{r assigning-first_year-22-23}
+(p22 <- sals %>% 
+    filter(pit_year == "2022"))
 
 sals <- sals %>% 
-  mutate(year = case_when(
-    pit %in% `2023pits` ~ "2023",
-    .default = year
+  mutate(first_year = case_when(
+    pit %in% `2022pits` ~ "2022",
+    .default = first_year
   ))
 
-(`2022pits` <- sals %>% 
-    filter(color == "blue"))
+# Separate out the PIT tags that only appeared in 2023 by using an anti_join with individuals22 
+
+pits23 <- sals %>%
+  mutate(pit = as.character(pit)) %>%
+  anti_join(individuals22, by = "pit")
+
+(p23 <- sals %>% 
+  filter(pit %in% pits23$pit))
 
 sals <- sals %>% 
-  mutate(year = case_when(
-    pit %in% `2022pits` ~ "2022",
-    .default = year
+  mutate(first_year = case_when(
+    pit %in% p23 ~ "2023",
+    .default = first_year
   ))
 
 sals <- sals %>% 
   mutate(color = case_when(
-    year == "2017" ~ "yellow",
-    year == "2018" ~ "pink",
-    year == "2019" ~ "orange",
-    year == "2020_2021" ~ "red",
-    year == "2022" ~ "blue",
-    year == "2023" ~ "green"
+    first_year == "2017" ~ "yellow",
+    first_year == "2018" ~ "pink",
+    first_year == "2019" ~ "orange",
+    first_year == "2020_2021" ~ "red",
+    first_year == "2022" ~ "blue",
+    first_year == "2023" ~ "green"
   ))
 ```
 
@@ -54,12 +65,12 @@ To date there have been 249 unique PIT tags deployed within the Otter Point popu
 
 ```{r check-pits}
 sals %>% 
-  group_by(year) %>% 
+  group_by(first_year) %>% 
   count()
 
 sals %>% 
   group_by(pit) %>% 
-  count(year)
+  count(first_year)
 
 #This code revealed that there is an erroneous pit tag 1299 (I think this is actually the IMG file number). Keep this in mind as I'll have to omit the observation? from my visualizations/analysis.
 
@@ -71,7 +82,7 @@ Though this is a major pain, I am going to look through the data for each of the
 
 ```{r recode-pit-year}
 sals <- sals %>% 
-  mutate(year = case_when(
+  mutate(first_year = case_when(
     pit == "3216" ~ "2020_2021", #once recorded as pink in 2023 but all other times, across 2 seasons, red
     pit == "3218" ~ "2022", #recorded as new in 2023 but was first tagged with PIT in 2022; was NOT double-tagged
     pit == "3229" ~ "2020_2021", #once recorded as pink in 2023 but all other times, across 2 seasons, red
@@ -95,7 +106,7 @@ sals <- sals %>%
     pit == "3358" ~ "2022", #first tagged with PIT in 2022
     pit == "3359" ~ "2020_2021", #once recorded orange in 2023 but all other times, across nights, red
     pit == "3360" ~ "2018", #no color recorded but notes say pink
-    pit == "3361" ~ "2022", #no color recorded when first PIT tagged in 2022 nor other 2022 observations but twice recorded as orange in 2023 ***
+    pit == "3361" ~ "2019", #no color recorded when first PIT tagged in 2022 nor other 2022 observations but twice recorded as orange in 2023
     pit == "3363" ~ "2020_2021", #once no color recorded in 2023 but all other times, across seasons, red
     pit == "3370" ~ "2019", #recorded orange 4x in 2022, once pink and twice red in 2023
     pit == "3374" ~ "2017", #yellow tag likely missed in first/only encounter in 2022, all other observations are yellow
@@ -122,24 +133,37 @@ sals <- sals %>%
     pit == "4883" ~ "2023", #first tagged with PIT in 2023
     pit == "4888" ~ "2023", #first tagged with PIT in 2023
     pit == "4898" ~ "2020_2021", #possible that the red color tag was missed when first PIT tagged 2023, all other times red
-    .default = year
+    .default = first_year
   ))
 
 sals <- sals %>% 
   mutate(color = case_when(
-    year == "2017" ~ "yellow",
-    year == "2018" ~ "pink",
-    year == "2019" ~ "orange",
-    year == "2020_2021" ~ "red",
-    year == "2022" ~ "blue",
-    year == "2023" ~ "green"
+    first_year == "2017" ~ "yellow",
+    first_year == "2018" ~ "pink",
+    first_year == "2019" ~ "orange",
+    first_year == "2020_2021" ~ "red",
+    first_year == "2022" ~ "blue",
+    first_year == "2023" ~ "green"
   ))
 ```
 
-```{r check-pit-year-again}
+
+```{r recode-pit-year-variable}
+sals <- sals %>% 
+  mutate(pit = as.character(pit)) %>% 
+  mutate(pit_year = as.character(pit_year)) %>% 
+  mutate(pit_year = case_when(
+    pit %in% p23$pit ~ "2023",
+    pit %in% p22$pit ~ "2022",
+    .default = pit_year
+  ))
+```
+
+
+```{r check-pit-year-again, include = FALSE}
 sals %>% 
   group_by(pit) %>% 
-  count(year)
+  count(first_year)
 
 #Below I removed the erroneous observation of PIT #1299 from the dataset (a single observation on 03/31/22)
 sals <- sals %>% 
@@ -151,17 +175,22 @@ sals <- sals %>%
 
 ```{r pit-counts-by-year}
 sals %>% 
-  group_by(year) %>% 
+  group_by(first_year) %>% 
   count()
 
 sals %>% 
   group_by(pit) %>% 
   count()
+
+sals %>% 
+  group_by(pit) %>% 
+  count(pool) %>% 
+  mutate(pool_prop = n/sum(n))
 ```
 ```{r visualize}
 sals %>% 
   group_by(pit) %>% 
-  ggplot(aes(pool, pit), fill = year) +
+  ggplot(aes(pool, pit), fill = first_year) +
   geom_col()
 ```
 
@@ -219,4 +248,17 @@ movenetdat <- MoveNetCreate(
   index = FALSE
 )
 ```
+```{r network-analysis-karate-example}
+#create a table that extracts the information needed from the dataset.
+
+nodes <- 
+edges <-
+```
+
+```{r}
+op23 %>%
+  filter(new_pit = yes) %>%
+  
+```
+
 

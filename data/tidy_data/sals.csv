@@ -1,4 +1,4 @@
-date,pool,pit,color,sex,year,salinity,pool_temp,notes,recap,pit_year
+date,pool,pit,color,sex,first_year,salinity,pool_temp,notes,recap,pit_year
 2022-03-18,0,3266,orange,m,2019,0,4,Upland forest below Otter Cliffs parking lot. Lung tissue herniated upon incision.,yes,2022
 2022-03-18,0,3274,red,m,2020_2021,0,4,"Larger pool above 5, left of 6",yes,2022
 2022-03-19,7,3216,red,m,2020_2021,0,5,NA,yes,2022
@@ -48,7 +48,7 @@ date,pool,pit,color,sex,year,salinity,pool_temp,notes,recap,pit_year
 2022-03-26,7,3359,red,f,2020_2021,0.24,9.2,NA,yes,2022
 2022-03-26,15,3372,blue,m,2022,0.47,8.3,NA,no,2022
 2022-03-26,1,3402,orange,m,2019,0.32,8.5,NA,yes,2022
-2022-03-26,3,NA,NA,NA,NA,1.1,9.1,Uncaptured,NA,2022
+2022-03-26,3,NA,NA,NA,NA,1.1,9.1,Uncaptured,NA,NA
 2022-03-27,7,3216,red,m,2020_2021,0.22,9,NA,yes,2022
 2022-03-27,5,3242,yellow,m,2017,0.26,8.4,NA,yes,2022
 2022-03-27,7,3261,red,m,2020_2021,0.22,9,NA,yes,2022
@@ -57,9 +57,9 @@ date,pool,pit,color,sex,year,salinity,pool_temp,notes,recap,pit_year
 2022-03-27,13,3305,blue,m,2022,0.33,9.4,NA,no,2022
 2022-03-27,7,3325,blue,m,2022,0.22,9,NA,no,2022
 2022-03-27,12,3358,blue,m,2022,0.22,8.7,NA,no,2022
-2022-03-27,1,NA,NA,NA,NA,0.27,8.4,Uncaptured,NA,2022
-2022-03-27,5,NA,NA,NA,NA,0.26,8.4,Uncaptured,NA,2022
-2022-03-30,NA,NA,NA,NA,NA,NA,NA,No salamanders at the point tonight,NA,2022
+2022-03-27,1,NA,NA,NA,NA,0.27,8.4,Uncaptured,NA,NA
+2022-03-27,5,NA,NA,NA,NA,0.26,8.4,Uncaptured,NA,NA
+2022-03-30,NA,NA,NA,NA,NA,NA,NA,No salamanders at the point tonight,NA,NA
 2022-03-31,5,1299,red,m,2020_2021,NA,NA,NA,yes,2022
 2022-03-31,5,3207,orange,m,2019,NA,NA,NA,yes,2022
 2022-03-31,0,3212,blue,m,2022,0.12,7.7,Outside pool 9,no,2022
@@ -108,53 +108,53 @@ date,pool,pit,color,sex,year,salinity,pool_temp,notes,recap,pit_year
 2022-03-31,0,3400,blue,m,2022,0.12,7.4,Right of pool 3 facing ocean,no,2022
 2022-03-31,7,3400,blue,m,2022,NA,NA,Moved on tagging night,no,2022
 2022-03-31,1,3402,orange,m,2019,0.25,6.7,NA,yes,2022
-2022-03-31,5,NA,blue,m,2022,NA,NA,NA,no,2022
-2022-03-31,5,NA,orange,m,2019,NA,NA,NA,yes,2022
-2022-03-31,5,NA,blue,m,2022,NA,NA,NA,no,2022
-2022-03-31,6,NA,yellow,f,2017,NA,NA,NA,yes,2022
-2022-03-31,6,NA,red,m,2020_2021,NA,NA,NA,yes,2022
-2022-03-31,6,NA,blue,m,2022,NA,NA,NA,no,2022
-2022-03-31,6,NA,orange,m,2019,NA,NA,NA,yes,2022
-2022-03-31,6,NA,yellow,m,2017,NA,NA,NA,yes,2022
-2022-03-31,6,NA,red,m,2020_2021,NA,NA,NA,yes,2022
-2022-03-31,6,NA,blue,m,2022,NA,NA,NA,no,2022
-2022-03-31,7,NA,blue,f,2022,NA,NA,Under Root,no,2022
-2022-03-31,7,NA,yellow,m,2017,NA,NA,NA,yes,2022
-2022-03-31,7,NA,blue,m,2022,NA,NA,NA,no,2022
-2022-03-31,7,NA,red,m,2020_2021,NA,NA,NA,yes,2022
-2022-03-31,7,NA,blue,m,2022,NA,NA,NA,no,2022
-2022-03-31,7,NA,blue,m,2022,NA,NA,NA,no,2022
-2022-03-31,7,NA,yellow,m,2017,NA,NA,Big,yes,2022
-2022-03-31,7,NA,blue,m,2022,NA,NA,IMG1340? - Uncertain,no,2022
-2022-03-31,7,NA,red,m,2020_2021,NA,NA,NA,yes,2022
-2022-03-31,7,NA,blue,m,2022,NA,NA,NA,no,2022
-2022-03-31,7,NA,blue,m,2022,NA,NA,NA,no,2022
-2022-03-31,7,NA,NA,NA,NA,NA,NA,Uncaptured,NA,2022
-2022-03-31,7,NA,NA,NA,NA,NA,NA,Uncaptured,NA,2022
-2022-03-31,7,NA,NA,NA,NA,NA,NA,Uncaptured,NA,2022
-2022-03-31,8,NA,blue,f,2022,0.19,7.5,NA,no,2022
-2022-03-31,8,NA,blue,m,2022,0.19,7.5,NA,no,2022
-2022-03-31,8,NA,blue,m,2022,0.19,7.5,NA,no,2022
-2022-03-31,12,NA,blue,m,2022,0.18,7.5,NA,no,2022
-2022-03-31,13,NA,blue,f,2022,0.28,7.4,NA,no,2022
-2022-03-31,13,NA,red,m,2020_2021,0.28,7.4,NA,yes,2022
-2022-03-31,13,NA,blue,m,2022,0.28,7.4,NA,no,2022
-2022-03-31,13,NA,red,m,2020_2021,0.28,7.4,NA,yes,2022
-2022-03-31,13,NA,orange,m,2019,0.28,7.4,NA,yes,2022
-2022-03-31,13,NA,red,m,2020_2021,0.28,7.4,Looks older,yes,2022
-2022-03-31,13,NA,blue,m,2022,0.28,7.4,NA,no,2022
-2022-03-31,13,NA,blue,m,2022,0.28,7.4,NA,no,2022
-2022-03-31,13,NA,blue,m,2022,0.28,7.4,NA,no,2022
-2022-03-31,15,NA,orange,m,2019,0.36,7.2,NA,yes,2022
-2022-03-31,15,NA,orange,m,2019,0.36,7.2,NA,yes,2022
-2022-03-31,15,NA,orange,m,2019,0.36,7.2,Photo is female?,yes,2022
-2022-03-31,15,NA,red,m,2020_2021,0.36,7.2,NA,yes,2022
-2022-03-31,15,NA,blue,m,2022,0.36,7.2,NA,no,2022
-2022-03-31,11,NA,yellow,m,2017,0.18,7.6,NA,yes,2022
-2022-03-31,11,NA,red,m,2020_2021,0.18,7.6,NA,yes,2022
-2022-03-31,11,NA,red,m,2020_2021,0.18,7.6,NA,yes,2022
-2022-03-31,11,NA,red,m,2020_2021,0.18,7.6,NA,yes,2022
-2022-03-31,11,NA,blue,m,2022,0.18,7.6,NA,no,2022
+2022-03-31,5,NA,blue,m,2022,NA,NA,NA,no,NA
+2022-03-31,5,NA,orange,m,2019,NA,NA,NA,yes,NA
+2022-03-31,5,NA,blue,m,2022,NA,NA,NA,no,NA
+2022-03-31,6,NA,yellow,f,2017,NA,NA,NA,yes,NA
+2022-03-31,6,NA,red,m,2020_2021,NA,NA,NA,yes,NA
+2022-03-31,6,NA,blue,m,2022,NA,NA,NA,no,NA
+2022-03-31,6,NA,orange,m,2019,NA,NA,NA,yes,NA
+2022-03-31,6,NA,yellow,m,2017,NA,NA,NA,yes,NA
+2022-03-31,6,NA,red,m,2020_2021,NA,NA,NA,yes,NA
+2022-03-31,6,NA,blue,m,2022,NA,NA,NA,no,NA
+2022-03-31,7,NA,blue,f,2022,NA,NA,Under Root,no,NA
+2022-03-31,7,NA,yellow,m,2017,NA,NA,NA,yes,NA
+2022-03-31,7,NA,blue,m,2022,NA,NA,NA,no,NA
+2022-03-31,7,NA,red,m,2020_2021,NA,NA,NA,yes,NA
+2022-03-31,7,NA,blue,m,2022,NA,NA,NA,no,NA
+2022-03-31,7,NA,blue,m,2022,NA,NA,NA,no,NA
+2022-03-31,7,NA,yellow,m,2017,NA,NA,Big,yes,NA
+2022-03-31,7,NA,blue,m,2022,NA,NA,IMG1340? - Uncertain,no,NA
+2022-03-31,7,NA,red,m,2020_2021,NA,NA,NA,yes,NA
+2022-03-31,7,NA,blue,m,2022,NA,NA,NA,no,NA
+2022-03-31,7,NA,blue,m,2022,NA,NA,NA,no,NA
+2022-03-31,7,NA,NA,NA,NA,NA,NA,Uncaptured,NA,NA
+2022-03-31,7,NA,NA,NA,NA,NA,NA,Uncaptured,NA,NA
+2022-03-31,7,NA,NA,NA,NA,NA,NA,Uncaptured,NA,NA
+2022-03-31,8,NA,blue,f,2022,0.19,7.5,NA,no,NA
+2022-03-31,8,NA,blue,m,2022,0.19,7.5,NA,no,NA
+2022-03-31,8,NA,blue,m,2022,0.19,7.5,NA,no,NA
+2022-03-31,12,NA,blue,m,2022,0.18,7.5,NA,no,NA
+2022-03-31,13,NA,blue,f,2022,0.28,7.4,NA,no,NA
+2022-03-31,13,NA,red,m,2020_2021,0.28,7.4,NA,yes,NA
+2022-03-31,13,NA,blue,m,2022,0.28,7.4,NA,no,NA
+2022-03-31,13,NA,red,m,2020_2021,0.28,7.4,NA,yes,NA
+2022-03-31,13,NA,orange,m,2019,0.28,7.4,NA,yes,NA
+2022-03-31,13,NA,red,m,2020_2021,0.28,7.4,Looks older,yes,NA
+2022-03-31,13,NA,blue,m,2022,0.28,7.4,NA,no,NA
+2022-03-31,13,NA,blue,m,2022,0.28,7.4,NA,no,NA
+2022-03-31,13,NA,blue,m,2022,0.28,7.4,NA,no,NA
+2022-03-31,15,NA,orange,m,2019,0.36,7.2,NA,yes,NA
+2022-03-31,15,NA,orange,m,2019,0.36,7.2,NA,yes,NA
+2022-03-31,15,NA,orange,m,2019,0.36,7.2,Photo is female?,yes,NA
+2022-03-31,15,NA,red,m,2020_2021,0.36,7.2,NA,yes,NA
+2022-03-31,15,NA,blue,m,2022,0.36,7.2,NA,no,NA
+2022-03-31,11,NA,yellow,m,2017,0.18,7.6,NA,yes,NA
+2022-03-31,11,NA,red,m,2020_2021,0.18,7.6,NA,yes,NA
+2022-03-31,11,NA,red,m,2020_2021,0.18,7.6,NA,yes,NA
+2022-03-31,11,NA,red,m,2020_2021,0.18,7.6,NA,yes,NA
+2022-03-31,11,NA,blue,m,2022,0.18,7.6,NA,no,NA
 2022-04-01,2,3208,orange,f,2019,0.13,8,NA,yes,2022
 2022-04-01,3,3211,orange,m,2019,0.19,8,NA,yes,2022
 2022-04-01,1,3306,red,m,2020_2021,0.2,7.3,NA,yes,2022
@@ -205,13 +205,13 @@ date,pool,pit,color,sex,year,salinity,pool_temp,notes,recap,pit_year
 2022-04-02,7,3357,orange,m,2019,0.19,8.8,NA,yes,2022
 2022-04-02,15,3394,blue,f,2022,0.3,7.6,NA,no,2022
 2022-04-02,0,3399,blue,m,2022,NA,NA,"Below pool 5, above pool 8",no,2022
-2022-04-02,1,NA,NA,NA,NA,0.26,8.4,Uncaptured,NA,2022
-2022-04-02,15,NA,blue,f,2022,0.3,7.6,Uncaptured,no,2022
+2022-04-02,1,NA,NA,NA,NA,0.26,8.4,Uncaptured,NA,NA
+2022-04-02,15,NA,blue,f,2022,0.3,7.6,Uncaptured,no,NA
 2022-04-03,15,3394,blue,f,2022,0.29,6.4,NA,no,2022
-2022-04-03,0,NA,NA,NA,NA,0,7.9,"Uncapture - Above 11, below 8, in a crevice that seems impossible to hide in...",NA,2022
-2022-04-03,1,NA,NA,NA,NA,0.2,8.2,Uncaptured,NA,2022
-2022-04-03,15,NA,blue,f,2022,0.29,6.4,Actively Laying Eggs,no,2022
-2022-04-03,15,NA,blue,f,2022,0.29,6.4,"Uncaptured, checked for UV tag",no,2022
+2022-04-03,0,NA,NA,NA,NA,0,7.9,"Uncapture - Above 11, below 8, in a crevice that seems impossible to hide in...",NA,NA
+2022-04-03,1,NA,NA,NA,NA,0.2,8.2,Uncaptured,NA,NA
+2022-04-03,15,NA,blue,f,2022,0.29,6.4,Actively Laying Eggs,no,NA
+2022-04-03,15,NA,blue,f,2022,0.29,6.4,"Uncaptured, checked for UV tag",no,NA
 2022-04-04,7,3216,red,m,2020_2021,0.16,10,NA,yes,2022
 2022-04-04,7,3307,orange,m,2019,0.16,10,NA,yes,2022
 2022-04-04,11,3309,blue,f,2022,0.18,10,NA,no,2022
@@ -225,9 +225,9 @@ date,pool,pit,color,sex,year,salinity,pool_temp,notes,recap,pit_year
 2022-04-04,11,3369,blue,f,2022,0.18,10,NA,no,2022
 2022-04-04,15,3381,blue,f,2022,0.27,8.8,NA,no,2022
 2022-04-04,15,3394,blue,f,2022,0.27,8.8,NA,no,2022
-2022-04-04,7,NA,blue,f,2022,0.15,9.8,laying eggs,no,2022
-2022-04-04,15,NA,NA,f,NA,0.27,8.8,laying eggs,NA,2022
-2022-04-04,15,NA,NA,f,NA,0.27,8.8,laying eggs,NA,2022
+2022-04-04,7,NA,blue,f,2022,0.15,9.8,laying eggs,no,NA
+2022-04-04,15,NA,NA,f,NA,0.27,8.8,laying eggs,NA,NA
+2022-04-04,15,NA,NA,f,NA,0.27,8.8,laying eggs,NA,NA
 2022-04-05,7,3216,red,m,2020_2021,0.16,11.6,NA,yes,2022
 2022-04-05,15,3308,blue,f,2022,0.26,8.6,NA,no,2022
 2022-04-05,7,3315,yellow,f,2017,0.16,11.6,NA,yes,2022
@@ -241,31 +241,31 @@ date,pool,pit,color,sex,year,salinity,pool_temp,notes,recap,pit_year
 2022-04-05,15,3381,blue,f,2022,0.26,8.6,NA,no,2022
 2022-04-05,15,3394,blue,f,2022,0.26,8.6,NA,no,2022
 2022-04-05,7,3396,red,m,2020_2021,0.16,11.6,NA,yes,2022
-2022-04-05,3,NA,NA,f,NA,0.18,7.3,laying eggs,NA,2022
-2022-04-05,6,NA,NA,NA,NA,0.06,6.9,Uncaptured,NA,2022
-2022-04-05,7,NA,orange,f,2019,0.16,11.6,NA,yes,2022
-2022-04-05,7,NA,blue,f,2022,0.16,11.6,NA,no,2022
-2022-04-05,11,NA,yellow,f,2017,0.17,9,NA,yes,2022
-2022-04-05,13,NA,orange,f,2019,0.25,9,NA,yes,2022
-2022-04-05,13,NA,blue,f,2022,0.25,9,NA,no,2022
-2022-04-05,13,NA,blue,f,2022,0.25,9,NA,no,2022
-2022-04-05,15,NA,NA,NA,NA,0.26,8.6,NA,NA,2022
-2022-04-05,15,NA,NA,NA,NA,0.26,8.6,NA,NA,2022
+2022-04-05,3,NA,NA,f,NA,0.18,7.3,laying eggs,NA,NA
+2022-04-05,6,NA,NA,NA,NA,0.06,6.9,Uncaptured,NA,NA
+2022-04-05,7,NA,orange,f,2019,0.16,11.6,NA,yes,NA
+2022-04-05,7,NA,blue,f,2022,0.16,11.6,NA,no,NA
+2022-04-05,11,NA,yellow,f,2017,0.17,9,NA,yes,NA
+2022-04-05,13,NA,orange,f,2019,0.25,9,NA,yes,NA
+2022-04-05,13,NA,blue,f,2022,0.25,9,NA,no,NA
+2022-04-05,13,NA,blue,f,2022,0.25,9,NA,no,NA
+2022-04-05,15,NA,NA,NA,NA,0.26,8.6,NA,NA,NA
+2022-04-05,15,NA,NA,NA,NA,0.26,8.6,NA,NA,NA
 2022-04-06,7,3216,red,m,2020_2021,0.15,10.2,NA,yes,2022
 2022-04-06,7,3289,pink,m,2018,0.15,10.2,NA,yes,2022
 2022-04-06,7,3307,orange,m,2019,0.15,10.2,Forgot UV light,yes,2022
 2022-04-06,11,3367,orange,f,2019,0.23,10.5,NA,yes,2022
 2022-04-06,7,3373,orange,m,2019,0.15,10.2,NA,yes,2022
-2022-04-06,7,NA,NA,NA,NA,0.15,10.2,NA,NA,2022
-2022-04-06,7,NA,NA,NA,NA,0.15,10.2,NA,NA,2022
-2022-04-06,7,NA,NA,NA,NA,0.15,10.2,NA,NA,2022
-2022-04-06,7,NA,NA,NA,NA,0.15,10.2,NA,NA,2022
-2022-04-06,11,NA,NA,NA,NA,0.15,9.8,NA,NA,2022
-2022-04-06,12,NA,NA,NA,NA,0.15,9.8,NA,NA,2022
-2022-04-06,12,NA,NA,NA,NA,0.15,9.8,NA,NA,2022
-2022-04-06,12,NA,NA,NA,NA,0.15,9.8,NA,NA,2022
-2022-04-06,15,NA,NA,NA,NA,0.25,9.8,NA,NA,2022
-2022-04-06,15,NA,NA,NA,NA,0.25,9.8,NA,NA,2022
+2022-04-06,7,NA,NA,NA,NA,0.15,10.2,NA,NA,NA
+2022-04-06,7,NA,NA,NA,NA,0.15,10.2,NA,NA,NA
+2022-04-06,7,NA,NA,NA,NA,0.15,10.2,NA,NA,NA
+2022-04-06,7,NA,NA,NA,NA,0.15,10.2,NA,NA,NA
+2022-04-06,11,NA,NA,NA,NA,0.15,9.8,NA,NA,NA
+2022-04-06,12,NA,NA,NA,NA,0.15,9.8,NA,NA,NA
+2022-04-06,12,NA,NA,NA,NA,0.15,9.8,NA,NA,NA
+2022-04-06,12,NA,NA,NA,NA,0.15,9.8,NA,NA,NA
+2022-04-06,15,NA,NA,NA,NA,0.25,9.8,NA,NA,NA
+2022-04-06,15,NA,NA,NA,NA,0.25,9.8,NA,NA,NA
 2022-04-07,6,3221,blue,m,2022,0.14,7.4,NA,no,2022
 2022-04-07,12,3234,NA,m,NA,0.15,8.5,NA,NA,2022
 2022-04-07,12,3273,NA,m,NA,0.15,8.5,NA,NA,2022
@@ -382,14 +382,14 @@ date,pool,pit,color,sex,year,salinity,pool_temp,notes,recap,pit_year
 2022-04-08,0,3403,red,m,2020_2021,0.29,7.6,NA,yes,2022
 2022-04-08,6,3403,red,m,2020_2021,0.48,6.9,Recaptured same night,yes,2022
 2022-04-08,0,3404,blue,m,2022,0.29,7.6,Above pool 6,no,2022
-2022-04-08,3,NA,NA,NA,NA,0.41,7.4,Uncaptured,NA,2022
-2022-04-08,6,NA,orange,f,2019,0.48,6.9,NA,yes,2022
-2022-04-08,6,NA,blue,f,2022,0.48,6.9,NA,no,2022
-2022-04-08,6,NA,NA,NA,NA,0.48,6.9,Uncaptured,NA,2022
-2022-04-08,6,NA,NA,NA,NA,0.48,6.9,Uncaptured,NA,2022
-2022-04-08,7,NA,orange,f,2019,0.31,6.9,NA,yes,2022
-2022-04-08,9,NA,NA,NA,NA,0.31,6.7,Uncaptured,NA,2022
-2022-04-08,12,NA,NA,NA,NA,0.31,7,Escaped after tagging,NA,2022
+2022-04-08,3,NA,NA,NA,NA,0.41,7.4,Uncaptured,NA,NA
+2022-04-08,6,NA,orange,f,2019,0.48,6.9,NA,yes,NA
+2022-04-08,6,NA,blue,f,2022,0.48,6.9,NA,no,NA
+2022-04-08,6,NA,NA,NA,NA,0.48,6.9,Uncaptured,NA,NA
+2022-04-08,6,NA,NA,NA,NA,0.48,6.9,Uncaptured,NA,NA
+2022-04-08,7,NA,orange,f,2019,0.31,6.9,NA,yes,NA
+2022-04-08,9,NA,NA,NA,NA,0.31,6.7,Uncaptured,NA,NA
+2022-04-08,12,NA,NA,NA,NA,0.31,7,Escaped after tagging,NA,NA
 2022-04-09,7,3216,red,m,2020_2021,0.21,8.3,NA,yes,2022
 2022-04-09,7,3218,blue,m,2022,0.21,8.3,NA,no,2022
 2022-04-09,0,3225,blue,f,2022,0,2,DECEASED - tagged for observation after possibly being stepped on,no,2022
@@ -463,15 +463,15 @@ date,pool,pit,color,sex,year,salinity,pool_temp,notes,recap,pit_year
 2022-04-11,7,3302,blue,f,2022,0.18,10.9,NA,no,2022
 2022-04-11,12,3348,yellow,m,2017,0.7,11,NA,yes,2022
 2022-04-11,6,3386,red,m,2020_2021,0.16,8.8,NA,yes,2022
-2022-04-11,0,NA,red,f,2020_2021,0.21,10.5,above 8,yes,2022
-2022-04-11,7,NA,blue,f,2022,0.18,10.9,NA,no,2022
-2022-04-11,7,NA,orange,f,2019,0.18,10.9,NA,yes,2022
-2022-04-11,7,NA,orange,f,2019,0.18,10.9,NA,yes,2022
-2022-04-11,7,NA,NA,NA,NA,0.18,10.9,NA,NA,2022
-2022-04-11,11,NA,red,f,2020_2021,0.7,11,NA,yes,2022
-2022-04-11,12,NA,NA,f,NA,0.7,11,NA,NA,2022
-2022-04-11,13,NA,orange,f,2019,0.27,11.3,NA,yes,2022
-2022-04-11,13,NA,orange,f,2019,0.27,11.3,NA,yes,2022
+2022-04-11,0,NA,red,f,2020_2021,0.21,10.5,above 8,yes,NA
+2022-04-11,7,NA,blue,f,2022,0.18,10.9,NA,no,NA
+2022-04-11,7,NA,orange,f,2019,0.18,10.9,NA,yes,NA
+2022-04-11,7,NA,orange,f,2019,0.18,10.9,NA,yes,NA
+2022-04-11,7,NA,NA,NA,NA,0.18,10.9,NA,NA,NA
+2022-04-11,11,NA,red,f,2020_2021,0.7,11,NA,yes,NA
+2022-04-11,12,NA,NA,f,NA,0.7,11,NA,NA,NA
+2022-04-11,13,NA,orange,f,2019,0.27,11.3,NA,yes,NA
+2022-04-11,13,NA,orange,f,2019,0.27,11.3,NA,yes,NA
 2022-04-12,12,3205,orange,f,2019,0.17,10.1,NA,yes,2022
 2022-04-12,7,3216,red,m,2020_2021,0.17,10,NA,yes,2022
 2022-04-12,7,3217,blue,m,2022,0.17,10,NA,no,2022
@@ -491,25 +491,25 @@ date,pool,pit,color,sex,year,salinity,pool_temp,notes,recap,pit_year
 2022-04-12,12,3348,yellow,m,2017,0.17,10.1,NA,yes,2022
 2022-04-12,12,3390,yellow,m,2017,0.17,10.1,NA,yes,2022
 2022-04-12,0,3399,blue,m,2022,0.18,9.8,NA,no,2022
-2022-04-12,0,NA,orange,f,2019,0.19,10.5,NA,yes,2022
-2022-04-12,6,NA,blue,f,2022,0.15,9.2,NA,no,2022
-2022-04-12,6,NA,blue,f,2022,0.15,9.2,NA,no,2022
-2022-04-12,7,NA,orange,f,2019,0.17,10,NA,yes,2022
-2022-04-12,7,NA,orange,f,2019,0.17,10,NA,yes,2022
-2022-04-12,7,NA,blue,f,2022,0.17,10,NA,no,2022
-2022-04-12,7,NA,orange,f,2019,0.17,10,NA,yes,2022
-2022-04-12,7,NA,blue,f,2022,0.17,10,NA,no,2022
-2022-04-12,11,NA,blue,f,2022,0.18,10.4,NA,no,2022
-2022-04-12,13,NA,orange,f,2019,0.26,10.4,NA,yes,2022
-2022-04-12,14,NA,blue,f,2022,0.27,8.7,NA,no,2022
-2022-04-12,15,NA,orange,f,2019,0.27,9.6,NA,yes,2022
-2022-04-12,15,NA,NA,NA,NA,0.27,9.6,Uncaptured,NA,2022
-2022-04-12,15,NA,NA,NA,NA,0.27,9.6,Uncaptured,NA,2022
-2022-04-12,15,NA,NA,NA,NA,0.27,9.6,Uncaptured,NA,2022
-2022-04-12,15,NA,NA,NA,NA,0.27,9.6,Uncaptured,NA,2022
-2022-04-12,15,NA,NA,NA,NA,0.27,9.6,Uncaptured,NA,2022
-2022-04-12,15,NA,NA,NA,NA,0.27,9.6,Uncaptured,NA,2022
-2022-04-12,15,NA,NA,NA,NA,0.27,9.6,Uncaptured,NA,2022
+2022-04-12,0,NA,orange,f,2019,0.19,10.5,NA,yes,NA
+2022-04-12,6,NA,blue,f,2022,0.15,9.2,NA,no,NA
+2022-04-12,6,NA,blue,f,2022,0.15,9.2,NA,no,NA
+2022-04-12,7,NA,orange,f,2019,0.17,10,NA,yes,NA
+2022-04-12,7,NA,orange,f,2019,0.17,10,NA,yes,NA
+2022-04-12,7,NA,blue,f,2022,0.17,10,NA,no,NA
+2022-04-12,7,NA,orange,f,2019,0.17,10,NA,yes,NA
+2022-04-12,7,NA,blue,f,2022,0.17,10,NA,no,NA
+2022-04-12,11,NA,blue,f,2022,0.18,10.4,NA,no,NA
+2022-04-12,13,NA,orange,f,2019,0.26,10.4,NA,yes,NA
+2022-04-12,14,NA,blue,f,2022,0.27,8.7,NA,no,NA
+2022-04-12,15,NA,orange,f,2019,0.27,9.6,NA,yes,NA
+2022-04-12,15,NA,NA,NA,NA,0.27,9.6,Uncaptured,NA,NA
+2022-04-12,15,NA,NA,NA,NA,0.27,9.6,Uncaptured,NA,NA
+2022-04-12,15,NA,NA,NA,NA,0.27,9.6,Uncaptured,NA,NA
+2022-04-12,15,NA,NA,NA,NA,0.27,9.6,Uncaptured,NA,NA
+2022-04-12,15,NA,NA,NA,NA,0.27,9.6,Uncaptured,NA,NA
+2022-04-12,15,NA,NA,NA,NA,0.27,9.6,Uncaptured,NA,NA
+2022-04-12,15,NA,NA,NA,NA,0.27,9.6,Uncaptured,NA,NA
 2022-04-13,0,3207,orange,m,2019,0.17,7.8,Above 5,yes,2022
 2022-04-13,7,3216,red,m,2020_2021,0.17,8.9,NA,yes,2022
 2022-04-13,6,3217,blue,m,2022,0.17,8.5,NA,no,2022
@@ -593,50 +593,50 @@ date,pool,pit,color,sex,year,salinity,pool_temp,notes,recap,pit_year
 2022-04-13,5,3401,NA,m,NA,0.17,8.6,NA,NA,2022
 2022-04-13,2,3402,orange,m,2019,0.33,10.2,NA,yes,2022
 2022-04-13,2,3403,red,m,2020_2021,0.33,10.2,NA,yes,2022
-2022-04-13,0,NA,red,f,2020_2021,0.17,7.8,Above 5,yes,2022
-2022-04-13,0,NA,blue,f,2022,0.17,7.8,Above 5,no,2022
-2022-04-13,0,NA,blue,f,2022,0.17,7.8,Above 5,no,2022
-2022-04-13,0,NA,NA,f,NA,0,6.6,Above 6,NA,2022
-2022-04-13,0,NA,NA,f,NA,0,6.6,Above 6,NA,2022
-2022-04-13,0,NA,NA,f,NA,0,6.6,Above 6,NA,2022
-2022-04-13,0,NA,NA,f,NA,0,6.6,Above 6,NA,2022
-2022-04-13,0,NA,NA,NA,NA,0,6.6,Below 11 Uncaptured,NA,2022
-2022-04-13,3,NA,NA,m,NA,0.16,9.7,NA,NA,2022
-2022-04-13,4,NA,red,f,2020_2021,0.21,9.4,NA,yes,2022
-2022-04-13,4,NA,NA,f,NA,0.21,9.4,NA,NA,2022
-2022-04-13,5,NA,NA,NA,NA,0.17,8.6,NA,NA,2022
-2022-04-13,5,NA,NA,NA,NA,0.17,8.6,Uncaptured,NA,2022
-2022-04-13,5,NA,NA,NA,NA,0.17,8.6,NA,NA,2022
-2022-04-13,5,NA,NA,NA,NA,0.17,8.6,Uncaptured,NA,2022
-2022-04-13,5,NA,NA,m,NA,0.17,8.6,NA,NA,2022
-2022-04-13,6,NA,NA,NA,NA,0.17,8.5,Uncaptured,NA,2022
-2022-04-13,6,NA,NA,m,NA,0.17,8.5,Later in the night at pool 6,NA,2022
-2022-04-13,6,NA,NA,f,NA,0.17,8.5,NA,NA,2022
-2022-04-13,6,NA,NA,f,NA,0.17,8.5,NA,NA,2022
-2022-04-13,7,NA,NA,f,NA,0.17,8.9,NA,NA,2022
-2022-04-13,7,NA,NA,f,NA,0.17,8.9,NA,NA,2022
-2022-04-13,7,NA,NA,NA,NA,0.17,8.9,NA,NA,2022
-2022-04-13,7,NA,NA,NA,NA,0.17,8.9,NA,NA,2022
-2022-04-13,7,NA,NA,NA,NA,0.17,8.9,NA,NA,2022
-2022-04-13,7,NA,NA,m,NA,0.17,8.9,NA,NA,2022
-2022-04-13,7,NA,NA,f,NA,0.17,8.9,NA,NA,2022
-2022-04-13,7,NA,NA,f,NA,0.17,8.9,NA,NA,2022
-2022-04-13,7,NA,NA,f,NA,0.17,8.9,NA,NA,2022
-2022-04-13,7,NA,NA,f,NA,0.17,8.9,NA,NA,2022
-2022-04-13,7,NA,NA,f,NA,0.17,8.9,NA,NA,2022
-2022-04-13,11,NA,NA,f,NA,0.16,9.7,NA,NA,2022
-2022-04-13,11,NA,NA,f,NA,0.16,9.7,NA,NA,2022
-2022-04-13,12,NA,NA,NA,NA,0.17,9.3,NA,NA,2022
-2022-04-13,13,NA,NA,NA,NA,0.22,9.7,NA,NA,2022
-2022-04-13,13,NA,NA,NA,NA,0.22,9.7,NA,NA,2022
-2022-04-13,13,NA,NA,NA,NA,0.22,9.7,NA,NA,2022
-2022-04-13,13,NA,orange,f,2019,0.22,9.7,NA,yes,2022
-2022-04-13,13,NA,red,f,2020_2021,0.22,9.7,NA,yes,2022
-2022-04-13,13,NA,NA,NA,NA,0.22,9.7,NA,NA,2022
-2022-04-13,15,NA,NA,NA,NA,0.28,9.3,Uncaptured,NA,2022
-2022-04-13,15,NA,NA,NA,NA,0.28,9.3,Uncaptured,NA,2022
-2022-04-13,15,NA,NA,NA,NA,0.28,9.3,Uncaptured,NA,2022
-2022-04-13,15,NA,NA,NA,NA,0.28,9.3,NA,NA,2022
+2022-04-13,0,NA,red,f,2020_2021,0.17,7.8,Above 5,yes,NA
+2022-04-13,0,NA,blue,f,2022,0.17,7.8,Above 5,no,NA
+2022-04-13,0,NA,blue,f,2022,0.17,7.8,Above 5,no,NA
+2022-04-13,0,NA,NA,f,NA,0,6.6,Above 6,NA,NA
+2022-04-13,0,NA,NA,f,NA,0,6.6,Above 6,NA,NA
+2022-04-13,0,NA,NA,f,NA,0,6.6,Above 6,NA,NA
+2022-04-13,0,NA,NA,f,NA,0,6.6,Above 6,NA,NA
+2022-04-13,0,NA,NA,NA,NA,0,6.6,Below 11 Uncaptured,NA,NA
+2022-04-13,3,NA,NA,m,NA,0.16,9.7,NA,NA,NA
+2022-04-13,4,NA,red,f,2020_2021,0.21,9.4,NA,yes,NA
+2022-04-13,4,NA,NA,f,NA,0.21,9.4,NA,NA,NA
+2022-04-13,5,NA,NA,NA,NA,0.17,8.6,NA,NA,NA
+2022-04-13,5,NA,NA,NA,NA,0.17,8.6,Uncaptured,NA,NA
+2022-04-13,5,NA,NA,NA,NA,0.17,8.6,NA,NA,NA
+2022-04-13,5,NA,NA,NA,NA,0.17,8.6,Uncaptured,NA,NA
+2022-04-13,5,NA,NA,m,NA,0.17,8.6,NA,NA,NA
+2022-04-13,6,NA,NA,NA,NA,0.17,8.5,Uncaptured,NA,NA
+2022-04-13,6,NA,NA,m,NA,0.17,8.5,Later in the night at pool 6,NA,NA
+2022-04-13,6,NA,NA,f,NA,0.17,8.5,NA,NA,NA
+2022-04-13,6,NA,NA,f,NA,0.17,8.5,NA,NA,NA
+2022-04-13,7,NA,NA,f,NA,0.17,8.9,NA,NA,NA
+2022-04-13,7,NA,NA,f,NA,0.17,8.9,NA,NA,NA
+2022-04-13,7,NA,NA,NA,NA,0.17,8.9,NA,NA,NA
+2022-04-13,7,NA,NA,NA,NA,0.17,8.9,NA,NA,NA
+2022-04-13,7,NA,NA,NA,NA,0.17,8.9,NA,NA,NA
+2022-04-13,7,NA,NA,m,NA,0.17,8.9,NA,NA,NA
+2022-04-13,7,NA,NA,f,NA,0.17,8.9,NA,NA,NA
+2022-04-13,7,NA,NA,f,NA,0.17,8.9,NA,NA,NA
+2022-04-13,7,NA,NA,f,NA,0.17,8.9,NA,NA,NA
+2022-04-13,7,NA,NA,f,NA,0.17,8.9,NA,NA,NA
+2022-04-13,7,NA,NA,f,NA,0.17,8.9,NA,NA,NA
+2022-04-13,11,NA,NA,f,NA,0.16,9.7,NA,NA,NA
+2022-04-13,11,NA,NA,f,NA,0.16,9.7,NA,NA,NA
+2022-04-13,12,NA,NA,NA,NA,0.17,9.3,NA,NA,NA
+2022-04-13,13,NA,NA,NA,NA,0.22,9.7,NA,NA,NA
+2022-04-13,13,NA,NA,NA,NA,0.22,9.7,NA,NA,NA
+2022-04-13,13,NA,NA,NA,NA,0.22,9.7,NA,NA,NA
+2022-04-13,13,NA,orange,f,2019,0.22,9.7,NA,yes,NA
+2022-04-13,13,NA,red,f,2020_2021,0.22,9.7,NA,yes,NA
+2022-04-13,13,NA,NA,NA,NA,0.22,9.7,NA,NA,NA
+2022-04-13,15,NA,NA,NA,NA,0.28,9.3,Uncaptured,NA,NA
+2022-04-13,15,NA,NA,NA,NA,0.28,9.3,Uncaptured,NA,NA
+2022-04-13,15,NA,NA,NA,NA,0.28,9.3,Uncaptured,NA,NA
+2022-04-13,15,NA,NA,NA,NA,0.28,9.3,NA,NA,NA
 2022-04-14,3,3239,blue,m,2022,NA,NA,NA,no,2022
 2022-04-14,7,3274,red,m,2020_2021,0.18,7.8,NA,yes,2022
 2022-04-14,5,3276,red,m,2020_2021,0.17,7.8,NA,yes,2022
@@ -648,19 +648,19 @@ date,pool,pit,color,sex,year,salinity,pool_temp,notes,recap,pit_year
 2022-04-14,1,3340,red,m,2020_2021,0.2,9.3,Color debated,yes,2022
 2022-04-14,5,3391,red,m,2020_2021,0.17,7.8,NA,yes,2022
 2022-04-14,6,4887,orange,m,2019,NA,NA,NA,yes,2022
-2022-04-14,0,NA,NA,NA,NA,0,5.5,Parking,NA,2022
-2022-04-14,1,NA,NA,NA,NA,0.2,9.3,Uncaptured,NA,2022
-2022-04-14,7,NA,red,f,2020_2021,0.18,7.8,NA,yes,2022
-2022-04-14,7,NA,blue,f,2022,0.18,7.8,NA,no,2022
-2022-04-14,7,NA,orange,f,2019,0.18,7.8,NA,yes,2022
-2022-04-14,11,NA,orange,f,2019,0.17,8,NA,yes,2022
+2022-04-14,0,NA,NA,NA,NA,0,5.5,Parking,NA,NA
+2022-04-14,1,NA,NA,NA,NA,0.2,9.3,Uncaptured,NA,NA
+2022-04-14,7,NA,red,f,2020_2021,0.18,7.8,NA,yes,NA
+2022-04-14,7,NA,blue,f,2022,0.18,7.8,NA,no,NA
+2022-04-14,7,NA,orange,f,2019,0.18,7.8,NA,yes,NA
+2022-04-14,11,NA,orange,f,2019,0.17,8,NA,yes,NA
 2022-04-15,0,3276,red,m,2020_2021,0.19,7.8,above 6,yes,2022
 2022-04-15,7,3289,pink,m,2018,0.19,11.1,NA,yes,2022
 2022-04-15,7,3330,red,m,2020_2021,0.19,11.1,NA,yes,2022
 2022-04-15,13,3334,blue,m,2022,0.2,10.7,NA,no,2022
 2022-04-15,0,4904,red,f,2020_2021,0.19,7.8,NA,yes,2022
-2022-04-15,9,NA,orange,f,2019,0.19,10.6,NA,yes,2022
-2022-04-15,11,NA,blue,f,2022,0.2,10.5,NA,no,2022
+2022-04-15,9,NA,orange,f,2019,0.19,10.6,NA,yes,NA
+2022-04-15,11,NA,blue,f,2022,0.2,10.5,NA,no,NA
 2022-04-16,13,3224,yellow,f,2017,0.18,8.8,NA,yes,2022
 2022-04-16,13,3226,blue,f,2022,0.18,8.8,NA,no,2022
 2022-04-16,11,3260,pink,m,2018,0.17,8.8,NA,yes,2022
@@ -669,23 +669,23 @@ date,pool,pit,color,sex,year,salinity,pool_temp,notes,recap,pit_year
 2022-04-16,1,3340,red,m,2020_2021,0.22,8.9,Color debated,yes,2022
 2022-04-16,5,3380,NA,m,NA,0.17,8.5,NA,NA,2022
 2022-04-16,11,3389,orange,m,2019,0.17,8.8,NA,yes,2022
-2022-04-16,0,NA,blue,f,2022,0,7.7,Between 5 & 8,no,2022
-2022-04-16,1,NA,blue,f,2022,0.22,8.9,NA,no,2022
-2022-04-16,7,NA,red,f,2020_2021,0.18,8.3,NA,yes,2022
-2022-04-16,7,NA,blue,f,2022,0.18,8.3,NA,no,2022
-2022-04-16,7,NA,blue,f,2022,0.18,8.3,NA,no,2022
-2022-04-16,7,NA,blue,f,2022,0.18,8.3,NA,no,2022
-2022-04-16,11,NA,blue,f,2022,0.17,8.8,NA,no,2022
-2022-04-16,11,NA,blue,f,2022,0.17,8.8,NA,no,2022
-2022-04-16,11,NA,blue,f,2022,0.17,8.8,NA,no,2022
-2022-04-16,12,NA,orange,f,2019,0.17,8.5,NA,yes,2022
-2022-04-16,12,NA,blue,f,2022,0.17,8.5,NA,no,2022
-2022-04-16,12,NA,blue,f,2022,0.17,8.5,NA,no,2022
-2022-04-16,13,NA,red,f,2020_2021,0.18,8.8,NA,yes,2022
-2022-04-16,13,NA,blue,f,2022,0.18,8.8,NA,no,2022
-2022-04-16,13,NA,NA,f,NA,0.18,8.8,Uncaptured,NA,2022
-2022-04-16,15,NA,blue,f,2022,0.29,8.6,NA,no,2022
-2022-04-16,15,NA,orange,f,2019,0.29,8.6,NA,yes,2022
+2022-04-16,0,NA,blue,f,2022,0,7.7,Between 5 & 8,no,NA
+2022-04-16,1,NA,blue,f,2022,0.22,8.9,NA,no,NA
+2022-04-16,7,NA,red,f,2020_2021,0.18,8.3,NA,yes,NA
+2022-04-16,7,NA,blue,f,2022,0.18,8.3,NA,no,NA
+2022-04-16,7,NA,blue,f,2022,0.18,8.3,NA,no,NA
+2022-04-16,7,NA,blue,f,2022,0.18,8.3,NA,no,NA
+2022-04-16,11,NA,blue,f,2022,0.17,8.8,NA,no,NA
+2022-04-16,11,NA,blue,f,2022,0.17,8.8,NA,no,NA
+2022-04-16,11,NA,blue,f,2022,0.17,8.8,NA,no,NA
+2022-04-16,12,NA,orange,f,2019,0.17,8.5,NA,yes,NA
+2022-04-16,12,NA,blue,f,2022,0.17,8.5,NA,no,NA
+2022-04-16,12,NA,blue,f,2022,0.17,8.5,NA,no,NA
+2022-04-16,13,NA,red,f,2020_2021,0.18,8.8,NA,yes,NA
+2022-04-16,13,NA,blue,f,2022,0.18,8.8,NA,no,NA
+2022-04-16,13,NA,NA,f,NA,0.18,8.8,Uncaptured,NA,NA
+2022-04-16,15,NA,blue,f,2022,0.29,8.6,NA,no,NA
+2022-04-16,15,NA,orange,f,2019,0.29,8.6,NA,yes,NA
 2022-04-17,15,3226,blue,f,2022,0.28,7.3,NA,no,2022
 2022-04-17,0,3307,orange,m,2019,0,2.7,Almost Dead - Above 6,yes,2022
 2022-04-17,13,4809,blue,f,2022,0.18,9.9,NA,no,2022
@@ -695,25 +695,25 @@ date,pool,pit,color,sex,year,salinity,pool_temp,notes,recap,pit_year
 2022-04-17,13,4878,red,f,2020_2021,0.18,9.9,NA,yes,2022
 2022-04-17,13,4899,orange,f,2019,0.18,9.9,NA,yes,2022
 2022-04-17,12,4907,blue,f,2022,0.19,7.7,NA,no,2022
-2022-04-17,0,NA,NA,f,NA,0,2.7,"DECEASED Above 6 - Bodies torn apart, possible mink predation",NA,2022
-2022-04-17,0,NA,NA,f,NA,0,2.7,"DECEASED Above 6 - Bodies torn apart, possible mink predation",NA,2022
-2022-04-17,0,NA,blue,m,2022,0,2.7,"DECEASED Above 14 - body dessicated, likely killed by high winds while moving between pools",no,2022
-2022-04-17,7,NA,red,f,2020_2021,0.19,7.5,NA,yes,2022
-2022-04-17,7,NA,orange,f,2019,0.19,7.5,NA,yes,2022
-2022-04-17,7,NA,blue,f,2022,0.19,7.5,NA,no,2022
-2022-04-17,7,NA,blue,f,2022,0.19,7.5,NA,no,2022
-2022-04-17,11,NA,blue,f,2022,0.2,7.5,NA,no,2022
+2022-04-17,0,NA,NA,f,NA,0,2.7,"DECEASED Above 6 - Bodies torn apart, possible mink predation",NA,NA
+2022-04-17,0,NA,NA,f,NA,0,2.7,"DECEASED Above 6 - Bodies torn apart, possible mink predation",NA,NA
+2022-04-17,0,NA,blue,m,2022,0,2.7,"DECEASED Above 14 - body dessicated, likely killed by high winds while moving between pools",no,NA
+2022-04-17,7,NA,red,f,2020_2021,0.19,7.5,NA,yes,NA
+2022-04-17,7,NA,orange,f,2019,0.19,7.5,NA,yes,NA
+2022-04-17,7,NA,blue,f,2022,0.19,7.5,NA,no,NA
+2022-04-17,7,NA,blue,f,2022,0.19,7.5,NA,no,NA
+2022-04-17,11,NA,blue,f,2022,0.2,7.5,NA,no,NA
 2022-04-18,0,3307,orange,m,2019,0,3.3,DECEASED - Found with others in a pile likely made by a mink,yes,2022
-2022-04-18,7,NA,blue,f,2022,0.19,11,NA,no,2022
-2022-04-18,7,NA,orange,f,2019,0.19,11,NA,yes,2022
-2022-04-18,11,NA,blue,f,2022,0.19,11.5,NA,no,2022
-2022-04-18,11,NA,blue,f,2022,0.19,11.5,NA,no,2022
+2022-04-18,7,NA,blue,f,2022,0.19,11,NA,no,NA
+2022-04-18,7,NA,orange,f,2019,0.19,11,NA,yes,NA
+2022-04-18,11,NA,blue,f,2022,0.19,11.5,NA,no,NA
+2022-04-18,11,NA,blue,f,2022,0.19,11.5,NA,no,NA
 2022-04-19,1,3340,red,m,2020_2021,26.5,7.9,DECEASED - 1.56ppt where found - likely died of osmotic shock fleeing higher salinities,yes,2022
 2022-04-19,6,4904,red,f,2020_2021,2.2,6.2,NA,yes,2022
-2022-04-20,NA,NA,NA,NA,NA,NA,NA,No Salamanders at the cliffs,NA,2022
+2022-04-20,NA,NA,NA,NA,NA,NA,NA,No Salamanders at the cliffs,NA,NA
 2022-04-21,1,4895,blue,f,2022,28.6,11.1,1.65ppt where found,no,2022
 2022-04-27,5,3268,yellow,m,2017,5.67,9.6,DECEASED - 0.36ppt where found - likely died of osmotic shock fleeing higher salinities,yes,2022
-2022-04-27,0,NA,NA,f,NA,7.2,0,between 6 & 7,NA,2022
+2022-04-27,0,NA,NA,f,NA,7.2,0,between 6 & 7,NA,NA
 23-04-16,0,3262,orange,NA,2019,NA,NA,NA,yes,NA
 23-04-16,0,3228,NA,NA,2022,NA,NA,NA,yes,NA
 23-04-16,0,4745,green,NA,2023,NA,NA,no color,no,2023
