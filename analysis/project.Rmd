@@ -229,108 +229,6 @@ pools %>%
        x = "Pool",
        y = "Individual Salamanders Observed")
 ```
-## CMRnet Package
-
-```{r load-CMR-pckg}
-# install CMRnet
-remotes::install_github("matthewsilk/CMRnet", build_vignettes = TRUE)
-library(CMRnet)
-```
-
-```{r format-CMR-data}
-cmr <- sals %>% 
-  select(pit, pool, date) %>% 
-  mutate(date = as.Date(date))
-```
-
-```{r try-CMR-movenet-analysis}
-#single-layer movement network
-library(CMRnet)
-mindate <- "2022-03-18"
-maxdate <- "2022-04-16"
-intwindow <- 1
-netwindow <- 6
-overlap <- 0
-spacewindow <- 0
-
-movenetdat <- MoveNetCreate(
-  data = cmr,
-  intwindow = intwindow,
-  mindate = mindate,
-  maxdate = maxdate,
-  netwindow = netwindow,
-  overlap = overlap,
-  nextonly = TRUE,
-  index = FALSE
-)
-```
-
-```{r try-CMR-movenethi-analysis}
-library(CMRnet)
-mindate <- "2022-03-18 00:00:00"
-maxdate <- "2022-04-16 00:00:00"
-intwindow <- 24*60
-netwindow <- 352
-overlap <- 0
-spacewindow <- 0
-
-movenetdat <- MoveNetCreate(
-  data = cmr,
-  intwindow = intwindow,
-  mindate = mindate,
-  maxdate = maxdate,
-  netwindow = netwindow,
-  overlap = overlap,
-  nextonly = TRUE,
-  index = FALSE
-)
-```
-
-## Network Analysis Karate Club Example
-
-```{r network-analysis-karate-example}
-#create a table that extracts the information needed from the dataset."Turn your data into a list of connections: for each individual within each time window, find all sites where it was recorded; find all unique combinations of sites (if undirected, AB = BA); make a table so that each pair of sites is weighted based on how many times that combination was recorded"
-library(igraphdata)
-data(karate)
-
-library(zoo)
-zoo::rollapply
-#https://stackoverflow.com/questions/72779067/r-mutate-new-column-that-tells-me-if-any-row-in-the-next-x-number-of-row-is-be
-
-sals %>% 
-  group_by(pit) %>% 
-  group_by(year) %>% 
-  group_by(pool) %>%
-  arrange(date) %>% 
-  arrange(pit) %>% 
-  mutate(pool_from = first(pool)) %>% 
-  mutate(pool_to = rollapply( #How do I extract the next pool in chronological sequence where the individual was encountered within that season?
-    pool,
-    width = 1,
-    FUN = function
-  ))
-
-# Code below from: https://bookdown.org/jdholster1/idsr/network-analysis.html#
-
-members <- sals$pool
-edges <- 
-
-nodes <- 
-edges <- as.vector(rbind(edges$from, edges$to))
-  
-pool_net <- make_empty_graph(n = length(nodes), directed = F) %>%
-  add_edges(edges) 
-
-pool_net <- pool_net %>%
-  igraph::set.vertex.attribute('group', index = V(G), value = groups)
-
-plot(pool_net, vertex.color="green",  # Changes node color
-     edge.color = 'black',     # Changes edge color
-     vertex.size = 10,         # Changes vertex size
-     vertex.shape = 'circle',  # Changes vertex shape
-     asp = 0,                  # Spread out nodes
-     layout = layout_in_circle)# Format nodes in a circle
-```
 
 ```{r observations-per-year}
 sals %>% 
@@ -392,33 +290,8 @@ environ23 <- sals %>%
 
 fidelity <- left_join(sals_fidelity, environ22, by = c("pool1", "pit"))
 fidelity <- left_join(fidelity, environ23, by = c("pool2", "pit"))
-
-
-# %>% 
-#   summarise(sitings = n(),
-#             pools = unique(pool))
-  
-# sals %>% 
-#   filter(pit %in% sals_fidel) %>%
-#   group_by(pit, year) %>% 
-#   slice(1) %>%
-#   ungroup() %>%
-#   # group_by(pit, pool) %>%
-#   # summarise(sitings = n()) %>%
-#   # mutate(fidelity = case_when(sitings == 2 ~ "yes",
-#   #                             TRUE ~ "no")) %>%
-#   # ungroup() %>%
-#   group_by(pit) %>%
-#   summarise(pools = toString(pool)) %>%
-#   separate_wider_delim(cols = pools, delim = ", ", names = c("pool1", "pool2")) %>%
-#   mutate(fidelity = case_when(pool1 == pool2 ~ "yes",
-#                                TRUE ~ "no"))
-
-  # mutate(fidelity = case_when
-  #           length(unique(pool)) == 1 ~ "yes",
-  #           TRUE ~ "no"))
-
 ```
+
 Then with the model, walk through all the necessary steps of data splitting into training/testing...
 
 ```{r lm-returns-by-salinity}
