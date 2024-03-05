@@ -218,16 +218,28 @@ sals %>%
   group_by(pit) %>% 
   count(pool)
 
+pools <- pools %>% 
+  mutate(date = as.Date(date)) %>% 
+  mutate(year = as.numeric(format(date,'%Y'))) 
+
+pools <- pools %>% 
+  mutate(year = as.character(year)) %>% 
+  mutate(year = case_when(
+    year == "20" ~ "2020",
+    year == "21" ~ "2021",
+    .default = year)) 
+
 pools %>% 
-  mutate(year = )
+  filter(year %in% c("2016","2017","2018","2019","2020","2021")) %>% 
   mutate(pool = factor(pool, levels = c("0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"))) %>%
+  drop_na(pool) %>% 
   ggplot(aes(pool, total), fill = first_year) + #Okay what am I actually plotting here?
   geom_col() + 
   facet_wrap(~ year) +
   labs(title = "Breeding Pools Used by Salamanders",
        subtitle = "Across Seven Seasons",
        x = "Pool",
-       y = "Individual Salamanders Observed")
+       y = "Total Salamander Observations")
 ```
 
 ```{r observations-per-year}
@@ -290,6 +302,10 @@ environ23 <- sals %>%
 
 fidelity <- left_join(sals_fidelity, environ22, by = c("pool1", "pit"))
 fidelity <- left_join(fidelity, environ23, by = c("pool2", "pit"))
+
+fidelity <- fidelity %>% 
+  mutate(salinity_change = pool2_salinity - pool1_salinity) %>% #Should it be pool2 - pool1 or the other way around?
+  mutate(temp_change = pool2_temp - pool1_temp)
 ```
 
 Then with the model, walk through all the necessary steps of data splitting into training/testing...
