@@ -6,20 +6,20 @@ output: github_document
 ---
 
 ```{r load-packages, include = FALSE}
-library(tidyverse)
-library(broom)
-library(readr)
-library(ggplot2)
-library(dplyr)
-library(lubridate)
-library(igraph)
-install.packages("ggnetwork")
-library(ggnetwork)
-install.packages("intergraph")
-library(intergraph)
-library(glmnet)
-library(parsnip)
-library(tidymodels)
+# library(tidyverse)
+# library(broom)
+# library(readr)
+# library(ggplot2)
+# library(dplyr)
+# library(lubridate)
+# library(igraph)
+# install.packages("ggnetwork")
+# library(ggnetwork)
+# install.packages("intergraph")
+# library(intergraph)
+# library(glmnet)
+# library(parsnip)
+# library(tidymodels)
 ```
 
 ```{r load-data, include = TRUE}
