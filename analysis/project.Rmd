@@ -4,27 +4,41 @@ author: "Georgia Lattig"
 date: "03/01/24"
 output: github_document
 ---
+```{r install-packages, include = FALSE}
+# install.packages("tidyverse")
+# install.packages("broom")
+# install.packages("readr")
+# install.packages("ggplot2")
+# install.packages("dplyr")
+# install.packages("lubridate")
+# install.packages("igraph")
+# install.packages("ggnetwork")
+# install.packages("intergraph")
+# install.packages("glmnet")
+# install.packages("parsnip")
+# install.packages("tidymodels")
+# install.packages("ggridges")
+```
 
 ```{r load-packages, include = FALSE}
-# library(tidyverse)
-# library(broom)
-# library(readr)
-# library(ggplot2)
-# library(dplyr)
-# library(lubridate)
-# library(igraph)
-# install.packages("ggnetwork")
-# library(ggnetwork)
-# install.packages("intergraph")
-# library(intergraph)
-# library(glmnet)
-# library(parsnip)
-# library(tidymodels)
+library(tidyverse)
+library(broom)
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(igraph)
+library(ggnetwork)
+library(intergraph)
+library(glmnet)
+library(parsnip)
+library(tidymodels)
+library(ggridges)
 ```
 
 ```{r load-data, include = TRUE}
-pools <- read_csv("/cloud/project/data/tidy_data/pools.csv")
-sals <- read_csv("/cloud/project/data/tidy_data/sals.csv")
+pools <- read_csv("/Users/georgialattig/salamanders by the sea/data/tidy_data/pools.csv")
+sals <- read_csv("/Users/georgialattig/salamanders by the sea/data/tidy_data/sals.csv")
 ```
 ## Data Processing
 
@@ -34,7 +48,7 @@ sals <- read_csv("/cloud/project/data/tidy_data/sals.csv")
 
 sals <- sals %>% 
   mutate(first_year = case_when(
-    pit %in% `2022pits` ~ "2022",
+    pit %in% pits22 ~ "2022",
     .default = first_year
   ))
 
@@ -75,13 +89,13 @@ sals %>%
   group_by(pit) %>% 
   count(first_year)
 
-#This code revealed that there is an erroneous pit tag 1299 (I think this is actually the IMG file number). Keep this in mind as I'll have to omit the observation? from my visualizations/analysis.
+#This code revealed that there is an erroneous pit tag 1299 (I think this is actually the IMG file number). Keep this in mind as I'll have to omit the observation from my visualizations/analysis.
 
 sals %>% 
   count(pit)
 ```
 
-Though this is a major pain, I am going to look through the data for each of these 46 PIT tags to determine which color/year should be associated with them. Then I will create a massive case_when function to recode the PIT tags as necessary. I will recode based on information about year of first PIT tag (these are concrete data) or based on the most frequent color tag recorded across seasons. In cases with equal numbers of observations of different color tags, I looked for additional information in the notes column or else trusted the first observation because of increased sampling effort in 2022.
+Though this is a major pain, I am going to look through the data for each of these 46 PIT tags to determine which color/year should be associated with them. Then I will create a massive case_when function to recode the PIT tags as necessary. I will recode based on information about year of first PIT tag (these are concrete data) or based on the most frequent color tag recorded across seasons. In cases with equal numbers of observations of different color tags, I looked for additional information in the notes column or else trusted the 2022 observation because of increased sampling effort in 2022. Reasons are given for each decision within the code below.
 
 ```{r recode-pit-year}
 sals <- sals %>% 
@@ -189,7 +203,11 @@ sals <- sals %>%
 ```{r pit-counts-by-year}
 sals %>% 
   group_by(year) %>% 
-  count()
+  count(pit)
+
+sals %>% 
+  count(pit)
+#The code above reveals that there are 249 uniquely PIT tagged individuals
 
 sals %>% 
   group_by(pit) %>% 
@@ -243,17 +261,18 @@ pools %>%
        subtitle = "Across Seven Seasons",
        x = "Pool",
        y = "Total Salamander Observations")
+##Change the units here as they are adding up "totals"... Does that work?
 ```
 
 ```{r observations-per-year}
 sals %>% 
   group_by(year) %>% 
   count()
-#There were more salamander observations than just 291 but the data in 2023 did not record untagged/uncaptured salamanders as their own rows
+#There were more salamander observations than just 291 but the data in 2023 did not record untagged/uncaptured salamanders as their own rows unlike 2022 data (something to fix going forward?)
 ```
-## Modeling
+## Modeling Site Fidelity
 
-### Site Fidelity
+### Data Preparation
 
 How can I make a model that looks at site fidelity? First I would need to modify the data some more, creating a categorical variable `fidelity` for individuals that have returned to the same pool across years "yes" or have not returned to the same pool across years "no". Then I could try to predict the response of the return categorical variable based on salinity? (high/low category or just numerical)...
 
@@ -310,11 +329,67 @@ fidelity <- fidelity %>%
   mutate(salinity_change = pool2_salinity - pool1_salinity) %>% #Should it be pool2 - pool1 or the other way around?
   mutate(temp_change = pool2_temp - pool1_temp) %>% 
   drop_na(pit)
+
+write_csv(fidelity, "/Users/georgialattig/salamanders by the sea/data/tidy_data/fidelity.csv")
 ```
 
-My data consist of 96 individual salamanders that were observed across two years. "Site fidelity" for the sake of this analysis is determined by whether the individual was observed within the same pool on the first night it was observed across 2 seasons. With these data I will model fidelity in response to predictors of change in salinity and change in temperature. 
+My data consist of 96 individual salamanders that were observed across two years. "Site fidelity" for the sake of this analysis is determined by whether the individual was observed within the same pool on the first night it was observed across 2 seasons. With these data, I will model fidelity in response to predictors of change in salinity and change in temperature. 
 
-```{r lm-returns-by-salinity-and-temp}
+### Exploratory Data Visualization
+
+```{r}
+fidelity %>% 
+  right_join(sals, by = "pit") %>% 
+  drop_na(pit, fidelity) %>% 
+ggplot(aes(x = fidelity,
+                  fill = first_year)) +
+  geom_bar() + 
+  scale_fill_manual(values = c("yellow2","pink","orange2","darkred","cornflowerblue")) +
+  labs(title = "Site Fidelity of Individual Spotted Salamanders",
+       subtitle = "Observed Across 2 Seasons",
+       fill = "First Year Observed",
+       x = "Fidelity",
+       y = "Number of Observations") #Fuss with the y axis some more because right now it is including duplicate observations
+```
+
+```{r fidelity-density-plot}
+fidelity %>% 
+  ggplot(aes(salinity_change, fidelity, fill = fidelity, color = fidelity)) + 
+  geom_density_ridges(alpha = 0.5) +
+  labs(title = "Salinity Changes Experienced by 96 Individually-Tagged Salamanders",
+       subtitle = "Faceted by Whether or Not the Individual Exhibited Site Fidelity",
+       fill = "Fidelity",
+       x = "Change in Salinity",
+       y = "Number of Individuals")
+```
+
+```{r fidelity-histogram}
+fidelity %>% 
+  ggplot(aes(salinity_change))+
+  geom_histogram(binwidth = 3) +
+  facet_wrap(~ fidelity) +
+  labs(title = "Salinity Changes Experienced by 96 Individually-Tagged Salamanders",
+       subtitle = "Faceted by Whether or Not the Individual Exhibited Site Fidelity",
+       x = "Change in Salinity",
+       y = "Number of Individuals")
+```
+
+```{r scatterplot}
+ggplot(data = fidelity,
+       mapping = aes(x = salinity_change,
+                     y = temp_change,
+                     colour = fidelity)) +
+  geom_point() +
+  labs(title = "Salinity Change and Temperature Change of Breeding Pool",
+       subtitle = "Across Two Years",
+       x = "Salinity Change", y = "Temp Change",
+       colour = "Fidelity") +
+  scale_colour_manual(values = c("darkred", "cornflowerblue"))
+```
+
+### Fitting a Model
+
+```{r model-split-data}
 set.seed(21)
 fidel_split <- initial_split(fidelity)
 
@@ -323,19 +398,22 @@ dim(fidel_train)
 
 fidel_test  <- testing(fidel_split)
 dim(fidel_test)
+```
 
+```{r model-build workflow}
 fidelity_mod <- logistic_reg() %>%
   set_engine("glm") 
 
-fidel_rec <- recipe(fidelity ~ salinity_change + temp_change, data = fidel_train, family = "binomial")
+fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, data = fidel_train, family = "binomial")
+# Do my response variables make sense? Should I standardize them somehow because right now there are both positive and negative differences... How would I interpret the model then? I could create another categorical variable "increase" or "decrease"..?
 
 fidel_wflow <- workflow() %>%
   add_model(fidelity_mod) %>%
   add_recipe(fidel_rec)
 
-fidel_fit <- fidel_wflow %>%
-  fit(data = fidel_train)
-tidy(fidel_fit)
+# fidel_fit <- fidel_wflow %>%
+#   fit(data = fidel_train)
+# tidy(fidel_fit)
 
 # fidelity_main_fit <- linear_reg() %>%
 #   set_engine("lm") %>%
