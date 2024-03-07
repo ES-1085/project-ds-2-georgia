@@ -17,16 +17,16 @@ library(lubridate)
 ```
 
 ```{r load-data, message = FALSE}
-op15 <- read_csv("/cloud/project/data/raw_data/otter point - 2015.csv")
-op16 <- read_csv("/cloud/project/data/raw_data/otter point - 2016.csv")
-op17 <- read_csv("/cloud/project/data/raw_data/otter point - 2017.csv")
-op18 <- read_csv("/cloud/project/data/raw_data/otter point - 2018.csv")
-op19 <- read_csv("/cloud/project/data/raw_data/otter point - 2019.csv")
-op20 <- read_csv("/cloud/project/data/raw_data/otter point - 2020.csv")
-op21 <- read_csv("/cloud/project/data/raw_data/otter point - 2021.csv")
-op22 <- read_csv("/cloud/project/data/raw_data/otter point - 2022.csv")
-sals22 <- read_csv("/cloud/project/data/raw_data/otter point - 2022_sals.csv")
-op23 <- read_csv("/cloud/project/data/raw_data/otter point - 2023.csv")
+op15 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2015.csv")
+op16 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2016.csv")
+op17 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2017.csv")
+op18 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2018.csv")
+op19 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2019.csv")
+op20 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2020.csv")
+op21 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2021.csv")
+op22 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2022.csv")
+sals22 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2022_sals.csv")
+op23 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2023.csv")
 ```
 
 ## Data Tidying
@@ -330,20 +330,20 @@ op21 <- op21 %>%
 
 I am running into a slight issue in that the data for 2022-2023 is in a very different format, with each observation being an individual salamander after PIT-tagging was implemented. I'm going to merge the datasets I just cleaned (op15-op21) which could be used to look at return rates. I could select out only the same data/variables as the past years in order to do this kind of analysis but more tidying will have to be done. For now I will merge the tidied datasets op15-op21 and do a similar tidying/merge of datasets op22, sals 22 and op23.
 
-```{r tidy-22}
-nights22 <- op22 %>% 
-  select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes)
-```
+# ```{r tidy-22}
+# nights22 <- op22 %>% 
+#   select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes)
+# ```
 
-```{r tidy-23}
-nights23 <- op23 %>% 
-  select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes)
-```
+# ```{r tidy-23}
+# nights23 <- op23 %>% 
+#   select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes)
+# ```
 
 ```{r bind_&_write_nightly-op-sets-15-21}
 pools <- rbind(op15, op16, op17, op18, op19, op20, op21)
 
-write_csv(pools, "/cloud/project/data/tidy_data/pools.csv")
+write_csv(pools, "/Users/georgialattig/salamanders by the sea/data/tidy_data/pools.csv")
 ```
 
 ### 2022-2023 Tracking Individual Salamanders (PIT CMR)
@@ -457,6 +457,6 @@ individuals23 <- individuals23 %>%
 ```{r merge_&_write_individuals-sets}
 sals <- rbind(individuals22, individuals23)
 
-write_csv(sals, "/cloud/project/data/tidy_data/sals.csv")
+write_csv(sals, "/Users/georgialattig/salamanders by the sea/data/tidy_data/sals.csv")
 ```
 
