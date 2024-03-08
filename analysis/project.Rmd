@@ -328,7 +328,9 @@ fidelity <- left_join(fidelity, environ23, by = c("pool2", "pit"))
 fidelity <- fidelity %>% 
   mutate(salinity_change = pool2_salinity - pool1_salinity) %>% #Should it be pool2 - pool1 or the other way around?
   mutate(temp_change = pool2_temp - pool1_temp) %>% 
-  drop_na(pit)
+  drop_na(pit) %>% 
+  mutate(salinity_magnitude = abs(salinity_change)) %>% 
+  mutate(temp_magnitude = abs(temp_change))
 
 write_csv(fidelity, "/Users/georgialattig/salamanders by the sea/data/tidy_data/fidelity.csv")
 ```
@@ -337,7 +339,7 @@ My data consist of 96 individual salamanders that were observed across two years
 
 ### Exploratory Data Visualization
 
-```{r}
+```{r fidelity-first-year-barplot, include = FALSE}
 fidelity %>% 
   right_join(sals, by = "pit") %>% 
   drop_na(pit, fidelity) %>% 
@@ -352,9 +354,9 @@ ggplot(aes(x = fidelity,
        y = "Number of Observations") #Fuss with the y axis some more because right now it is including duplicate observations
 ```
 
-```{r fidelity-density-plot}
+```{r fidelity-density-plot, include = FALSE}
 fidelity %>% 
-  ggplot(aes(salinity_change, fidelity, fill = fidelity, color = fidelity)) + 
+  ggplot(aes(salinity_change, fidelity, fill = fidelity)) + 
   geom_density_ridges(alpha = 0.5) +
   labs(title = "Salinity Changes Experienced by 96 Individually-Tagged Salamanders",
        subtitle = "Faceted by Whether or Not the Individual Exhibited Site Fidelity",
@@ -363,7 +365,7 @@ fidelity %>%
        y = "Number of Individuals")
 ```
 
-```{r fidelity-histogram}
+```{r fidelity-salinity-change-histogram, include = TRUE}
 fidelity %>% 
   ggplot(aes(salinity_change))+
   geom_histogram(binwidth = 3) +
@@ -374,17 +376,83 @@ fidelity %>%
        y = "Number of Individuals")
 ```
 
-```{r scatterplot}
-ggplot(data = fidelity,
-       mapping = aes(x = salinity_change,
+```{r fidelity-salinity-temp-change-scatterplots}
+fidelity %>% 
+  group_by(pool1) %>% 
+  count()
+
+fidelity %>% 
+   mutate(pool1 = factor(pool1, levels = c("0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"))) %>%
+  filter(pool1 %in% c("0","1","3","5","6","7","11","12","13","15")) %>% 
+  ggplot(mapping = aes(x = salinity_change,
                      y = temp_change,
                      colour = fidelity)) +
-  geom_point() +
-  labs(title = "Salinity Change and Temperature Change of Breeding Pool",
-       subtitle = "Across Two Years",
-       x = "Salinity Change", y = "Temp Change",
+  geom_jitter() +
+  facet_wrap(~ pool1) +
+  labs(title = "Salinity Change and Temperature Change of Spotted Salamander Breeding Pools",
+       subtitle = "Used by Salamanders Returning to the Site Across Two Years",
+       x = "Salinity Change (ppt)", y = "Temperature Change (C)",
        colour = "Fidelity") +
+  theme_bw() +
   scale_colour_manual(values = c("darkred", "cornflowerblue"))
+
+## Zoom in on values close to zero`
+  
+fidelity %>% 
+   mutate(pool1 = factor(pool1, levels = c("0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"))) %>%
+  filter(pool1 %in% c("0","1","3","5","6","7","11","12","13","15")) %>% 
+  ggplot(mapping = aes(x = salinity_change,
+                     y = temp_change,
+                     colour = fidelity)) +
+  geom_jitter() +
+  coord_cartesian(xlim = c(-0.5, 0.3), ylim = c(-2, 10)) +
+  facet_wrap(~ pool1) +
+  labs(title = "Salinity Change and Temperature Change of Spotted Salamander Breeding Pools",
+       subtitle = "Used by Salamanders Returning to the Site Across Two Years",
+       x = "Salinity Change (ppt)", y = "Temperature Change (C)",
+       colour = "Fidelity") +
+  theme_bw() +
+  scale_colour_manual(values = c("darkred", "cornflowerblue"))
+```
+
+```{r salinity-change-boxplot, include = FALSE}
+ggplot(fidelity, aes(x = salinity_change)) +
+  geom_boxplot() +
+  coord_flip() +
+  facet_wrap(~ fidelity) +
+  labs(title = "Salinity Changes Experienced by 96 Individual A.maculatum",
+       subtitle = "Who Returned in 2023",
+       x = "Salinity Change")
+```
+
+```{r fidelity-pool-barplots, include = TRUE}
+fidelity %>% 
+  mutate(pool1 = factor(pool1, levels = c("0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"))) %>%
+  mutate(sal = 1) %>% 
+  ggplot(aes(x = pool1, y = sal, fill = fidelity)) +
+  geom_bar(position="fill", stat="identity") +
+  scale_fill_manual(values = c("darkred", "cornflowerblue")) +
+  theme_minimal(base_line_size = 7/22) +
+  labs(title = "Proportion of Site Fidelity Exhibited by Individual Spotted Salamanders",
+       subtitle = "Across 15 Breeding Pools",
+       fill = "Fidelity",
+       x = "Breeding Pool",
+       y = "Number of Salamanders")
+
+fidelity %>% 
+  mutate(pool1 = factor(pool1, levels = c("0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"))) %>%
+  mutate(sal = 1) %>% 
+  ggplot(aes(x = pool1, y = sal, fill = fidelity)) +
+  geom_bar(position="stack", stat="identity") +
+  scale_fill_manual(values = c("darkred", "cornflowerblue")) +
+  theme_minimal(base_line_size = 7/22) +
+  labs(title = "Site Fidelity of Individual Spotted Salamanders",
+       subtitle = "Across 15 Breeding Pools",
+       fill = "Fidelity",
+       x = "Initial Breeding Pool",
+       y = "Number of Salamanders")
+
+## Potentially add labels or change tick marks to make the differences in scale more apparent
 ```
 
 ### Fitting a Model
@@ -404,12 +472,13 @@ dim(fidel_test)
 fidelity_mod <- logistic_reg() %>%
   set_engine("glm") 
 
-fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, data = fidel_train, family = "binomial")
+fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
+                       data = fidel_train, family = "binomial")
 # Do my response variables make sense? Should I standardize them somehow because right now there are both positive and negative differences... How would I interpret the model then? I could create another categorical variable "increase" or "decrease"..?
 
 fidel_wflow <- workflow() %>%
   add_model(fidelity_mod) %>%
-  add_recipe(fidel_rec)
+  add_recipe(fidelity_rec)
 
 # fidel_fit <- fidel_wflow %>%
 #   fit(data = fidel_train)
