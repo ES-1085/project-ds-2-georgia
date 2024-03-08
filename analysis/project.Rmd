@@ -330,7 +330,12 @@ fidelity <- fidelity %>%
   mutate(temp_change = pool2_temp - pool1_temp) %>% 
   drop_na(pit) %>% 
   mutate(salinity_magnitude = abs(salinity_change)) %>% 
-  mutate(temp_magnitude = abs(temp_change))
+  mutate(temp_magnitude = abs(temp_change)) 
+
+##Create direction variables for both salinity & temp change where, if the value was negative, direction = decrease and if the value was positive, direction = increase
+
+  mutate(sal_change_direction = if_else(salinity_change ~)) %>% 
+  mutate(temp_change_direction = if_else(salinity_change)
 
 write_csv(fidelity, "/Users/georgialattig/salamanders by the sea/data/tidy_data/fidelity.csv")
 ```
@@ -376,7 +381,7 @@ fidelity %>%
        y = "Number of Individuals")
 ```
 
-```{r fidelity-salinity-temp-change-scatterplots}
+```{r fidelity-salinity-temp-change-scatterplots, include = TRUE}
 fidelity %>% 
   group_by(pool1) %>% 
   count()
@@ -456,6 +461,12 @@ fidelity %>%
 ```
 
 ### Fitting a Model
+
+Some of my target questions with the `fidelity` dataset to explore with models are as follows: 
+1. Does the site fidelity of individual salamanders vary with a change in the environmental factors of their breeding pools (salinity, temperature)?
+2. Does the site fidelity of individual salamanders vary with the the direction of change in salinity/temperature (increase/decrease) or the magnitude of change in salinity/temperature?
+3. Does the site fidelity of individual salamanders vary with the salinity/temperature of the breeding pool they experienced during the previous season?
+4. Does the site fidelity of individual salamanders vary with the breeding pool they were found in first the previous season?
 
 ```{r model-split-data}
 set.seed(21)
