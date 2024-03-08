@@ -330,12 +330,14 @@ fidelity <- fidelity %>%
   mutate(temp_change = pool2_temp - pool1_temp) %>% 
   drop_na(pit) %>% 
   mutate(salinity_magnitude = abs(salinity_change)) %>% 
-  mutate(temp_magnitude = abs(temp_change)) 
+  mutate(temp_magnitude = abs(temp_change)) %>% 
 
 ##Create direction variables for both salinity & temp change where, if the value was negative, direction = decrease and if the value was positive, direction = increase
 
-  mutate(sal_change_direction = if_else(salinity_change ~)) %>% 
-  mutate(temp_change_direction = if_else(salinity_change)
+  mutate(sal_change_direction = if_else(
+    salinity_change < 0, "decrease", "increase")) %>% 
+  mutate(temp_change_direction = if_else(
+    temp_change < 0, "decrease", "increase"))
 
 write_csv(fidelity, "/Users/georgialattig/salamanders by the sea/data/tidy_data/fidelity.csv")
 ```
