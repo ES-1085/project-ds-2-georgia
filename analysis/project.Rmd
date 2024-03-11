@@ -534,45 +534,35 @@ fidelity_mod <- logistic_reg() %>%
   set_engine("glm") 
 ```
 
-```{r salinity_change model}
-fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
+```{r salinity_change+temp_change model}
+sal_temp_change_rec <- recipe(fidelity ~ salinity_change + temp_change, 
                        data = fidel_train, family = "binomial")
+
+sal_temp_change_wflow <- workflow() %>%
+  add_model(fidelity_mod) %>%
+  add_recipe(sal_temp_change_rec)
+
+sal_temp_change_fit <- sal_temp_change_wflow %>%
+  fit(data = fidel_train)
+tidy(sal_temp_change_fit)
 ```
 
-```{r temperature_change model}
-fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
+```{r salinity_change*temp_change model}
+sal_temp_int_rec <- recipe(fidelity ~ salinity_change * temp_change, 
                        data = fidel_train, family = "binomial")
+
+sal_temp_int_wflow <- workflow() %>%
+  add_model(fidelity_mod) %>%
+  add_recipe(sal_temp_int_rec)
+
+sal_temp_int_fit <- sal_temp_int_wflow %>%
+  fit(data = fidel_train)
+tidy(sal_temp_int_fit)
 ```
 
 ```{r salinity_mag_change*direction model}
 fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
                        data = fidel_train, family = "binomial")
-```
-
-```{r temp_mag_change_model*direction model}
-fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
-                       data = fidel_train, family = "binomial")
-```
-
-```{r pool1_salinity*salinity_change model}
-fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
-                       data = fidel_train, family = "binomial")
-```
-
-
-```{r pool1_temp*temp_change model}
-```
-
-
-
-
-
-
-```{r}
-
-fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
-                       data = fidel_train, family = "binomial")
-# Do my response variables make sense? Should I standardize them somehow because right now there are both positive and negative differences... How would I interpret the model then? I could create another categorical variable "increase" or "decrease"..?
 
 fidel_wflow <- workflow() %>%
   add_model(fidelity_mod) %>%
@@ -581,10 +571,44 @@ fidel_wflow <- workflow() %>%
 # fidel_fit <- fidel_wflow %>%
 #   fit(data = fidel_train)
 # tidy(fidel_fit)
-
-# fidelity_main_fit <- linear_reg() %>%
-#   set_engine("lm") %>%
-#   fit(fidelity ~ salinity + pool_temp + pool, data = sals)
-# tidy(fidelity_main_fit)
 ```
 
+```{r temp_mag_change_model*direction model}
+fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
+                       data = fidel_train, family = "binomial")
+
+fidel_wflow <- workflow() %>%
+  add_model(fidelity_mod) %>%
+  add_recipe(fidelity_rec)
+
+# fidel_fit <- fidel_wflow %>%
+#   fit(data = fidel_train)
+# tidy(fidel_fit)
+```
+
+```{r pool1_salinity*salinity_change model}
+fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
+                       data = fidel_train, family = "binomial")
+
+fidel_wflow <- workflow() %>%
+  add_model(fidelity_mod) %>%
+  add_recipe(fidelity_rec)
+
+# fidel_fit <- fidel_wflow %>%
+#   fit(data = fidel_train)
+# tidy(fidel_fit)
+```
+
+
+```{r pool1_temp*temp_change model}
+fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
+                       data = fidel_train, family = "binomial")
+
+fidel_wflow <- workflow() %>%
+  add_model(fidelity_mod) %>%
+  add_recipe(fidelity_rec)
+
+# fidel_fit <- fidel_wflow %>%
+#   fit(data = fidel_train)
+# tidy(fidel_fit)
+```
