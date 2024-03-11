@@ -1,5 +1,5 @@
 ---
-title: "Salamanders by the Sea: Site Fidelity and Interpool Movement of Spotted Salamanders Breeding in Rocky Cliff Pools"
+title: "Salamanders by the Sea: Site Fidelity of Spotted Salamanders Breeding in Rocky Cliff Pools by the Atlantic Ocean"
 author: "Georgia Lattig"
 date: "03/01/24"
 output: github_document
@@ -18,6 +18,10 @@ output: github_document
 # install.packages("parsnip")
 # install.packages("tidymodels")
 # install.packages("ggridges")
+# install.packages("hrbrthemes")
+# install.packages("viridis")
+# install.packages("plotly")
+# install.packages("heatmaply")
 ```
 
 ```{r load-packages, include = FALSE}
@@ -34,6 +38,10 @@ library(glmnet)
 library(parsnip)
 library(tidymodels)
 library(ggridges)
+library(hrbrthemes)
+library(viridis)
+library(plotly)
+library(heatmaply)
 ```
 
 ```{r load-data, include = TRUE}
@@ -177,7 +185,7 @@ sals <- sals %>%
 ```
 
 
-```{r check-pit-year-again, include = FALSE}
+```{r check-first-year-again, include = FALSE}
 sals %>% 
   group_by(pit) %>% 
   count(first_year)
@@ -262,6 +270,11 @@ pools %>%
        x = "Pool",
        y = "Total Salamander Observations")
 ##Change the units here as they are adding up "totals"... Does that work?
+
+pools %>% 
+  group_by(pool) %>% 
+  count() %>% 
+  arrange(n)
 ```
 
 ```{r observations-per-year}
@@ -274,7 +287,7 @@ sals %>%
 
 ### Data Preparation
 
-How can I make a model that looks at site fidelity? First I would need to modify the data some more, creating a categorical variable `fidelity` for individuals that have returned to the same pool across years "yes" or have not returned to the same pool across years "no". Then I could try to predict the response of the return categorical variable based on salinity? (high/low category or just numerical)...
+How can I make a model that looks at site fidelity? First I would need to modify the data some more, creating a categorical variable `fidelity` for individuals that have returned to the same pool across years "yes" or have not returned to the same pool across years "no". Then I could try to predict the response of that categorical variable (`fidelity`) based on salinity? (high/low category or just numerical)...
 
 ```{r set-up-data-for-model-fidelity}
 sals_sight_twice <- sals %>% 
@@ -342,7 +355,7 @@ fidelity <- fidelity %>%
 write_csv(fidelity, "/Users/georgialattig/salamanders by the sea/data/tidy_data/fidelity.csv")
 ```
 
-My data consist of 96 individual salamanders that were observed across two years. "Site fidelity" for the sake of this analysis is determined by whether the individual was observed within the same pool on the first night it was observed across 2 seasons. With these data, I will model fidelity in response to predictors of change in salinity and change in temperature. 
+My data consist of 96 individual salamanders that were observed across two years. All 96 individuals were PIT-tagged in 2022 and returned to Otter Point in 2023. "Site fidelity" for the sake of this analysis is determined by whether the individual was observed within the same pool on the first night it was observed/found across both seasons. i.e. Did the individual return to the same first pool in 2022 and 2023. With these data, I will model fidelity in response to predictors of change in salinity and change in temperature, as well as see whether the fidelity depends on the pools themselves because there may be other characteristics of the breeding pools that could affect fidelity that aren't reflected in the environmental conditions. 
 
 ### Exploratory Data Visualization
 
@@ -375,11 +388,21 @@ fidelity %>%
 ```{r fidelity-salinity-change-histogram, include = TRUE}
 fidelity %>% 
   ggplot(aes(salinity_change))+
-  geom_histogram(binwidth = 3) +
+  geom_histogram(binwidth = 2) +
   facet_wrap(~ fidelity) +
-  labs(title = "Salinity Changes Experienced by 96 Individually-Tagged Salamanders",
+  labs(title = "Salinity Changes Experienced by 96 Individually-Tagged Salamanders Across 2 Seasons",
        subtitle = "Faceted by Whether or Not the Individual Exhibited Site Fidelity",
-       x = "Change in Salinity",
+       x = "Change in Salinity (ppt)",
+       y = "Number of Individuals")
+```
+```{r fidelity-temp-change-histogram, include = TRUE}
+fidelity %>% 
+  ggplot(aes(temp_change)) +
+  geom_histogram(binwidth = 2) +
+  facet_wrap(~ fidelity) +
+  labs(title = "Temperature Changes Experienced by 96 Individually-Tagged Salamanders Across 2 Seasons",
+       subtitle = "Faceted by Whether or Not the Individual Exhibited Site Fidelity",
+       x = "Change in Temperature (C)",
        y = "Number of Individuals")
 ```
 
@@ -461,17 +484,40 @@ fidelity %>%
 
 ## Potentially add labels or change tick marks to make the differences in scale more apparent
 ```
+Below I looked into creating a heatmap that would plot pathways between pools (pool 1 on x axis and pool 2 on y axis). Tabling this for now depending on the route I go with the logistic regression modeling. I have a feeling I'm going to focus more on the environmental conditions of pools in relation to fidelity this time around, less on the pools themselves.
+
+```{r pool-fidelity-heatmap, include = FALSE}
+fidelity %>% 
+  group_by(pool1) %>% 
+  count
+
+fidelity %>% 
+  group_by(pool2) %>% 
+  count
+
+hmfidel <- fidelity %>% 
+  group_by(pool1, pool2) %>% 
+  count() %>% 
+  mutate(connections = n) %>% 
+  mutate(connections = as.numeric(connections)) 
+
+hmfidelmat <- as.matrix(hmfidel)
+
+#Need to work harder to get this into proper matrix format for heatmapping
+
+heatmap(hmfidelmat)
+```
 
 ### Fitting a Model
 
 Some of my target questions with the `fidelity` dataset to explore with models are as follows: 
 1. Does the site fidelity of individual salamanders vary with a change in the environmental factors of their breeding pools (salinity, temperature)?
-2. Does the site fidelity of individual salamanders vary with the the direction of change in salinity/temperature (increase/decrease) or the magnitude of change in salinity/temperature?
-3. Does the site fidelity of individual salamanders vary with the salinity/temperature of the breeding pool they experienced during the previous season?
-4. Does the site fidelity of individual salamanders vary with the breeding pool they were found in first the previous season?
+2. Does the site fidelity of individual salamanders vary with the the direction of change in salinity/temperature (increase/decrease) OR the magnitude of change in salinity/temperature?
+3. Does the site fidelity of individual salamanders vary with the salinity/temperature of the breeding pool they experienced in that pool during the previous season?
+4. Does the site fidelity of individual salamanders vary with the breeding pool they were found in first during the previous season?
 
 ```{r model-split-data}
-set.seed(21)
+set.seed(2112)
 fidel_split <- initial_split(fidelity)
 
 fidel_train <- training(fidel_split)
@@ -481,9 +527,48 @@ fidel_test  <- testing(fidel_split)
 dim(fidel_test)
 ```
 
-```{r model-build workflow}
+Below I set up model workflows for many different but related models which I was interested in running and comparing, to see how well each explained the variation in my data.
+
+```{r build-model}
 fidelity_mod <- logistic_reg() %>%
   set_engine("glm") 
+```
+
+```{r salinity_change model}
+fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
+                       data = fidel_train, family = "binomial")
+```
+
+```{r temperature_change model}
+fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
+                       data = fidel_train, family = "binomial")
+```
+
+```{r salinity_mag_change*direction model}
+fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
+                       data = fidel_train, family = "binomial")
+```
+
+```{r temp_mag_change_model*direction model}
+fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
+                       data = fidel_train, family = "binomial")
+```
+
+```{r pool1_salinity*salinity_change model}
+fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
+                       data = fidel_train, family = "binomial")
+```
+
+
+```{r pool1_temp*temp_change model}
+```
+
+
+
+
+
+
+```{r}
 
 fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
                        data = fidel_train, family = "binomial")
