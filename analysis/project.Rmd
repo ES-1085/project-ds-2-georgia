@@ -704,6 +704,46 @@ mag_change_pred %>%
     event_level = "second"
   )
 ```
+
+### fidelity ~ salinity_mag * temp_mag
+
+```{r env_mag_change_model}
+mag_change_int_fit <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(factor(fidelity) ~ salinity_magnitude * temp_magnitude, data = fidel_train, family = "binomial")
+
+mag_change_int_fit
+
+predict(mag_change_int_fit, fidel_test)
+
+mag_change_int_pred <- predict(mag_change_int_fit, fidel_test, type = "prob") %>%
+  bind_cols(fidel_test %>% select(fidelity, salinity_magnitude, temp_magnitude))
+
+mag_change_int_pred
+
+mag_change_int_pred %>%
+  arrange(desc(.pred_yes)) %>%
+  print(n = 10)
+
+mag_change_int_pred <- mag_change_int_pred %>% 
+  mutate(fidelity = factor(fidelity))
+
+mag_change_int_pred %>%
+  roc_curve(
+    truth = fidelity,
+    .pred_yes,
+    event_level = "second"
+  ) %>%
+  autoplot()
+
+mag_change_int_pred %>%
+  roc_auc(
+    truth = fidelity,
+    .pred_yes,
+    event_level = "second"
+  )
+```
+
 ### fidelity ~ salinity_direction + temp_direction 
 
 ```{r env_direction_change model}
@@ -870,3 +910,82 @@ pool1_temp_change_pred %>%
 
 ## Model Widdling, Testing and Comparing
 
+Below are the models that I have run with the highest predictive power (still not all that powerful...).
+
+### fidelity ~ salinity_change * temp_change 
+
+```{r salinity_change*temp_change model}
+sal_temp_int_fit <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(factor(fidelity) ~ salinity_change * temp_change, data = fidel_train, family = "binomial")
+
+sal_temp_int_fit
+
+predict(sal_temp_int_fit, fidel_test)
+
+sal_temp_int_pred <- predict(sal_temp_int_fit, fidel_test, type = "prob") %>%
+  bind_cols(fidel_test %>% select(fidelity, salinity_change, temp_change))
+
+sal_temp_int_pred
+
+sal_temp_int_pred %>%
+  arrange(desc(.pred_yes)) %>%
+  print(n = 10)
+
+sal_temp_int_pred <- sal_temp_int_pred %>% 
+  mutate(fidelity = factor(fidelity))
+
+sal_temp_int_pred %>%
+  roc_curve(
+    truth = fidelity,
+    .pred_yes,
+    event_level = "second"
+  ) %>%
+  autoplot()
+
+sal_temp_int_pred %>%
+  roc_auc(
+    truth = fidelity,
+    .pred_yes,
+    event_level = "second"
+  )
+```
+
+### fidelity ~ pool1 temp * temp change
+
+```{r pool1_temp * temp_change model}
+pool1_temp_change_fit <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(factor(fidelity) ~ pool1_temp * temp_change, data = fidel_train, family = "binomial")
+
+pool1_temp_change_fit
+
+predict(pool1_temp_change_fit, fidel_test)
+
+pool1_temp_change_pred <- predict(pool1_temp_change_fit, fidel_test, type = "prob") %>%
+  bind_cols(fidel_test %>% select(fidelity, pool1_temp, temp_change))
+
+pool1_temp_change_pred
+
+pool1_temp_change_pred %>%
+  arrange(desc(.pred_yes)) %>%
+  print(n = 10)
+
+pool1_temp_change_pred <- pool1_temp_change_pred %>% 
+  mutate(fidelity = factor(fidelity))
+
+pool1_temp_change_pred %>%
+  roc_curve(
+    truth = fidelity,
+    .pred_yes,
+    event_level = "second"
+  ) %>%
+  autoplot()
+
+pool1_temp_change_pred %>%
+  roc_auc(
+    truth = fidelity,
+    .pred_yes,
+    event_level = "second"
+  )
+```
