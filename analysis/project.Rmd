@@ -487,25 +487,25 @@ fidelity %>%
 Below I looked into creating a heatmap that would plot pathways between pools (pool 1 on x axis and pool 2 on y axis). Tabling this for now depending on the route I go with the logistic regression modeling. I have a feeling I'm going to focus more on the environmental conditions of pools in relation to fidelity this time around, less on the pools themselves.
 
 ```{r pool-fidelity-heatmap, include = FALSE}
-fidelity %>% 
-  group_by(pool1) %>% 
-  count
-
-fidelity %>% 
-  group_by(pool2) %>% 
-  count
-
-hmfidel <- fidelity %>% 
-  group_by(pool1, pool2) %>% 
-  count() %>% 
-  mutate(connections = n) %>% 
-  mutate(connections = as.numeric(connections)) 
-
-hmfidelmat <- as.matrix(hmfidel)
-
-#Need to work harder to get this into proper matrix format for heatmapping
-
-heatmap(hmfidelmat)
+# fidelity %>% 
+#   group_by(pool1) %>% 
+#   count
+# 
+# fidelity %>% 
+#   group_by(pool2) %>% 
+#   count
+# 
+# hmfidel <- fidelity %>% 
+#   group_by(pool1, pool2) %>% 
+#   count() %>% 
+#   mutate(connections = n) %>% 
+#   mutate(connections = as.numeric(connections)) 
+# 
+# hmfidelmat <- as.matrix(hmfidel)
+# 
+# #Need to work harder to get this into proper matrix format for heatmapping
+# 
+# heatmap(hmfidelmat)
 ```
 
 ### Fitting a Model
@@ -527,88 +527,74 @@ fidel_test  <- testing(fidel_split)
 dim(fidel_test)
 ```
 
-Below I set up model workflows for many different but related models which I was interested in running and comparing, to see how well each explained the variation in my data.
+Below I ran many different but related models on the training data and compared them to see how well each explained the variation in my data.
 
-```{r build-model}
-fidelity_mod <- logistic_reg() %>%
-  set_engine("glm") 
-```
+### fidelity ~ salinity_change + temp_change 
 
 ```{r salinity_change+temp_change model}
-sal_temp_change_rec <- recipe(fidelity ~ salinity_change + temp_change, 
-                       data = fidel_train, family = "binomial")
+sal_temp_change_fit <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(factor(fidelity) ~ salinity_change + temp_change, data = fidel_train, family = "binomial")
 
-sal_temp_change_wflow <- workflow() %>%
-  add_model(fidelity_mod) %>%
-  add_recipe(sal_temp_change_rec)
-
-sal_temp_change_fit <- sal_temp_change_wflow %>%
-  fit(data = fidel_train)
-tidy(sal_temp_change_fit)
+sal_temp_change_fit
 ```
+
+### fidelity ~ salinity_change * temp_change 
 
 ```{r salinity_change*temp_change model}
-sal_temp_int_rec <- recipe(fidelity ~ salinity_change * temp_change, 
-                       data = fidel_train, family = "binomial")
+sal_temp_int_fit <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(factor(fidelity) ~ salinity_change * temp_change, data = fidel_train, family = "binomial")
 
-sal_temp_int_wflow <- workflow() %>%
-  add_model(fidelity_mod) %>%
-  add_recipe(sal_temp_int_rec)
-
-sal_temp_int_fit <- sal_temp_int_wflow %>%
-  fit(data = fidel_train)
-tidy(sal_temp_int_fit)
+sal_temp_int_fit
 ```
 
-```{r salinity_mag_change*direction model}
-fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
-                       data = fidel_train, family = "binomial")
+### fidelity ~ salinity mag * change + temp mag * change
+```{r env_mag_change*direction model}
+env_mag_change_fit <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(factor(fidelity) ~ salinity_magnitude * sal_change_direction + temp_magnitude * temp_change_direction, data = fidel_train, family = "binomial")
 
-fidel_wflow <- workflow() %>%
-  add_model(fidelity_mod) %>%
-  add_recipe(fidelity_rec)
+env_mag_change_fit
+```
+### fidelity ~ salinity_mag + temp_mag
 
-# fidel_fit <- fidel_wflow %>%
-#   fit(data = fidel_train)
-# tidy(fidel_fit)
+```{r env_mag_change_model}
+mag_change_fit <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(factor(fidelity) ~ salinity_magnitude + temp_magnitude, data = fidel_train, family = "binomial")
+
+mag_change_fit
+```
+### fidelity ~ salinity_direction + temp_direction 
+
+```{r env_direction_change model}
+env_direction_change_fit <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(factor(fidelity) ~ sal_change_direction + temp_change_direction, data = fidel_train, family = "binomial")
+
+env_direction_change_fit
+```
+```{r pool1 model}
+pool1_fit <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(factor(fidelity) ~ factor(pool1), data = fidel_train, family = "binomial")
+
+pool1_fit
 ```
 
-```{r temp_mag_change_model*direction model}
-fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
-                       data = fidel_train, family = "binomial")
+```{r pool1_salinity * salinity_change model}
+pool1_sal_change_fit <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(factor(fidelity) ~ pool1_salinity * salinity_change, data = fidel_train, family = "binomial")
 
-fidel_wflow <- workflow() %>%
-  add_model(fidelity_mod) %>%
-  add_recipe(fidelity_rec)
+pool1_sal_change_fit
+```
+```{r pool1_temp * temp_change model}
+pool1_temp_change_fit <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(factor(fidelity) ~ pool1_temp * temp_change, data = fidel_train, family = "binomial")
 
-# fidel_fit <- fidel_wflow %>%
-#   fit(data = fidel_train)
-# tidy(fidel_fit)
+pool1_temp_change_fit
 ```
 
-```{r pool1_salinity*salinity_change model}
-fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
-                       data = fidel_train, family = "binomial")
-
-fidel_wflow <- workflow() %>%
-  add_model(fidelity_mod) %>%
-  add_recipe(fidelity_rec)
-
-# fidel_fit <- fidel_wflow %>%
-#   fit(data = fidel_train)
-# tidy(fidel_fit)
-```
-
-
-```{r pool1_temp*temp_change model}
-fidelity_rec <- recipe(factor(fidelity) ~ salinity_change + temp_change, 
-                       data = fidel_train, family = "binomial")
-
-fidel_wflow <- workflow() %>%
-  add_model(fidelity_mod) %>%
-  add_recipe(fidelity_rec)
-
-# fidel_fit <- fidel_wflow %>%
-#   fit(data = fidel_train)
-# tidy(fidel_fit)
-```
