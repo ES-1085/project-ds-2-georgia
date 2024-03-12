@@ -452,8 +452,6 @@ individuals23 <- individuals23 %>%
   mutate(recap = as.factor(recap))
 ```
 
-ˆ
-
 ```{r merge_&_write_individuals-sets}
 sals <- rbind(individuals22, individuals23)
 

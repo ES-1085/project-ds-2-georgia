@@ -6,16 +6,16 @@ Georgia Lattig
 ## Packages and Data
 
 ``` r
-op15 <- read_csv("/cloud/project/data/raw_data/otter point - 2015.csv")
-op16 <- read_csv("/cloud/project/data/raw_data/otter point - 2016.csv")
-op17 <- read_csv("/cloud/project/data/raw_data/otter point - 2017.csv")
-op18 <- read_csv("/cloud/project/data/raw_data/otter point - 2018.csv")
-op19 <- read_csv("/cloud/project/data/raw_data/otter point - 2019.csv")
-op20 <- read_csv("/cloud/project/data/raw_data/otter point - 2020.csv")
-op21 <- read_csv("/cloud/project/data/raw_data/otter point - 2021.csv")
-op22 <- read_csv("/cloud/project/data/raw_data/otter point - 2022.csv")
-sals22 <- read_csv("/cloud/project/data/raw_data/otter point - 2022_sals.csv")
-op23 <- read_csv("/cloud/project/data/raw_data/otter point - 2023.csv")
+op15 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2015.csv")
+op16 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2016.csv")
+op17 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2017.csv")
+op18 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2018.csv")
+op19 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2019.csv")
+op20 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2020.csv")
+op21 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2021.csv")
+op22 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2022.csv")
+sals22 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2022_sals.csv")
+op23 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2023.csv")
 ```
 
 ## Data Tidying
@@ -357,20 +357,14 @@ past years in order to do this kind of analysis but more tidying will
 have to be done. For now I will merge the tidied datasets op15-op21 and
 do a similar tidying/merge of datasets op22, sals 22 and op23.
 
-``` r
-nights22 <- op22 %>% 
-  select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes)
-```
+# `{r tidy-22} # nights22 <- op22 %>%  #   select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes) #`
 
-``` r
-nights23 <- op23 %>% 
-  select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes)
-```
+# `{r tidy-23} # nights23 <- op23 %>%  #   select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes) #`
 
 ``` r
 pools <- rbind(op15, op16, op17, op18, op19, op20, op21)
 
-write_csv(pools, "/cloud/project/data/tidy_data/pools.csv")
+write_csv(pools, "/Users/georgialattig/salamanders by the sea/data/tidy_data/pools.csv")
 ```
 
 ### 2022-2023 Tracking Individual Salamanders (PIT CMR)
@@ -385,66 +379,95 @@ individuals22 <- op22 %>%
     pool = `pool_num`,
     salinity = `salinity_ppt`,
     pit = `pit_num`,
-    pool_temp = `pool_temp_c`) %>% 
-  mutate(year = case_when(
+    first_year = year,
+    pool_temp = `pool_temp_c`)
+
+individuals22 <- individuals22 %>% 
+  mutate(first_year = case_when(
     color == "yellow" ~ "2017",
     color == "pink" ~ "2018",
     color == "orange" ~ "2019",
     color == "red" ~ "2020_2021",
-    .default = year
+    .default = first_year
+  )) %>% 
+  mutate(color = case_when(
+    first_year == "2022" ~ "blue", #assign 2022-marked salamanders a color (even though they don't have VIE tags, this will help with the code and data QAQC)
+    .default = color
   )) %>% 
   mutate(recap = case_when(
-    year == "2017" ~ "yes",
-    year == "2018" ~ "yes",
-    year == "2019" ~ "yes",
-    year == "2020_2021" ~ "yes",
-    year == "2022" ~ "no"
+    first_year == "2017" ~ "yes",
+    first_year == "2018" ~ "yes",
+    first_year == "2019" ~ "yes",
+    first_year == "2020_2021" ~ "yes",
+    first_year == "2022" ~ "no"
   )) %>% 
   mutate(date = as.Date(date, "%m/%d/%Y")) %>% 
   mutate(pool = as.character(pool)) %>% 
   mutate(pit = as.character(pit)) %>% 
   mutate(color = as.character(color)) %>% 
   mutate(sex = as.factor(sex)) %>% 
-  mutate(year = as.character(year)) %>% 
+  mutate(first_year = as.character(first_year)) %>% 
   mutate(salinity = as.numeric(salinity)) %>% 
   mutate(pool_temp = as.numeric(pool_temp)) %>% 
   mutate(recap = as.factor(recap))
 
+# Create pit_year variable for the year that PIT tag was given
+
+pits22 <- individuals22 %>% 
+  filter(str_detect(pit,"\\d"))
+
+individuals22 <- individuals22 %>% 
+  mutate(pit_year = case_when(
+    pit %in% pits22$pit ~ "2022"
+  ))
+
 individuals23 <- op23 %>% 
   mutate(pit_num = str_remove_all(pit_num, "90004300024")) %>% 
+   mutate(color = case_when(
+     new_pit == "y" ~ "green", #assign 2023-marked salamanders a color (even though they don't have VIE tags, this will help with the code and data QAQC)
+     .default = color
+   )) %>% 
+  mutate(pit_year = case_when( # Create pit_year variable for the year that PIT tag was given
+    new_pit == "y" ~ "2023" # Later will need to recode as there are a few errors in new_pit variable
+  )) %>% 
   #Remove 11-digit repeating number sequence before the unique 4-digit combination at the end of PIT IDs
-  select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes) %>% 
+  select(date, pool_num, pit_num, color, sex, year, salinity_ppt, pool_temp_c, notes, pit_year) %>% 
   rename(
     pool = `pool_num`,
     salinity = `salinity_ppt`,
     pit = `pit_num`,
-    pool_temp = `pool_temp_c`) %>% 
-  mutate(year = as.character(year)) %>%
-  mutate(year = case_when(
+    first_year = year,
+    pool_temp = `pool_temp_c`)
+
+individuals23 <- individuals23 %>% 
+  mutate(first_year = as.character(first_year)) %>%
+  mutate(first_year = case_when(
     color == "yellow" ~ "2017",
     color == "pink" ~ "2018",
     color == "orange" ~ "2019",
     color == "red" ~ "2020_2021",
-    .default = year
+    color == "blue" ~ "2022",
+    color == "green" ~ "2023",
+    .default = first_year
   )) %>% 
-  mutate(year = case_when(
-    year == "2021" ~ "2020_2021", #Red VIE tags were used both in 2020 and 2021
-    .default = year
+  mutate(first_year = case_when(
+    first_year == "2021" ~ "2020_2021", #Red VIE tags were used both in 2020 and 2021
+    .default = first_year
   )) %>% 
   mutate(recap = case_when(
-    year == "2017" ~ "yes",
-    year == "2018" ~ "yes",
-    year == "2019" ~ "yes",
-    year == "2020_2021" ~ "yes",
-    year == "2022" ~ "yes",
-    year == "2023" ~ "no"
+    first_year == "2017" ~ "yes",
+    first_year == "2018" ~ "yes",
+    first_year == "2019" ~ "yes",
+    first_year == "2020_2021" ~ "yes",
+    first_year == "2022" ~ "yes",
+    first_year == "2023" ~ "no"
   )) %>% 
   mutate(date = as.Date(date, "%m/%d/%Y")) %>% 
   mutate(pool = as.character(pool)) %>% 
   mutate(pit = as.character(pit)) %>% 
   mutate(color = as.character(color)) %>% 
   mutate(sex = as.factor(sex)) %>% 
-  mutate(year = as.character(year)) %>% 
+  mutate(first_year = as.character(first_year)) %>% 
   mutate(salinity = as.numeric(salinity)) %>% 
   mutate(pool_temp = as.numeric(pool_temp)) %>% 
   mutate(recap = as.factor(recap))
@@ -453,5 +476,5 @@ individuals23 <- op23 %>%
 ``` r
 sals <- rbind(individuals22, individuals23)
 
-write_csv(sals, "/cloud/project/data/tidy_data/sals.csv")
+write_csv(sals, "/Users/georgialattig/salamanders by the sea/data/tidy_data/sals.csv")
 ```
