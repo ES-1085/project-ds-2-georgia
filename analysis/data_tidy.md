@@ -6,16 +6,16 @@ Georgia Lattig
 ## Packages and Data
 
 ``` r
-op15 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2015.csv")
-op16 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2016.csv")
-op17 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2017.csv")
-op18 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2018.csv")
-op19 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2019.csv")
-op20 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2020.csv")
-op21 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2021.csv")
-op22 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2022.csv")
-sals22 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2022_sals.csv")
-op23 <- read_csv("/Users/georgialattig/salamanders by the sea/data/raw_data/otter point - 2023.csv")
+op15 <- read_csv("/Users/georgialattig/seaside salamanders/data/raw_data/otter point - 2015.csv")
+op16 <- read_csv("/Users/georgialattig/seaside salamanders/data/raw_data/otter point - 2016.csv")
+op17 <- read_csv("/Users/georgialattig/seaside salamanders/data/raw_data/otter point - 2017.csv")
+op18 <- read_csv("/Users/georgialattig/seaside salamanders/data/raw_data/otter point - 2018.csv")
+op19 <- read_csv("/Users/georgialattig/seaside salamanders/data/raw_data/otter point - 2019.csv")
+op20 <- read_csv("/Users/georgialattig/seaside salamanders/data/raw_data/otter point - 2020.csv")
+op21 <- read_csv("/Users/georgialattig/seaside salamanders/data/raw_data/otter point - 2021.csv")
+op22 <- read_csv("/Users/georgialattig/seaside salamanders/data/raw_data/otter point - 2022.csv")
+sals22 <- read_csv("/Users/georgialattig/seaside salamanders/data/raw_data/otter point - 2022_sals.csv")
+op23 <- read_csv("/Users/georgialattig/seaside salamanders/data/raw_data/otter point - 2023.csv")
 ```
 
 ## Data Tidying
@@ -364,7 +364,7 @@ do a similar tidying/merge of datasets op22, sals 22 and op23.
 ``` r
 pools <- rbind(op15, op16, op17, op18, op19, op20, op21)
 
-write_csv(pools, "/Users/georgialattig/salamanders by the sea/data/tidy_data/pools.csv")
+write_csv(pools, "/Users/georgialattig/seaside salamanders/data/tidy_data/pools.csv")
 ```
 
 ### 2022-2023 Tracking Individual Salamanders (PIT CMR)
@@ -476,5 +476,5 @@ individuals23 <- individuals23 %>%
 ``` r
 sals <- rbind(individuals22, individuals23)
 
-write_csv(sals, "/Users/georgialattig/salamanders by the sea/data/tidy_data/sals.csv")
+write_csv(sals, "/Users/georgialattig/seaside salamanders/data/tidy_data/sals.csv")
 ```
