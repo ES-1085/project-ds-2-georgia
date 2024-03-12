@@ -550,6 +550,7 @@ sal_temp_int_fit
 ```
 
 ### fidelity ~ salinity mag * change + temp mag * change
+
 ```{r env_mag_change*direction model}
 env_mag_change_fit <- logistic_reg() %>%
   set_engine("glm") %>%
@@ -575,6 +576,8 @@ env_direction_change_fit <- logistic_reg() %>%
 
 env_direction_change_fit
 ```
+### fidelity ~ pool1
+
 ```{r pool1 model}
 pool1_fit <- logistic_reg() %>%
   set_engine("glm") %>%
@@ -582,6 +585,7 @@ pool1_fit <- logistic_reg() %>%
 
 pool1_fit
 ```
+### fidelity ~ pool1 salinity * salinity change
 
 ```{r pool1_salinity * salinity_change model}
 pool1_sal_change_fit <- logistic_reg() %>%
@@ -590,6 +594,8 @@ pool1_sal_change_fit <- logistic_reg() %>%
 
 pool1_sal_change_fit
 ```
+### fidelity ~ pool1 temp * temp change
+
 ```{r pool1_temp * temp_change model}
 pool1_temp_change_fit <- logistic_reg() %>%
   set_engine("glm") %>%
@@ -597,4 +603,5 @@ pool1_temp_change_fit <- logistic_reg() %>%
 
 pool1_temp_change_fit
 ```
+## Model Widdling, Testing and Comparing
 
