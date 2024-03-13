@@ -45,8 +45,8 @@ library(heatmaply)
 ```
 
 ```{r load-data, include = TRUE}
-pools <- read_csv("/Users/georgialattig/salamanders by the sea/data/tidy_data/pools.csv")
-sals <- read_csv("/Users/georgialattig/salamanders by the sea/data/tidy_data/sals.csv")
+pools <- read_csv("/Users/georgialattig/seaside salamanders/data/tidy_data/pools.csv")
+sals <- read_csv("/Users/georgialattig/seaside salamanders/data/tidy_data/sals.csv")
 ```
 ## Data Processing
 
@@ -227,6 +227,7 @@ sals %>%
   count(pool) %>% 
   mutate(pool_prop = n/sum(n))
 ```
+
 ```{r visualize-most-popular-breeding-pools}
 sals %>% 
   drop_na(pit) %>% #Only look at tagged individuals
@@ -241,6 +242,8 @@ sals %>%
        subtitle = "Across Two Seasons",
        x = "Pool",
        y = "PIT Tagged Individuals Observed")
+
+ggsave("/Users/georgialattig/seaside salamanders/visualizations/pool_use_22_23_barplot.tiff", device = "tiff", dpi = 500)
 
 sals %>% 
   group_by(year) %>% 
@@ -270,6 +273,8 @@ pools %>%
        x = "Pool",
        y = "Total Salamander Observations")
 ##Change the units here as they are adding up "totals"... Does that work?
+
+ggsave("/Users/georgialattig/seaside salamanders/visualizations/pool_use_16-21_barplot.tiff", device = "tiff", dpi = 500)
 
 pools %>% 
   group_by(pool) %>% 
@@ -352,7 +357,7 @@ fidelity <- fidelity %>%
   mutate(temp_change_direction = if_else(
     temp_change < 0, "decrease", "increase"))
 
-write_csv(fidelity, "/Users/georgialattig/salamanders by the sea/data/tidy_data/fidelity.csv")
+write_csv(fidelity, "/Users/georgialattig/seaside salamanders/data/tidy_data/fidelity.csv")
 ```
 
 My data consist of 96 individual salamanders that were observed across two years. All 96 individuals were PIT-tagged in 2022 and returned to Otter Point in 2023. "Site fidelity" for the sake of this analysis is determined by whether the individual was observed within the same pool on the first night it was observed/found across both seasons. i.e. Did the individual return to the same first pool in 2022 and 2023. With these data, I will model fidelity in response to predictors of change in salinity and change in temperature, as well as see whether the fidelity depends on the pools themselves because there may be other characteristics of the breeding pools that could affect fidelity that aren't reflected in the environmental conditions. 
@@ -372,6 +377,8 @@ ggplot(aes(x = fidelity,
        fill = "First Year Observed",
        x = "Fidelity",
        y = "Number of Observations") #Fuss with the y axis some more because right now it is including duplicate observations
+
+ggsave("/Users/georgialattig/seaside salamanders/visualizations/fidelity_first_year_barplot.tiff", device = "tiff", dpi = 500)
 ```
 
 ```{r fidelity-density-plot, include = FALSE}
@@ -383,6 +390,8 @@ fidelity %>%
        fill = "Fidelity",
        x = "Change in Salinity",
        y = "Number of Individuals")
+
+ggsave("/Users/georgialattig/seaside salamanders/visualizations/fidelity-salinity-change_density.tiff", device = "tiff", dpi = 500)
 ```
 
 ```{r fidelity-salinity-change-histogram, include = TRUE}
@@ -394,7 +403,10 @@ fidelity %>%
        subtitle = "Faceted by Whether or Not the Individual Exhibited Site Fidelity",
        x = "Change in Salinity (ppt)",
        y = "Number of Individuals")
+
+ggsave("/Users/georgialattig/seaside salamanders/visualizations/fidelity-sal-changes-hist.tiff", device = "tiff", dpi = 500)
 ```
+
 ```{r fidelity-temp-change-histogram, include = TRUE}
 fidelity %>% 
   ggplot(aes(temp_change)) +
@@ -404,6 +416,8 @@ fidelity %>%
        subtitle = "Faceted by Whether or Not the Individual Exhibited Site Fidelity",
        x = "Change in Temperature (C)",
        y = "Number of Individuals")
+
+ggsave("/Users/georgialattig/seaside salamanders/visualizations/fidelity-temp-changes-hist.tiff", device = "tiff", dpi = 500)
 ```
 
 ```{r fidelity-salinity-temp-change-scatterplots, include = TRUE}
@@ -424,7 +438,9 @@ fidelity %>%
        x = "Salinity Change (ppt)", y = "Temperature Change (C)",
        colour = "Fidelity") +
   theme_bw() +
-  scale_colour_manual(values = c("darkred", "cornflowerblue"))
+  scale_colour_manual(values = c("darkorchid4", "gold"))
+
+ggsave("/Users/georgialattig/seaside salamanders/visualizations/fidelity-environment-scatter.tiff", device = "tiff", dpi = 500)
 
 ## Zoom in on values close to zero`
   
@@ -442,7 +458,9 @@ fidelity %>%
        x = "Salinity Change (ppt)", y = "Temperature Change (C)",
        colour = "Fidelity") +
   theme_bw() +
-  scale_colour_manual(values = c("darkred", "cornflowerblue"))
+  scale_colour_manual(values = c("darkorchid4", "gold"))
+
+ggsave("/Users/georgialattig/seaside salamanders/visualizations/fidelity-environment-scatter-ZOOM.tiff", device = "tiff", dpi = 500)
 ```
 
 ```{r salinity-change-boxplot, include = FALSE}
@@ -453,6 +471,8 @@ ggplot(fidelity, aes(x = salinity_change)) +
   labs(title = "Salinity Changes Experienced by 96 Individual A.maculatum",
        subtitle = "Who Returned in 2023",
        x = "Salinity Change")
+
+ggsave("/Users/georgialattig/seaside salamanders/visualizations/salinity_change_boxplot.tiff", device = "tiff", dpi = 500)
 ```
 
 ```{r fidelity-pool-barplots, include = TRUE}
@@ -461,7 +481,7 @@ fidelity %>%
   mutate(sal = 1) %>% 
   ggplot(aes(x = pool1, y = sal, fill = fidelity)) +
   geom_bar(position="fill", stat="identity") +
-  scale_fill_manual(values = c("darkred", "cornflowerblue")) +
+  scale_fill_manual(values = c("darkorchid4", "gold")) +
   theme_minimal(base_line_size = 7/22) +
   labs(title = "Proportion of Site Fidelity Exhibited by Individual Spotted Salamanders",
        subtitle = "Across 15 Breeding Pools",
@@ -469,18 +489,22 @@ fidelity %>%
        x = "Breeding Pool",
        y = "Number of Salamanders")
 
+ggsave("/Users/georgialattig/seaside salamanders/visualizations/fidelity-pools-stacked-barplot.tiff", device = "tiff", dpi = 500)
+
 fidelity %>% 
   mutate(pool1 = factor(pool1, levels = c("0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"))) %>%
   mutate(sal = 1) %>% 
   ggplot(aes(x = pool1, y = sal, fill = fidelity)) +
   geom_bar(position="stack", stat="identity") +
-  scale_fill_manual(values = c("darkred", "cornflowerblue")) +
+  scale_fill_manual(values = c("darkorchid4", "gold")) +
   theme_minimal(base_line_size = 7/22) +
   labs(title = "Site Fidelity of Individual Spotted Salamanders",
        subtitle = "Across 15 Breeding Pools",
        fill = "Fidelity",
        x = "Initial Breeding Pool",
        y = "Number of Salamanders")
+
+ggsave("/Users/georgialattig/seaside salamanders/visualizations/fidelity-pools-scaled-barplot.tiff", device = "tiff", dpi = 500)
 
 ## Potentially add labels or change tick marks to make the differences in scale more apparent
 ```
@@ -782,9 +806,10 @@ env_direction_change_pred %>%
     event_level = "second"
   )
 ```
+
 ### fidelity ~ pool1
 
-```{r pool1 model}
+```{r pool1 model, include = FALSE}
 pool1_fit <- logistic_reg() %>%
   set_engine("glm") %>%
   fit(factor(fidelity) ~ pool1, data = fidel_train, family = "binomial")
@@ -831,6 +856,7 @@ pool1_pred %>%
   )
 
 ```
+
 ### fidelity ~ pool1 salinity * salinity change
 
 ```{r pool1_salinity * salinity_change model}
@@ -869,6 +895,7 @@ pool1_sal_change_pred %>%
     event_level = "second"
   )
 ```
+
 ### fidelity ~ pool1 temp * temp change
 
 ```{r pool1_temp * temp_change model}
