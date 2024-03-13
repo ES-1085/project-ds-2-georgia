@@ -426,6 +426,10 @@ fidelity %>%
   count()
 
 fidelity %>% 
+  group_by(fidelity) %>% 
+  count()
+
+fidelity %>% 
    mutate(pool1 = factor(pool1, levels = c("0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"))) %>%
   filter(pool1 %in% c("0","1","3","5","6","7","11","12","13","15")) %>% 
   ggplot(mapping = aes(x = salinity_change,
@@ -475,7 +479,7 @@ ggplot(fidelity, aes(x = salinity_change)) +
 ggsave("/Users/georgialattig/seaside salamanders/visualizations/salinity_change_boxplot.tiff", device = "tiff", dpi = 500)
 ```
 
-```{r fidelity-pool-barplots, include = TRUE}
+```{r fidelity-pool-barplots, fig.width = 6, fig.height = 4, include = TRUE}
 fidelity %>% 
   mutate(pool1 = factor(pool1, levels = c("0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"))) %>%
   mutate(sal = 1) %>% 
@@ -483,10 +487,10 @@ fidelity %>%
   geom_bar(position="fill", stat="identity") +
   scale_fill_manual(values = c("darkorchid4", "gold")) +
   theme_minimal(base_line_size = 7/22) +
-  labs(title = "Proportion of Site Fidelity Exhibited by Individual Spotted Salamanders",
-       subtitle = "Across 15 Breeding Pools",
+  labs(title = "Proportion of Breeding Pool Site Fidelity Exhibited by Individual Spotted Salamanders",
+       subtitle = "Across 14 Breeding Pools",
        fill = "Fidelity",
-       x = "Breeding Pool",
+       x = "Initial Breeding Pool (2022)",
        y = "Number of Salamanders")
 
 ggsave("/Users/georgialattig/seaside salamanders/visualizations/fidelity-pools-stacked-barplot.tiff", device = "tiff", dpi = 500)
@@ -498,10 +502,10 @@ fidelity %>%
   geom_bar(position="stack", stat="identity") +
   scale_fill_manual(values = c("darkorchid4", "gold")) +
   theme_minimal(base_line_size = 7/22) +
-  labs(title = "Site Fidelity of Individual Spotted Salamanders",
-       subtitle = "Across 15 Breeding Pools",
+  labs(title = "Breeding Pool Site Fidelity of Individual Spotted Salamanders",
+       subtitle = "Across 14 Breeding Pools",
        fill = "Fidelity",
-       x = "Initial Breeding Pool",
+       x = "Initial Breeding Pool (2022)",
        y = "Number of Salamanders")
 
 ggsave("/Users/georgialattig/seaside salamanders/visualizations/fidelity-pools-scaled-barplot.tiff", device = "tiff", dpi = 500)
@@ -689,6 +693,7 @@ env_mag_change_pred %>%
     .pred_yes,
     event_level = "second"
   )
+
 ```
 ### fidelity ~ salinity_mag + temp_mag
 
@@ -810,50 +815,50 @@ env_direction_change_pred %>%
 ### fidelity ~ pool1
 
 ```{r pool1 model, include = FALSE}
-pool1_fit <- logistic_reg() %>%
-  set_engine("glm") %>%
-  fit(factor(fidelity) ~ pool1, data = fidel_train, family = "binomial")
-
-pool1_fit
-
-predict(pool1_fit, fidel_test)
-
-## I am running into an error when I try to predict the model fit on the testing set because there are some pools that appear in the testing set that don't appear in the training set (pool 4) and also pools that appear in the training set that don't appear in the testing set. See below.
-
-fidel_train %>% 
-  count(pool1)
-
-fidel_test %>% 
-  count(pool1)
-
-## 
-
-pool1_pred <- predict(pool1_fit, fidel_test, type = "prob") %>%
-  bind_cols(fidel_test %>% select(fidelity, pool1))
-
-pool1_pred
-
-pool1_pred %>%
-  arrange(desc(.pred_yes)) %>%
-  print(n = 10)
-
-pool1_pred <- pool1_pred %>% 
-  mutate(fidelity = factor(fidelity))
-
-pool1_pred %>%
-  roc_curve(
-    truth = fidelity,
-    .pred_yes,
-    event_level = "second"
-  ) %>%
-  autoplot()
-
-pool1_pred %>%
-  roc_auc(
-    truth = fidelity,
-    .pred_yes,
-    event_level = "second"
-  )
+# pool1_fit <- logistic_reg() %>%
+#   set_engine("glm") %>%
+#   fit(factor(fidelity) ~ pool1, data = fidel_train, family = "binomial")
+# 
+# pool1_fit
+# 
+# predict(pool1_fit, fidel_test)
+# 
+# ## I am running into an error when I try to predict the model fit on the testing set because there are some pools that appear in the testing set that don't appear in the training set (pool 4) and also pools that appear in the training set that don't appear in the testing set. See below.
+# 
+# fidel_train %>% 
+#   count(pool1)
+# 
+# fidel_test %>% 
+#   count(pool1)
+# 
+# ## 
+# 
+# pool1_pred <- predict(pool1_fit, fidel_test, type = "prob") %>%
+#   bind_cols(fidel_test %>% select(fidelity, pool1))
+# 
+# pool1_pred
+# 
+# pool1_pred %>%
+#   arrange(desc(.pred_yes)) %>%
+#   print(n = 10)
+# 
+# pool1_pred <- pool1_pred %>% 
+#   mutate(fidelity = factor(fidelity))
+# 
+# pool1_pred %>%
+#   roc_curve(
+#     truth = fidelity,
+#     .pred_yes,
+#     event_level = "second"
+#   ) %>%
+#   autoplot()
+# 
+# pool1_pred %>%
+#   roc_auc(
+#     truth = fidelity,
+#     .pred_yes,
+#     event_level = "second"
+#   )
 
 ```
 
@@ -970,6 +975,8 @@ sal_temp_int_pred %>%
   ) %>%
   autoplot()
 
+ggsave("/Users/georgialattig/seaside salamanders/visualizations/salchange*tempchange_ROC.tiff", device = "tiff", dpi = 500)
+
 sal_temp_int_pred %>%
   roc_auc(
     truth = fidelity,
@@ -1009,7 +1016,91 @@ pool1_temp_change_pred %>%
   ) %>%
   autoplot()
 
+ggsave("/Users/georgialattig/seaside salamanders/visualizations/pool1temp*tempchange_ROC.tiff", device = "tiff", dpi = 500)
+
 pool1_temp_change_pred %>%
+  roc_auc(
+    truth = fidelity,
+    .pred_yes,
+    event_level = "second"
+  )
+```
+
+### fidelity ~ salinity_magnitude 
+
+```{r salinity_magnitude model}
+sal_mag_fit <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(factor(fidelity) ~ pool1_salinity * salinity_magnitude, data = fidel_train, family = "binomial")
+
+sal_mag_fit
+
+predict(sal_mag_fit, fidel_test)
+
+sal_mag_pred <- predict(sal_mag_fit, fidel_test, type = "prob") %>%
+  bind_cols(fidel_test %>% select(fidelity, pool1_salinity, salinity_magnitude))
+
+sal_mag_pred
+
+sal_mag_pred %>%
+  arrange(desc(.pred_yes)) %>%
+  print(n = 10)
+
+sal_mag_pred <- sal_mag_pred %>% 
+  mutate(fidelity = factor(fidelity))
+
+sal_mag_pred %>%
+  roc_curve(
+    truth = fidelity,
+    .pred_yes,
+    event_level = "second"
+  ) %>%
+  autoplot()
+
+ggsave("/Users/georgialattig/seaside salamanders/visualizations/salmag_ROC.tiff", device = "tiff", dpi = 500)
+
+sal_mag_pred %>%
+  roc_auc(
+    truth = fidelity,
+    .pred_yes,
+    event_level = "second"
+  )
+```
+
+### fidelity ~ salinity_direction
+
+```{r salinity_direciton model}
+sal_direct_fit <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(factor(fidelity) ~ pool1_salinity * sal_change_direction, data = fidel_train, family = "binomial")
+
+sal_direct_fit
+
+predict(sal_direct_fit, fidel_test)
+
+sal_direct_pred <- predict(sal_direct_fit, fidel_test, type = "prob") %>%
+  bind_cols(fidel_test %>% select(fidelity, pool1_salinity, sal_change_direction))
+
+sal_direct_pred
+
+sal_direct_pred %>%
+  arrange(desc(.pred_yes)) %>%
+  print(n = 10)
+
+sal_direct_pred <- sal_direct_pred %>% 
+  mutate(fidelity = factor(fidelity))
+
+sal_direct_pred %>%
+  roc_curve(
+    truth = fidelity,
+    .pred_yes,
+    event_level = "second"
+  ) %>%
+  autoplot()
+
+ggsave("/Users/georgialattig/seaside salamanders/visualizations/saldirect_ROC.tiff", device = "tiff", dpi = 500)
+
+sal_direct_pred %>%
   roc_auc(
     truth = fidelity,
     .pred_yes,
