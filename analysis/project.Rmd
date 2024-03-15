@@ -105,7 +105,7 @@ sals %>%
 
 Though this is a major pain, I am going to look through the data for each of these 46 PIT tags to determine which color/year should be associated with them. Then I will create a massive case_when function to recode the PIT tags as necessary. I will recode based on information about year of first PIT tag (these are concrete data) or based on the most frequent color tag recorded across seasons. In cases with equal numbers of observations of different color tags, I looked for additional information in the notes column or else trusted the 2022 observation because of increased sampling effort in 2022. Reasons are given for each decision within the code below.
 
-```{r recode-pit-year}
+```{r recode-first-year}
 sals <- sals %>% 
   mutate(first_year = case_when(
     pit == "3216" ~ "2020_2021", #once recorded as pink in 2023 but all other times, across 2 seasons, red
@@ -226,6 +226,10 @@ sals %>%
   group_by(pit) %>% 
   count(pool) %>% 
   mutate(pool_prop = n/sum(n))
+
+sals %>% 
+  filter(pit_year == "2022") %>% 
+  count(pit) 
 ```
 
 ```{r visualize-most-popular-breeding-pools}
@@ -360,7 +364,7 @@ fidelity <- fidelity %>%
 write_csv(fidelity, "/Users/georgialattig/seaside salamanders/data/tidy_data/fidelity.csv")
 ```
 
-My data consist of 96 individual salamanders that were observed across two years. All 96 individuals were PIT-tagged in 2022 and returned to Otter Point in 2023. "Site fidelity" for the sake of this analysis is determined by whether the individual was observed within the same pool on the first night it was observed/found across both seasons. i.e. Did the individual return to the same first pool in 2022 and 2023. With these data, I will model fidelity in response to predictors of change in salinity and change in temperature, as well as see whether the fidelity depends on the pools themselves because there may be other characteristics of the breeding pools that could affect fidelity that aren't reflected in the environmental conditions. 
+My data consist of 96 individual salamanders that were observed across two years. All 96 individuals were PIT-tagged in 2022 and returned to Otter Point in 2023. "Site fidelity" for the sake of this analysis is determined by whether the individual was observed within the same pool on the first night it was observed/found across both seasons. i.e. Did the individual return to the same first pool in 2022 and 2023? With these data, I will model fidelity in response to predictors of change in salinity and change in temperature, as well as see whether the fidelity depends on the pools themselves because there may be other characteristics of the breeding pools that could affect fidelity that aren't reflected in the environmental conditions. 
 
 ### Exploratory Data Visualization
 
@@ -1025,6 +1029,8 @@ pool1_temp_change_pred %>%
     event_level = "second"
   )
 ```
+
+Below I decided to make two different models predicting fidelity from different aspects of salinity change: direction and magnitude. Surprisingly, one of these actually resulted in a model with decent predictive power: fidelity ~ pool1_salinity * salinity_magnitude.
 
 ### fidelity ~ salinity_magnitude 
 
