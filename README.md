@@ -1,7 +1,7 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/UJYjcgLc)
-Project title
+Salamanders by the Sea: Modeling Site Fidelity of Spotted Salamanders 
+Breeding in Rocky Cliff Pools
 ================
-by Team name
+by Georgia Lattig
 
 ## Summary
 
@@ -25,7 +25,7 @@ your project.
 
 ## Presentation
 
-Our presentation can be found [here](presentation/presentation.html). You can update this link to a Google Slides link.
+Our presentation can be found [here](https://docs.google.com/presentation/d/17C3VR7BxwCiNIXM_-rTdYIbv37W5zIO7mqMHEOGj8Ic/edit#slide=id.p).
 
 ## Data
 
@@ -36,5 +36,4 @@ sure to note the retrieval date.
 
 ## References
 
-List any references here. You should, at a minimum, list your data
-source.
+Stephen J. Ressel, Emma E. Damm, Wriley Hodge, Georgia Q. Lattig, Tess Moore, Westly Reason, Judith A. Tunstad, Jasper White, "Salinity Characteristics of Rocky Cliff Pools Used as Breeding Habitat by Spotted Salamanders (Ambystoma maculatum)," Northeastern Naturalist, 30(2), 212-225, (29 June 2023)
